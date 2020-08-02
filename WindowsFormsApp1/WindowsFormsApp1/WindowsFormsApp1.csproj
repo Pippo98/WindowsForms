@@ -80,11 +80,11 @@
     <Compile Include="AddForms\DnewProject.Designer.cs">
       <DependentUpon>DnewProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddForms\DnewTransaction.cs">
+    <Compile Include="AddForms\DnewRegister.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddForms\DnewTransaction.Designer.cs">
-      <DependentUpon>DnewTransaction.cs</DependentUpon>
+    <Compile Include="AddForms\DnewRegister.Designer.cs">
+      <DependentUpon>DnewRegister.cs</DependentUpon>
     </Compile>
     <Compile Include="AddForms\DopenProject.cs">
       <SubType>Form</SubType>
@@ -92,6 +92,13 @@
     <Compile Include="AddForms\DopenProject.Designer.cs">
       <DependentUpon>DopenProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddForms\DopenWarning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddForms\DopenWarning.Designer.cs">
+      <DependentUpon>DopenWarning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataClasses\Analysis.cs" />
     <Compile Include="dataClasses\Firm.cs" />
     <Compile Include="dataClasses\Site.cs" />
     <Compile Include="MainForm.cs">
@@ -120,11 +127,14 @@
     <EmbeddedResource Include="AddForms\DnewProject.resx">
       <DependentUpon>DnewProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddForms\DnewTransaction.resx">
-      <DependentUpon>DnewTransaction.cs</DependentUpon>
+    <EmbeddedResource Include="AddForms\DnewRegister.resx">
+      <DependentUpon>DnewRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddForms\DopenProject.resx">
       <DependentUpon>DopenProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddForms\DopenWarning.resx">
+      <DependentUpon>DopenWarning.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

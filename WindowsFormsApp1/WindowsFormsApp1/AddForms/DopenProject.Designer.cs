@@ -54,6 +54,7 @@
             // 
             // prjList
             // 
+            this.prjList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.prjList.HideSelection = false;
             this.prjList.Location = new System.Drawing.Point(12, 91);
             this.prjList.MultiSelect = false;
@@ -65,9 +66,10 @@
             // 
             // newPrjBtn
             // 
-            this.newPrjBtn.Location = new System.Drawing.Point(332, 12);
+            this.newPrjBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newPrjBtn.Location = new System.Drawing.Point(321, 12);
             this.newPrjBtn.Name = "newPrjBtn";
-            this.newPrjBtn.Size = new System.Drawing.Size(85, 23);
+            this.newPrjBtn.Size = new System.Drawing.Size(114, 37);
             this.newPrjBtn.TabIndex = 2;
             this.newPrjBtn.Text = "Crea Progetto";
             this.newPrjBtn.UseVisualStyleBackColor = true;

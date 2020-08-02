@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1.AddForms
 {
-    partial class DnewTransaction
+    partial class DnewRegister
     {
         /// <summary>
         /// Required designer variable.
@@ -28,73 +28,69 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.components = new System.ComponentModel.Container();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.producerBox = new System.Windows.Forms.ComboBox();
+            this.carrierBox = new System.Windows.Forms.ComboBox();
+            this.cerBox = new System.Windows.Forms.ComboBox();
+            this.plateBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox1 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox2 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox3 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox4 = new System.Web.Management.ReadOnlyTextBox();
-            this.readOnlyTextBox5 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox6 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox7 = new System.Web.Management.ReadOnlyTextBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.siteLocationBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox8 = new System.Web.Management.ReadOnlyTextBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.siteNameBox = new System.Windows.Forms.ComboBox();
             this.ok = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
+            this.readOnlyTextBox5 = new System.Web.Management.ReadOnlyTextBox();
+            this.loadUnloadBox = new System.Windows.Forms.ComboBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(296, 39);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePicker.Location = new System.Drawing.Point(296, 39);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker.TabIndex = 0;
             // 
-            // comboBox1
+            // producerBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(296, 83);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(200, 21);
-            this.comboBox1.TabIndex = 1;
+            this.producerBox.FormattingEnabled = true;
+            this.producerBox.Location = new System.Drawing.Point(296, 83);
+            this.producerBox.Name = "producerBox";
+            this.producerBox.Size = new System.Drawing.Size(200, 21);
+            this.producerBox.TabIndex = 1;
+            this.producerBox.SelectedValueChanged += new System.EventHandler(this.producerBox_SelectedValueChanged);
             // 
-            // comboBox2
+            // carrierBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(296, 130);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(200, 21);
-            this.comboBox2.TabIndex = 2;
+            this.carrierBox.FormattingEnabled = true;
+            this.carrierBox.Location = new System.Drawing.Point(296, 130);
+            this.carrierBox.Name = "carrierBox";
+            this.carrierBox.Size = new System.Drawing.Size(200, 21);
+            this.carrierBox.TabIndex = 2;
+            this.carrierBox.SelectedValueChanged += new System.EventHandler(this.carrierBox_SelectedValueChanged);
             // 
-            // comboBox3
+            // cerBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(430, 219);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(66, 21);
-            this.comboBox3.TabIndex = 3;
+            this.cerBox.FormattingEnabled = true;
+            this.cerBox.Location = new System.Drawing.Point(375, 262);
+            this.cerBox.Name = "cerBox";
+            this.cerBox.Size = new System.Drawing.Size(121, 21);
+            this.cerBox.TabIndex = 4;
             // 
-            // comboBox4
+            // plateBox
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(375, 262);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 4;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(375, 176);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 21);
-            this.comboBox5.TabIndex = 5;
+            this.plateBox.FormattingEnabled = true;
+            this.plateBox.Location = new System.Drawing.Point(375, 176);
+            this.plateBox.Name = "plateBox";
+            this.plateBox.Size = new System.Drawing.Size(121, 21);
+            this.plateBox.TabIndex = 5;
             // 
             // readOnlyTextBox1
             // 
@@ -144,18 +140,6 @@
             this.readOnlyTextBox4.TabStop = false;
             this.readOnlyTextBox4.Text = "Targa";
             // 
-            // readOnlyTextBox5
-            // 
-            this.readOnlyTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox5.Location = new System.Drawing.Point(137, 222);
-            this.readOnlyTextBox5.Multiline = true;
-            this.readOnlyTextBox5.Name = "readOnlyTextBox5";
-            this.readOnlyTextBox5.ReadOnly = true;
-            this.readOnlyTextBox5.Size = new System.Drawing.Size(100, 20);
-            this.readOnlyTextBox5.TabIndex = 10;
-            this.readOnlyTextBox5.TabStop = false;
-            this.readOnlyTextBox5.Text = "Carico/Scarico";
-            // 
             // readOnlyTextBox6
             // 
             this.readOnlyTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -180,13 +164,14 @@
             this.readOnlyTextBox7.TabStop = false;
             this.readOnlyTextBox7.Text = "Comune";
             // 
-            // comboBox6
+            // siteLocationBox
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(296, 305);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(200, 21);
-            this.comboBox6.TabIndex = 12;
+            this.siteLocationBox.FormattingEnabled = true;
+            this.siteLocationBox.Location = new System.Drawing.Point(296, 305);
+            this.siteLocationBox.Name = "siteLocationBox";
+            this.siteLocationBox.Size = new System.Drawing.Size(200, 21);
+            this.siteLocationBox.TabIndex = 12;
+            this.siteLocationBox.SelectedIndexChanged += new System.EventHandler(this.siteLocationBox_SelectedIndexChanged);
             // 
             // readOnlyTextBox8
             // 
@@ -200,13 +185,13 @@
             this.readOnlyTextBox8.TabStop = false;
             this.readOnlyTextBox8.Text = "Cantiere";
             // 
-            // comboBox7
+            // siteNameBox
             // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(296, 347);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(200, 21);
-            this.comboBox7.TabIndex = 14;
+            this.siteNameBox.FormattingEnabled = true;
+            this.siteNameBox.Location = new System.Drawing.Point(296, 347);
+            this.siteNameBox.Name = "siteNameBox";
+            this.siteNameBox.Size = new System.Drawing.Size(200, 21);
+            this.siteNameBox.TabIndex = 14;
             // 
             // ok
             // 
@@ -228,7 +213,31 @@
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
-            // DnewTransaction
+            // readOnlyTextBox5
+            // 
+            this.readOnlyTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox5.Location = new System.Drawing.Point(137, 222);
+            this.readOnlyTextBox5.Multiline = true;
+            this.readOnlyTextBox5.Name = "readOnlyTextBox5";
+            this.readOnlyTextBox5.ReadOnly = true;
+            this.readOnlyTextBox5.Size = new System.Drawing.Size(100, 20);
+            this.readOnlyTextBox5.TabIndex = 10;
+            this.readOnlyTextBox5.TabStop = false;
+            this.readOnlyTextBox5.Text = "Carico/Scarico";
+            // 
+            // loadUnloadBox
+            // 
+            this.loadUnloadBox.FormattingEnabled = true;
+            this.loadUnloadBox.Location = new System.Drawing.Point(430, 219);
+            this.loadUnloadBox.Name = "loadUnloadBox";
+            this.loadUnloadBox.Size = new System.Drawing.Size(66, 21);
+            this.loadUnloadBox.TabIndex = 3;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // DnewRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -236,23 +245,24 @@
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.readOnlyTextBox8);
-            this.Controls.Add(this.comboBox7);
+            this.Controls.Add(this.siteNameBox);
             this.Controls.Add(this.readOnlyTextBox7);
-            this.Controls.Add(this.comboBox6);
+            this.Controls.Add(this.siteLocationBox);
             this.Controls.Add(this.readOnlyTextBox6);
             this.Controls.Add(this.readOnlyTextBox5);
             this.Controls.Add(this.readOnlyTextBox4);
             this.Controls.Add(this.readOnlyTextBox3);
             this.Controls.Add(this.readOnlyTextBox2);
             this.Controls.Add(this.readOnlyTextBox1);
-            this.Controls.Add(this.comboBox5);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Name = "DnewTransaction";
-            this.Text = "DnewTransaction";
+            this.Controls.Add(this.plateBox);
+            this.Controls.Add(this.cerBox);
+            this.Controls.Add(this.loadUnloadBox);
+            this.Controls.Add(this.carrierBox);
+            this.Controls.Add(this.producerBox);
+            this.Controls.Add(this.dateTimePicker);
+            this.Name = "DnewRegister";
+            this.Text = "Nuovo Registro";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,23 +270,24 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
+        private System.Windows.Forms.ComboBox producerBox;
+        private System.Windows.Forms.ComboBox carrierBox;
+        private System.Windows.Forms.ComboBox cerBox;
+        private System.Windows.Forms.ComboBox plateBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox1;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox2;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox3;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox4;
-        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox5;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox6;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox7;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox siteLocationBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox8;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox siteNameBox;
         private System.Windows.Forms.Button ok;
         private System.Windows.Forms.Button cancel;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox5;
+        private System.Windows.Forms.ComboBox loadUnloadBox;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

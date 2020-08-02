@@ -8,33 +8,40 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.dataClasses;
 
 namespace WindowsFormsApp1.AddForms
 {
     public partial class DnewSite : Form
     {
 
-        private string[] locations;
+        private Site[] siteData;
+        private string[] siteNames;
+        private string[] siteLocations;
+
         private bool comboChanged;
 
         public string siteName;
         public string siteLocation;
+        public bool isNewSite;
 
-        public DnewSite(string[] locations_)
+        public DnewSite(Site[] locations_)
         {
             InitializeComponent();
 
-            this.locations = locations_;
+            this.siteData = locations_;
 
-            if(this.locations.Length > 0 && this.locations[0] != null)
+            if (siteData.Length > 0)
             {
-                siteCombo.Items.AddRange(this.locations);
+                siteLocations = new string[this.siteData.Length];
+
+                for (int i = 0; i < this.siteData.Length; i++)
+                {
+                    siteLocations[i] = this.siteData[i].location;
+                }
+                this.siteCombo.Items.AddRange(siteLocations);
             }
-
-            siteCombo.Items.Add("vjsfdnvfj");
         }
-
-
 
 
         private void ok_Click(object sender, EventArgs e)
@@ -65,10 +72,12 @@ namespace WindowsFormsApp1.AddForms
                 if (this.siteText.Text != "")
                 {
                     this.siteLocation = this.siteText.Text;
+                    this.isNewSite = true;
                 }
                 else
                 {
                     this.siteLocation = this.siteCombo.SelectedItem.ToString();
+                    this.isNewSite = false;
                 }
                 this.DialogResult = DialogResult.OK;
                 this.Close();

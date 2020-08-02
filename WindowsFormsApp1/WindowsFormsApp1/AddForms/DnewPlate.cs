@@ -52,7 +52,7 @@ namespace WindowsFormsApp1.AddForms
             {
                 errorProvider1.Dispose();
             }
-            if (this.plateText.Text != "" || !this.dimensionBoxChanged)
+            if (this.plateText.Text == "" || !this.dimensionBoxChanged)
             {
                 errorProvider2.SetError(this.plateText, "Inserisci Targa e Dimensione");
                 valid = false;

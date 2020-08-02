@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
-    class Site
+    public class Site
     {
         public string location;
-        public string name;
+        public string[] names;
 
-        public Site(string location_, string name_)
+        public Site(string location_, string[] names_)
         {
             this.location   = location_;
-            this.name       = name_;
+            this.names      = names_;
         }
     }
 }

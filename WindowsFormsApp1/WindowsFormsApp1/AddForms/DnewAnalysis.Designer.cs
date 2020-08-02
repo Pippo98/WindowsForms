@@ -28,42 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.components = new System.ComponentModel.Container();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.cerBox = new System.Windows.Forms.ComboBox();
+            this.producerBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox1 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox2 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox3 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox4 = new System.Web.Management.ReadOnlyTextBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.siteLocationBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox5 = new System.Web.Management.ReadOnlyTextBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.siteNameBox = new System.Windows.Forms.ComboBox();
             this.cancel = new System.Windows.Forms.Button();
             this.ok = new System.Windows.Forms.Button();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(288, 37);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePicker.Location = new System.Drawing.Point(288, 37);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker.TabIndex = 0;
             // 
-            // comboBox1
+            // cerBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(288, 77);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(200, 21);
-            this.comboBox1.TabIndex = 1;
+            this.cerBox.FormattingEnabled = true;
+            this.cerBox.Location = new System.Drawing.Point(288, 77);
+            this.cerBox.Name = "cerBox";
+            this.cerBox.Size = new System.Drawing.Size(200, 21);
+            this.cerBox.TabIndex = 1;
             // 
-            // comboBox2
+            // producerBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(288, 117);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(200, 21);
-            this.comboBox2.TabIndex = 2;
+            this.producerBox.FormattingEnabled = true;
+            this.producerBox.Location = new System.Drawing.Point(288, 117);
+            this.producerBox.Name = "producerBox";
+            this.producerBox.Size = new System.Drawing.Size(200, 21);
+            this.producerBox.TabIndex = 2;
             // 
             // readOnlyTextBox1
             // 
@@ -113,13 +116,14 @@
             this.readOnlyTextBox4.TabStop = false;
             this.readOnlyTextBox4.Text = "Comune";
             // 
-            // comboBox3
+            // siteLocationBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(288, 160);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(200, 21);
-            this.comboBox3.TabIndex = 6;
+            this.siteLocationBox.FormattingEnabled = true;
+            this.siteLocationBox.Location = new System.Drawing.Point(288, 160);
+            this.siteLocationBox.Name = "siteLocationBox";
+            this.siteLocationBox.Size = new System.Drawing.Size(200, 21);
+            this.siteLocationBox.TabIndex = 6;
+            this.siteLocationBox.SelectedValueChanged += new System.EventHandler(this.siteLocationBox_SelectedValueChanged);
             // 
             // readOnlyTextBox5
             // 
@@ -133,13 +137,13 @@
             this.readOnlyTextBox5.TabStop = false;
             this.readOnlyTextBox5.Text = "Cantiere";
             // 
-            // comboBox4
+            // siteNameBox
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(288, 201);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(200, 21);
-            this.comboBox4.TabIndex = 8;
+            this.siteNameBox.FormattingEnabled = true;
+            this.siteNameBox.Location = new System.Drawing.Point(288, 201);
+            this.siteNameBox.Name = "siteNameBox";
+            this.siteNameBox.Size = new System.Drawing.Size(200, 21);
+            this.siteNameBox.TabIndex = 8;
             // 
             // cancel
             // 
@@ -161,6 +165,10 @@
             this.ok.UseVisualStyleBackColor = true;
             this.ok.Click += new System.EventHandler(this.ok_Click);
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // DnewAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,17 +177,18 @@
             this.Controls.Add(this.ok);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.readOnlyTextBox5);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.siteNameBox);
             this.Controls.Add(this.readOnlyTextBox4);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.siteLocationBox);
             this.Controls.Add(this.readOnlyTextBox3);
             this.Controls.Add(this.readOnlyTextBox2);
             this.Controls.Add(this.readOnlyTextBox1);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.producerBox);
+            this.Controls.Add(this.cerBox);
+            this.Controls.Add(this.dateTimePicker);
             this.Name = "DnewAnalysis";
             this.Text = "Aggiungi Analisi";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,17 +196,18 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
+        private System.Windows.Forms.ComboBox cerBox;
+        private System.Windows.Forms.ComboBox producerBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox1;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox2;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox3;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox siteLocationBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox5;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox siteNameBox;
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.Button ok;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

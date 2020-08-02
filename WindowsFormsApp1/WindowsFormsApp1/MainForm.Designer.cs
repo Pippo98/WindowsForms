@@ -37,7 +37,7 @@
             this.addFirm = new System.Windows.Forms.Button();
             this.textBox = new System.Windows.Forms.RichTextBox();
             this.addAnalysis = new System.Windows.Forms.Button();
-            this.addTransaction = new System.Windows.Forms.Button();
+            this.addRegister = new System.Windows.Forms.Button();
             this.addPlate = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -126,16 +126,16 @@
             this.addAnalysis.UseVisualStyleBackColor = true;
             this.addAnalysis.Click += new System.EventHandler(this.addAnalysis_Click);
             // 
-            // addTransaction
+            // addRegister
             // 
-            this.addTransaction.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addTransaction.Location = new System.Drawing.Point(875, 489);
-            this.addTransaction.Name = "addTransaction";
-            this.addTransaction.Size = new System.Drawing.Size(131, 65);
-            this.addTransaction.TabIndex = 8;
-            this.addTransaction.Text = "Aggiungi Transazione";
-            this.addTransaction.UseVisualStyleBackColor = true;
-            this.addTransaction.Click += new System.EventHandler(this.addTransaction_Click);
+            this.addRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addRegister.Location = new System.Drawing.Point(875, 489);
+            this.addRegister.Name = "addRegister";
+            this.addRegister.Size = new System.Drawing.Size(131, 65);
+            this.addRegister.TabIndex = 8;
+            this.addRegister.Text = "Aggiungi Registro";
+            this.addRegister.UseVisualStyleBackColor = true;
+            this.addRegister.Click += new System.EventHandler(this.addRegister_Click);
             // 
             // addPlate
             // 
@@ -156,7 +156,7 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1018, 566);
             this.Controls.Add(this.addPlate);
-            this.Controls.Add(this.addTransaction);
+            this.Controls.Add(this.addRegister);
             this.Controls.Add(this.addAnalysis);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.addSite);
@@ -182,7 +182,7 @@
         private System.Windows.Forms.Button addFirm;
         private System.Windows.Forms.RichTextBox textBox;
         private System.Windows.Forms.Button addAnalysis;
-        private System.Windows.Forms.Button addTransaction;
+        private System.Windows.Forms.Button addRegister;
         private System.Windows.Forms.Button addPlate;
     }
 }
