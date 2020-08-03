@@ -15,7 +15,7 @@ namespace WindowsFormsApp1.AddForms
     public partial class DnewSite : Form
     {
 
-        private Site[] siteData;
+        private List<Site> siteData;
         private string[] siteNames;
         private string[] siteLocations;
 
@@ -25,17 +25,17 @@ namespace WindowsFormsApp1.AddForms
         public string siteLocation;
         public bool isNewSite;
 
-        public DnewSite(Site[] locations_)
+        public DnewSite(List<Site> locations_)
         {
             InitializeComponent();
 
             this.siteData = locations_;
 
-            if (siteData.Length > 0)
+            if (siteData.Count > 0)
             {
-                siteLocations = new string[this.siteData.Length];
+                siteLocations = new string[this.siteData.Count];
 
-                for (int i = 0; i < this.siteData.Length; i++)
+                for (int i = 0; i < this.siteData.Count; i++)
                 {
                     siteLocations[i] = this.siteData[i].location;
                 }

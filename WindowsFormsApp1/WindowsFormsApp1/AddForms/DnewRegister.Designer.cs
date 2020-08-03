@@ -48,6 +48,8 @@
             this.readOnlyTextBox5 = new System.Web.Management.ReadOnlyTextBox();
             this.loadUnloadBox = new System.Windows.Forms.ComboBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.destinationBox = new System.Windows.Forms.ComboBox();
+            this.readOnlyTextBox9 = new System.Web.Management.ReadOnlyTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +81,7 @@
             // cerBox
             // 
             this.cerBox.FormattingEnabled = true;
-            this.cerBox.Location = new System.Drawing.Point(375, 262);
+            this.cerBox.Location = new System.Drawing.Point(375, 307);
             this.cerBox.Name = "cerBox";
             this.cerBox.Size = new System.Drawing.Size(121, 21);
             this.cerBox.TabIndex = 4;
@@ -143,7 +145,7 @@
             // readOnlyTextBox6
             // 
             this.readOnlyTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox6.Location = new System.Drawing.Point(137, 265);
+            this.readOnlyTextBox6.Location = new System.Drawing.Point(137, 310);
             this.readOnlyTextBox6.Multiline = true;
             this.readOnlyTextBox6.Name = "readOnlyTextBox6";
             this.readOnlyTextBox6.ReadOnly = true;
@@ -155,7 +157,7 @@
             // readOnlyTextBox7
             // 
             this.readOnlyTextBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox7.Location = new System.Drawing.Point(137, 305);
+            this.readOnlyTextBox7.Location = new System.Drawing.Point(137, 350);
             this.readOnlyTextBox7.Multiline = true;
             this.readOnlyTextBox7.Name = "readOnlyTextBox7";
             this.readOnlyTextBox7.ReadOnly = true;
@@ -167,7 +169,7 @@
             // siteLocationBox
             // 
             this.siteLocationBox.FormattingEnabled = true;
-            this.siteLocationBox.Location = new System.Drawing.Point(296, 305);
+            this.siteLocationBox.Location = new System.Drawing.Point(296, 350);
             this.siteLocationBox.Name = "siteLocationBox";
             this.siteLocationBox.Size = new System.Drawing.Size(200, 21);
             this.siteLocationBox.TabIndex = 12;
@@ -176,7 +178,7 @@
             // readOnlyTextBox8
             // 
             this.readOnlyTextBox8.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox8.Location = new System.Drawing.Point(137, 347);
+            this.readOnlyTextBox8.Location = new System.Drawing.Point(137, 392);
             this.readOnlyTextBox8.Multiline = true;
             this.readOnlyTextBox8.Name = "readOnlyTextBox8";
             this.readOnlyTextBox8.ReadOnly = true;
@@ -188,7 +190,7 @@
             // siteNameBox
             // 
             this.siteNameBox.FormattingEnabled = true;
-            this.siteNameBox.Location = new System.Drawing.Point(296, 347);
+            this.siteNameBox.Location = new System.Drawing.Point(296, 392);
             this.siteNameBox.Name = "siteNameBox";
             this.siteNameBox.Size = new System.Drawing.Size(200, 21);
             this.siteNameBox.TabIndex = 14;
@@ -232,16 +234,40 @@
             this.loadUnloadBox.Name = "loadUnloadBox";
             this.loadUnloadBox.Size = new System.Drawing.Size(66, 21);
             this.loadUnloadBox.TabIndex = 3;
+            this.loadUnloadBox.SelectedIndexChanged += new System.EventHandler(this.loadUnloadBox_SelectedIndexChanged);
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // destinationBox
+            // 
+            this.destinationBox.Enabled = false;
+            this.destinationBox.FormattingEnabled = true;
+            this.destinationBox.Location = new System.Drawing.Point(374, 264);
+            this.destinationBox.Name = "destinationBox";
+            this.destinationBox.Size = new System.Drawing.Size(121, 21);
+            this.destinationBox.TabIndex = 18;
+            // 
+            // readOnlyTextBox9
+            // 
+            this.readOnlyTextBox9.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox9.Location = new System.Drawing.Point(137, 267);
+            this.readOnlyTextBox9.Multiline = true;
+            this.readOnlyTextBox9.Name = "readOnlyTextBox9";
+            this.readOnlyTextBox9.ReadOnly = true;
+            this.readOnlyTextBox9.Size = new System.Drawing.Size(100, 20);
+            this.readOnlyTextBox9.TabIndex = 19;
+            this.readOnlyTextBox9.TabStop = false;
+            this.readOnlyTextBox9.Text = "Destinazione";
             // 
             // DnewRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(775, 529);
+            this.Controls.Add(this.readOnlyTextBox9);
+            this.Controls.Add(this.destinationBox);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.readOnlyTextBox8);
@@ -289,5 +315,7 @@
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox5;
         private System.Windows.Forms.ComboBox loadUnloadBox;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox9;
+        private System.Windows.Forms.ComboBox destinationBox;
     }
 }

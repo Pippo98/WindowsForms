@@ -13,12 +13,12 @@ namespace WindowsFormsApp1.AddForms
 {
     public partial class DnewAnalysis : Form
     {
-        private Firm[] firmData;
+        private List<Firm> firmData;
         private string[] firmNames;
 
         private string[] CERs;
 
-        private Site[] siteData;
+        private List<Site> siteData;
         private string[] siteLocations;
         private string[] siteNames;
 
@@ -29,7 +29,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteLocation;
         public string siteName;
 
-        public DnewAnalysis(Firm[] firms, Site[] sites, string[] cer)
+        public DnewAnalysis(List<Firm> firms, List<Site> sites, string[] cer)
         {
             InitializeComponent();
 
@@ -38,22 +38,22 @@ namespace WindowsFormsApp1.AddForms
             this.CERs = cer;
 
 
-            if (firmData.Length > 0)
+            if (firmData.Count > 0)
             {
-                firmNames = new string[this.firmData.Length];
+                firmNames = new string[this.firmData.Count];
 
-                for (int i = 0; i < this.firmData.Length; i++)
+                for (int i = 0; i < this.firmData.Count; i++)
                 {
                     firmNames[i] = this.firmData[i].name;
                 }
                 this.producerBox.Items.AddRange(this.firmNames);
             }
 
-            if (siteData.Length > 0)
+            if (siteData.Count > 0)
             {
-                siteLocations = new string[this.siteData.Length];
+                siteLocations = new string[this.siteData.Count];
 
-                for (int i = 0; i < this.siteData.Length; i++)
+                for (int i = 0; i < this.siteData.Count; i++)
                 {
                     siteLocations[i] = this.siteData[i].location;
                 }
@@ -66,7 +66,7 @@ namespace WindowsFormsApp1.AddForms
 
         private void updateCurrentSites(string location)
         {
-            for (int i = 0; i < this.siteData.Length; i++)
+            for (int i = 0; i < this.siteData.Count; i++)
             {
                 if (this.siteData[i].location == location)
                 {

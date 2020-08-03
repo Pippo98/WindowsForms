@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.AddForms
 {
     public partial class DnewRegister : Form
     {
-        private Firm[]      firmData;
+        private List<Firm>      firmData;
         private string[]    firmNames;
         private Tuple<string, string>[] platesTuple;
         private string[]    plates;
@@ -22,7 +22,7 @@ namespace WindowsFormsApp1.AddForms
 
         private string[]    CERs;
 
-        private Site[]      siteData;
+        private List<Site>      siteData;
         private string[]    siteLocations;
         private string[]    siteNames;
 
@@ -31,6 +31,7 @@ namespace WindowsFormsApp1.AddForms
         public string loadUnload;
         public string producer;
         public string carrier;
+        public string destination;
         public string carrierPlate;
         public string carrierDimension;
         public string CER;
@@ -38,7 +39,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteName;
 
 
-        public DnewRegister(Firm[] firms, Site[] sites, string[] cer)
+        public DnewRegister(List<Firm> firms, List<Site> sites, string[] cer)
         {
             InitializeComponent();
 
@@ -47,23 +48,28 @@ namespace WindowsFormsApp1.AddForms
             this.CERs = cer;
 
 
-            if (firmData.Length > 0)
+            if (firmData.Count > 0)
             {
-                firmNames = new string[this.firmData.Length];
+                firmNames = new string[this.firmData.Count];
 
-                for (int i = 0; i < this.firmData.Length; i++)
+                for (int i = 0; i < this.firmData.Count; i++)
                 {
+                    if (this.firmData[i] == null)
+                    {
+                        continue;
+                    }
                     firmNames[i] = this.firmData[i].name;
                 }
                 this.producerBox.Items.AddRange(this.firmNames);
                 this.carrierBox.Items.AddRange(this.firmNames);
+                this.destinationBox.Items.AddRange(this.firmNames);
             }
 
-            if (siteData.Length > 0)
+            if (siteData.Count > 0)
             {
-                siteLocations = new string[this.siteData.Length];
+                siteLocations = new string[this.siteData.Count];
 
-                for(int i = 0; i < this.siteData.Length; i++)
+                for(int i = 0; i < this.siteData.Count; i++)
                 {
                     siteLocations[i] = this.siteData[i].location;
                 }
@@ -78,7 +84,7 @@ namespace WindowsFormsApp1.AddForms
 
         private void updateCurrentPlates(string firm)
         {
-            for (int i = 0; i < this.firmData.Length; i++)
+            for (int i = 0; i < this.firmData.Count; i++)
             {
                 if(this.firmData[i].name == firm)
                 {
@@ -92,8 +98,8 @@ namespace WindowsFormsApp1.AddForms
                     this.platesDimension = new string[this.platesTuple.Length];
                     for (int j = 0; j < this.firmData[i].targhe.Count; j++)
                     {
-                        this.plates[j] = this.firmData[i].targhe[j].Item1;
-                        this.platesDimension[j] = this.firmData[i].targhe[j].Item2;
+                        this.plates[j] = this.firmData[i].targhe[j].Item2;
+                        this.platesDimension[j] = this.firmData[i].targhe[j].Item1;
                     }
                     break;
                 }
@@ -104,7 +110,7 @@ namespace WindowsFormsApp1.AddForms
 
         private void updateCurrentSites(string location)
         {
-            for (int i =0; i < this.siteData.Length; i++)
+            for (int i =0; i < this.siteData.Count; i++)
             {
                 if(this.siteData[i].location == location)
                 {
@@ -132,6 +138,15 @@ namespace WindowsFormsApp1.AddForms
                 this.CER = this.cerBox.SelectedItem.ToString();
                 this.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.siteName = this.siteNameBox.SelectedItem.ToString();
+
+                if(loadUnloadBox.SelectedItem.ToString() == "Scarico")
+                {
+                    this.destination = this.destinationBox.SelectedItem.ToString();
+                }
+                else
+                {
+                    this.destination = "";
+                }
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -187,8 +202,22 @@ namespace WindowsFormsApp1.AddForms
                 valid = false;
             if (this.siteNameBox.SelectedItem == null)
                 valid = false;
+            if (this.loadUnloadBox.SelectedItem != null && this.loadUnloadBox.SelectedItem.ToString() == "Scarico")
+                if (this.destinationBox.SelectedItem == null)
+                    valid = false;
 
             return valid;
+        }
+
+        private void loadUnloadBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(loadUnloadBox.SelectedItem != null)
+            {
+                if(loadUnloadBox.SelectedItem.ToString() == "Scarico")
+                    this.destinationBox.Enabled = true;
+                else
+                    this.destinationBox.Enabled = false;
+            }
         }
     }
 }
