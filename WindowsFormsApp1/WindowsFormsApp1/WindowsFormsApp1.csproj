@@ -116,11 +116,11 @@
     <Compile Include="AddForms\DnewProject.Designer.cs">
       <DependentUpon>DnewProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddForms\DnewRegister.cs">
+    <Compile Include="AddForms\DnewModule.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddForms\DnewRegister.Designer.cs">
-      <DependentUpon>DnewRegister.cs</DependentUpon>
+    <Compile Include="AddForms\DnewModule.Designer.cs">
+      <DependentUpon>DnewModule.cs</DependentUpon>
     </Compile>
     <Compile Include="AddForms\DopenProject.cs">
       <SubType>Form</SubType>
@@ -134,11 +134,24 @@
     <Compile Include="AddForms\DopenWarning.Designer.cs">
       <DependentUpon>DopenWarning.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddForms\WarningMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddForms\WarningMessage.Designer.cs">
+      <DependentUpon>WarningMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="dataClasses\Analysis.cs" />
+    <Compile Include="dataClasses\ExtendedTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="dataClasses\Firm.cs" />
+    <Compile Include="dataClasses\Month.cs" />
+    <Compile Include="dataClasses\MonthElement.cs" />
     <Compile Include="dataClasses\PdfPrinter.cs" />
-    <Compile Include="dataClasses\Register.cs" />
+    <Compile Include="dataClasses\Module.cs" />
     <Compile Include="dataClasses\Site.cs" />
+    <Compile Include="dataClasses\Stat.cs" />
+    <Compile Include="dataClasses\StatManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,14 +184,17 @@
     <EmbeddedResource Include="AddForms\DnewProject.resx">
       <DependentUpon>DnewProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddForms\DnewRegister.resx">
-      <DependentUpon>DnewRegister.cs</DependentUpon>
+    <EmbeddedResource Include="AddForms\DnewModule.resx">
+      <DependentUpon>DnewModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddForms\DopenProject.resx">
       <DependentUpon>DopenProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddForms\DopenWarning.resx">
       <DependentUpon>DopenWarning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddForms\WarningMessage.resx">
+      <DependentUpon>WarningMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

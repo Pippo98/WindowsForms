@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1.AddForms
 {
-    partial class DnewRegister
+    partial class DnewModule
     {
         /// <summary>
         /// Required designer variable.
@@ -50,6 +50,12 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.destinationBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox9 = new System.Web.Management.ReadOnlyTextBox();
+            this.readOnlyTextBox10 = new System.Web.Management.ReadOnlyTextBox();
+            this.readonyKg = new System.Web.Management.ReadOnlyTextBox();
+            this.KgBox = new System.Windows.Forms.TextBox();
+            this.noteBox = new System.Windows.Forms.TextBox();
+            this.readOnlyTextBox11 = new System.Web.Management.ReadOnlyTextBox();
+            this.toBreakCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,6 +103,7 @@
             // readOnlyTextBox1
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox1.Location = new System.Drawing.Point(137, 39);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
@@ -109,6 +116,7 @@
             // readOnlyTextBox2
             // 
             this.readOnlyTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox2.Location = new System.Drawing.Point(137, 86);
             this.readOnlyTextBox2.Multiline = true;
             this.readOnlyTextBox2.Name = "readOnlyTextBox2";
@@ -121,6 +129,7 @@
             // readOnlyTextBox3
             // 
             this.readOnlyTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox3.Location = new System.Drawing.Point(137, 130);
             this.readOnlyTextBox3.Multiline = true;
             this.readOnlyTextBox3.Name = "readOnlyTextBox3";
@@ -133,6 +142,7 @@
             // readOnlyTextBox4
             // 
             this.readOnlyTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox4.Location = new System.Drawing.Point(137, 176);
             this.readOnlyTextBox4.Multiline = true;
             this.readOnlyTextBox4.Name = "readOnlyTextBox4";
@@ -145,6 +155,7 @@
             // readOnlyTextBox6
             // 
             this.readOnlyTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox6.Location = new System.Drawing.Point(137, 310);
             this.readOnlyTextBox6.Multiline = true;
             this.readOnlyTextBox6.Name = "readOnlyTextBox6";
@@ -157,6 +168,7 @@
             // readOnlyTextBox7
             // 
             this.readOnlyTextBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox7.Location = new System.Drawing.Point(137, 350);
             this.readOnlyTextBox7.Multiline = true;
             this.readOnlyTextBox7.Name = "readOnlyTextBox7";
@@ -178,6 +190,7 @@
             // readOnlyTextBox8
             // 
             this.readOnlyTextBox8.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox8.Location = new System.Drawing.Point(137, 392);
             this.readOnlyTextBox8.Multiline = true;
             this.readOnlyTextBox8.Name = "readOnlyTextBox8";
@@ -190,14 +203,14 @@
             // siteNameBox
             // 
             this.siteNameBox.FormattingEnabled = true;
-            this.siteNameBox.Location = new System.Drawing.Point(296, 392);
+            this.siteNameBox.Location = new System.Drawing.Point(295, 392);
             this.siteNameBox.Name = "siteNameBox";
             this.siteNameBox.Size = new System.Drawing.Size(200, 21);
             this.siteNameBox.TabIndex = 14;
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(421, 458);
+            this.ok.Location = new System.Drawing.Point(421, 509);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(75, 23);
             this.ok.TabIndex = 16;
@@ -207,7 +220,7 @@
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(296, 458);
+            this.cancel.Location = new System.Drawing.Point(296, 509);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 17;
@@ -218,6 +231,7 @@
             // readOnlyTextBox5
             // 
             this.readOnlyTextBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox5.Location = new System.Drawing.Point(137, 222);
             this.readOnlyTextBox5.Multiline = true;
             this.readOnlyTextBox5.Name = "readOnlyTextBox5";
@@ -252,6 +266,7 @@
             // readOnlyTextBox9
             // 
             this.readOnlyTextBox9.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readOnlyTextBox9.Location = new System.Drawing.Point(137, 267);
             this.readOnlyTextBox9.Multiline = true;
             this.readOnlyTextBox9.Name = "readOnlyTextBox9";
@@ -261,11 +276,82 @@
             this.readOnlyTextBox9.TabStop = false;
             this.readOnlyTextBox9.Text = "Destinazione";
             // 
-            // DnewRegister
+            // readOnlyTextBox10
+            // 
+            this.readOnlyTextBox10.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox10.Location = new System.Drawing.Point(137, 474);
+            this.readOnlyTextBox10.Multiline = true;
+            this.readOnlyTextBox10.Name = "readOnlyTextBox10";
+            this.readOnlyTextBox10.ReadOnly = true;
+            this.readOnlyTextBox10.Size = new System.Drawing.Size(76, 20);
+            this.readOnlyTextBox10.TabIndex = 20;
+            this.readOnlyTextBox10.TabStop = false;
+            this.readOnlyTextBox10.Text = "Da Pinzare";
+            // 
+            // readonyKg
+            // 
+            this.readonyKg.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readonyKg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readonyKg.Location = new System.Drawing.Point(137, 433);
+            this.readonyKg.Multiline = true;
+            this.readonyKg.Name = "readonyKg";
+            this.readonyKg.ReadOnly = true;
+            this.readonyKg.Size = new System.Drawing.Size(76, 16);
+            this.readonyKg.TabIndex = 22;
+            this.readonyKg.TabStop = false;
+            this.readonyKg.Text = "Kg";
+            // 
+            // KgBox
+            // 
+            this.KgBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.KgBox.Location = new System.Drawing.Point(296, 433);
+            this.KgBox.Name = "KgBox";
+            this.KgBox.Size = new System.Drawing.Size(199, 21);
+            this.KgBox.TabIndex = 23;
+            this.KgBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KgBox_KeyPress);
+            // 
+            // noteBox
+            // 
+            this.noteBox.Location = new System.Drawing.Point(537, 375);
+            this.noteBox.Multiline = true;
+            this.noteBox.Name = "noteBox";
+            this.noteBox.Size = new System.Drawing.Size(250, 112);
+            this.noteBox.TabIndex = 24;
+            // 
+            // readOnlyTextBox11
+            // 
+            this.readOnlyTextBox11.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox11.Location = new System.Drawing.Point(614, 340);
+            this.readOnlyTextBox11.Multiline = true;
+            this.readOnlyTextBox11.Name = "readOnlyTextBox11";
+            this.readOnlyTextBox11.ReadOnly = true;
+            this.readOnlyTextBox11.Size = new System.Drawing.Size(100, 20);
+            this.readOnlyTextBox11.TabIndex = 25;
+            this.readOnlyTextBox11.TabStop = false;
+            this.readOnlyTextBox11.Text = "Note";
+            // 
+            // toBreakCheck
+            // 
+            this.toBreakCheck.AutoSize = true;
+            this.toBreakCheck.Location = new System.Drawing.Point(480, 473);
+            this.toBreakCheck.Name = "toBreakCheck";
+            this.toBreakCheck.Size = new System.Drawing.Size(15, 14);
+            this.toBreakCheck.TabIndex = 26;
+            this.toBreakCheck.UseVisualStyleBackColor = true;
+            // 
+            // DnewModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 529);
+            this.ClientSize = new System.Drawing.Size(799, 560);
+            this.Controls.Add(this.toBreakCheck);
+            this.Controls.Add(this.readOnlyTextBox11);
+            this.Controls.Add(this.noteBox);
+            this.Controls.Add(this.KgBox);
+            this.Controls.Add(this.readonyKg);
+            this.Controls.Add(this.readOnlyTextBox10);
             this.Controls.Add(this.readOnlyTextBox9);
             this.Controls.Add(this.destinationBox);
             this.Controls.Add(this.cancel);
@@ -286,7 +372,7 @@
             this.Controls.Add(this.carrierBox);
             this.Controls.Add(this.producerBox);
             this.Controls.Add(this.dateTimePicker);
-            this.Name = "DnewRegister";
+            this.Name = "DnewModule";
             this.Text = "Nuovo Registro";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
@@ -317,5 +403,11 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox9;
         private System.Windows.Forms.ComboBox destinationBox;
+        private System.Windows.Forms.TextBox KgBox;
+        private System.Web.Management.ReadOnlyTextBox readonyKg;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox10;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox11;
+        private System.Windows.Forms.TextBox noteBox;
+        private System.Windows.Forms.CheckBox toBreakCheck;
     }
 }

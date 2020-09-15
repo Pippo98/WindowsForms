@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Esf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ using WindowsFormsApp1.dataClasses;
 
 namespace WindowsFormsApp1.AddForms
 {
-    public partial class DnewRegister : Form
+    public partial class DnewModule : Form
     {
         private List<Firm>      firmData;
         private string[]    firmNames;
@@ -23,10 +24,11 @@ namespace WindowsFormsApp1.AddForms
         private string[]    CERs;
 
         private List<Site>      siteData;
-        private string[]    siteLocations;
-        private string[]    siteNames;
+        private string[]        siteLocations;
+        private string[]        siteNames;
+        private string          moduleType;
 
-
+        public string note;
         public string date;
         public string loadUnload;
         public string producer;
@@ -35,17 +37,20 @@ namespace WindowsFormsApp1.AddForms
         public string carrierPlate;
         public string carrierDimension;
         public string CER;
+        public bool toBreak;
+        public int Kg;
         public string siteLocation;
         public string siteName;
 
 
-        public DnewRegister(List<Firm> firms, List<Site> sites, string[] cer)
+        public DnewModule(List<Firm> firms, List<Site> sites, string[] cer, string moduleType)
         {
             InitializeComponent();
 
             this.firmData = firms;
             this.siteData = sites;
             this.CERs = cer;
+            this.moduleType = moduleType;
 
 
             if (firmData.Count > 0)
@@ -129,13 +134,16 @@ namespace WindowsFormsApp1.AddForms
         {
             if (checkIfValid())
             {
+                this.note = this.noteBox.Text;
                 this.date = this.dateTimePicker.Value.ToString();
                 this.producer = this.producerBox.SelectedItem.ToString();
                 this.carrier = this.carrierBox.SelectedItem.ToString();
-                this.carrierPlate = this.plates[this.plateBox.SelectedIndex];
-                this.carrierDimension = this.platesDimension[this.plateBox.SelectedIndex];
+                if(this.moduleType == "Implant")
+                    this.carrierPlate = this.plates[this.plateBox.SelectedIndex];
                 this.loadUnload = this.loadUnloadBox.SelectedItem.ToString();
                 this.CER = this.cerBox.SelectedItem.ToString();
+                this.toBreak = this.toBreakCheck.Checked;
+                this.Kg = int.Parse(this.KgBox.Text);
                 this.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.siteName = this.siteNameBox.SelectedItem.ToString();
 
@@ -192,7 +200,7 @@ namespace WindowsFormsApp1.AddForms
                 valid = false;
             if(this.carrierBox.SelectedItem == null)
                 valid = false;
-            if (this.plateBox.SelectedItem == null)
+            if (this.plateBox.SelectedItem == null && this.moduleType == "Implant")
                 valid = false;
             if (this.loadUnloadBox.SelectedItem == null)
                 valid = false;
@@ -201,6 +209,8 @@ namespace WindowsFormsApp1.AddForms
             if (this.siteLocationBox.SelectedItem == null)
                 valid = false;
             if (this.siteNameBox.SelectedItem == null)
+                valid = false;
+            if (this.KgBox.Text == "")
                 valid = false;
             if (this.loadUnloadBox.SelectedItem != null && this.loadUnloadBox.SelectedItem.ToString() == "Scarico")
                 if (this.destinationBox.SelectedItem == null)
@@ -218,6 +228,11 @@ namespace WindowsFormsApp1.AddForms
                 else
                     this.destinationBox.Enabled = false;
             }
+        }
+
+        private void KgBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.Print
     public partial class DselectPrint : Form
     {
 
-        private string[] options;
+        private List<string> options;
 
         public string[] selected;
 
@@ -23,16 +23,16 @@ namespace WindowsFormsApp1.Print
             InitializeComponent();
 
 
-            this.options = new string[options_.Length + 1];
-            this.options[0] = "Seleziona Tutti";
-            for (int i = 1; i < this.options.Length; i++)
+            this.options = new List<string>();
+            this.options.Add("Seleziona Tutti");
+            for (int i = 0; i < options_.Length; i++)
             {
-                this.options[i] = options_[i-1];
+                this.options.Add(options_[i]);
             }
 
-            this.optionsList.Items.AddRange(this.options);
+            this.optionsList.Items.AddRange(this.options.ToArray());
 
-            this.selected = new string[options.Length];
+            this.selected = new string[options.Count];
         }
 
         private void ok_Click(object sender, EventArgs e)
@@ -54,6 +54,21 @@ namespace WindowsFormsApp1.Print
 
         private void optionsList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            if(e.Index == 0)
+            {
+                if (e.CurrentValue == CheckState.Unchecked)
+                {
+                    for (int idx = 1; idx < this.optionsList.Items.Count; idx++)
+                        this.optionsList.SetItemChecked(idx, true);
+
+                }
+                else
+                {
+                    for (int idx = 1; idx < this.optionsList.Items.Count; idx++)
+                        this.optionsList.SetItemChecked(idx, false);
+                }
+            }
+
         }
     }
 }

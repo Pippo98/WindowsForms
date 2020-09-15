@@ -35,21 +35,25 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSite = new System.Windows.Forms.Button();
             this.addFirm = new System.Windows.Forms.Button();
-            this.registerBox = new System.Windows.Forms.RichTextBox();
             this.addAnalysis = new System.Windows.Forms.Button();
-            this.addRegister = new System.Windows.Forms.Button();
+            this.addFormImplant = new System.Windows.Forms.Button();
             this.addPlate = new System.Windows.Forms.Button();
             this.printButton = new System.Windows.Forms.Button();
-            this.analysisBox = new System.Windows.Forms.RichTextBox();
-            this.siteBox = new System.Windows.Forms.RichTextBox();
-            this.firmBox = new System.Windows.Forms.RichTextBox();
             this.firmButton = new System.Windows.Forms.Button();
             this.siteButton = new System.Windows.Forms.Button();
             this.analysisButton = new System.Windows.Forms.Button();
             this.registerButton = new System.Windows.Forms.Button();
             this.missingAnalysisButton = new System.Windows.Forms.Button();
-            this.invalidAnalysisBox = new System.Windows.Forms.RichTextBox();
+            this.invalidAnalysisButton = new System.Windows.Forms.Button();
+            this.projectUsable = new System.Windows.Forms.Button();
+            this.RegisterVariousButton = new System.Windows.Forms.Button();
+            this.addFormVarious = new System.Windows.Forms.Button();
+            this.dataBox = new System.Windows.Forms.RichTextBox();
+            this.readOnlyTextBox1 = new System.Web.Management.ReadOnlyTextBox();
+            this.table = new System.Windows.Forms.DataGridView();
+            this.monthButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +64,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1018, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1225, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -99,7 +103,7 @@
             this.addSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addSite.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.addSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addSite.Location = new System.Drawing.Point(875, 235);
+            this.addSite.Location = new System.Drawing.Point(1082, 291);
             this.addSite.Name = "addSite";
             this.addSite.Size = new System.Drawing.Size(131, 39);
             this.addSite.TabIndex = 4;
@@ -112,7 +116,7 @@
             this.addFirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFirm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.addFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addFirm.Location = new System.Drawing.Point(875, 190);
+            this.addFirm.Location = new System.Drawing.Point(1082, 246);
             this.addFirm.Name = "addFirm";
             this.addFirm.Size = new System.Drawing.Size(131, 39);
             this.addFirm.TabIndex = 2;
@@ -120,24 +124,12 @@
             this.addFirm.UseVisualStyleBackColor = true;
             this.addFirm.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addImpresa_MouseClick);
             // 
-            // registerBox
-            // 
-            this.registerBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.registerBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.registerBox.Location = new System.Drawing.Point(12, 84);
-            this.registerBox.Name = "registerBox";
-            this.registerBox.Size = new System.Drawing.Size(857, 473);
-            this.registerBox.TabIndex = 6;
-            this.registerBox.Text = "";
-            // 
             // addAnalysis
             // 
             this.addAnalysis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addAnalysis.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.addAnalysis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addAnalysis.Location = new System.Drawing.Point(875, 280);
+            this.addAnalysis.Location = new System.Drawing.Point(1082, 336);
             this.addAnalysis.Name = "addAnalysis";
             this.addAnalysis.Size = new System.Drawing.Size(131, 39);
             this.addAnalysis.TabIndex = 7;
@@ -145,25 +137,25 @@
             this.addAnalysis.UseVisualStyleBackColor = true;
             this.addAnalysis.Click += new System.EventHandler(this.addAnalysis_Click);
             // 
-            // addRegister
+            // addFormImplant
             // 
-            this.addRegister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addRegister.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addRegister.Location = new System.Drawing.Point(875, 84);
-            this.addRegister.Name = "addRegister";
-            this.addRegister.Size = new System.Drawing.Size(133, 65);
-            this.addRegister.TabIndex = 8;
-            this.addRegister.Text = "Aggiungi Registro";
-            this.addRegister.UseVisualStyleBackColor = true;
-            this.addRegister.Click += new System.EventHandler(this.addRegister_Click);
+            this.addFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addFormImplant.Location = new System.Drawing.Point(1080, 94);
+            this.addFormImplant.Name = "addFormImplant";
+            this.addFormImplant.Size = new System.Drawing.Size(133, 65);
+            this.addFormImplant.TabIndex = 8;
+            this.addFormImplant.Text = "Aggiungi Formulario Impianto";
+            this.addFormImplant.UseVisualStyleBackColor = true;
+            this.addFormImplant.Click += new System.EventHandler(this.addFormImplant_Click);
             // 
             // addPlate
             // 
             this.addPlate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addPlate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.addPlate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addPlate.Location = new System.Drawing.Point(875, 325);
+            this.addPlate.Location = new System.Drawing.Point(1082, 381);
             this.addPlate.Name = "addPlate";
             this.addPlate.Size = new System.Drawing.Size(131, 39);
             this.addPlate.TabIndex = 9;
@@ -173,10 +165,10 @@
             // 
             // printButton
             // 
-            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.printButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printButton.Location = new System.Drawing.Point(873, 492);
+            this.printButton.Location = new System.Drawing.Point(1080, 666);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(133, 65);
             this.printButton.TabIndex = 10;
@@ -184,47 +176,12 @@
             this.printButton.UseVisualStyleBackColor = true;
             this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
-            // analysisBox
-            // 
-            this.analysisBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.analysisBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.analysisBox.Location = new System.Drawing.Point(12, 84);
-            this.analysisBox.Name = "analysisBox";
-            this.analysisBox.Size = new System.Drawing.Size(857, 470);
-            this.analysisBox.TabIndex = 11;
-            this.analysisBox.Text = "";
-            // 
-            // siteBox
-            // 
-            this.siteBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.siteBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.siteBox.Location = new System.Drawing.Point(12, 84);
-            this.siteBox.Name = "siteBox";
-            this.siteBox.Size = new System.Drawing.Size(857, 470);
-            this.siteBox.TabIndex = 12;
-            this.siteBox.Text = "";
-            // 
-            // firmBox
-            // 
-            this.firmBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.firmBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.firmBox.Location = new System.Drawing.Point(12, 84);
-            this.firmBox.Name = "firmBox";
-            this.firmBox.Size = new System.Drawing.Size(857, 470);
-            this.firmBox.TabIndex = 13;
-            this.firmBox.Text = "";
-            // 
             // firmButton
             // 
+            this.firmButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.firmButton.Location = new System.Drawing.Point(13, 28);
             this.firmButton.Name = "firmButton";
-            this.firmButton.Size = new System.Drawing.Size(98, 28);
+            this.firmButton.Size = new System.Drawing.Size(132, 27);
             this.firmButton.TabIndex = 14;
             this.firmButton.Text = "Imprese";
             this.firmButton.UseVisualStyleBackColor = true;
@@ -232,9 +189,10 @@
             // 
             // siteButton
             // 
-            this.siteButton.Location = new System.Drawing.Point(117, 27);
+            this.siteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.siteButton.Location = new System.Drawing.Point(13, 61);
             this.siteButton.Name = "siteButton";
-            this.siteButton.Size = new System.Drawing.Size(98, 28);
+            this.siteButton.Size = new System.Drawing.Size(132, 27);
             this.siteButton.TabIndex = 15;
             this.siteButton.Text = "Cantieri";
             this.siteButton.UseVisualStyleBackColor = true;
@@ -242,9 +200,10 @@
             // 
             // analysisButton
             // 
-            this.analysisButton.Location = new System.Drawing.Point(221, 28);
+            this.analysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.analysisButton.Location = new System.Drawing.Point(289, 31);
             this.analysisButton.Name = "analysisButton";
-            this.analysisButton.Size = new System.Drawing.Size(98, 28);
+            this.analysisButton.Size = new System.Drawing.Size(132, 27);
             this.analysisButton.TabIndex = 16;
             this.analysisButton.Text = "Analisi";
             this.analysisButton.UseVisualStyleBackColor = true;
@@ -252,35 +211,125 @@
             // 
             // registerButton
             // 
-            this.registerButton.Location = new System.Drawing.Point(325, 28);
+            this.registerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registerButton.Location = new System.Drawing.Point(151, 28);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(98, 28);
+            this.registerButton.Size = new System.Drawing.Size(132, 27);
             this.registerButton.TabIndex = 17;
-            this.registerButton.Text = "Registro";
+            this.registerButton.Text = "Registro Impianto";
             this.registerButton.UseVisualStyleBackColor = true;
             this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // missingAnalysisButton
             // 
-            this.missingAnalysisButton.Location = new System.Drawing.Point(429, 28);
+            this.missingAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.missingAnalysisButton.Location = new System.Drawing.Point(427, 31);
             this.missingAnalysisButton.Name = "missingAnalysisButton";
-            this.missingAnalysisButton.Size = new System.Drawing.Size(98, 28);
+            this.missingAnalysisButton.Size = new System.Drawing.Size(132, 27);
             this.missingAnalysisButton.TabIndex = 18;
             this.missingAnalysisButton.Text = "Analisi Mancanti";
             this.missingAnalysisButton.UseVisualStyleBackColor = true;
             this.missingAnalysisButton.Click += new System.EventHandler(this.missingAnalysisButton_Click);
             // 
-            // invalidAnalysisBox
+            // invalidAnalysisButton
             // 
-            this.invalidAnalysisBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.invalidAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.invalidAnalysisButton.Location = new System.Drawing.Point(289, 61);
+            this.invalidAnalysisButton.Name = "invalidAnalysisButton";
+            this.invalidAnalysisButton.Size = new System.Drawing.Size(132, 27);
+            this.invalidAnalysisButton.TabIndex = 21;
+            this.invalidAnalysisButton.Text = "Analisi Scadute";
+            this.invalidAnalysisButton.UseVisualStyleBackColor = true;
+            this.invalidAnalysisButton.Click += new System.EventHandler(this.invalidAnalysisButton_Click);
+            // 
+            // projectUsable
+            // 
+            this.projectUsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectUsable.BackColor = System.Drawing.Color.DarkRed;
+            this.projectUsable.Enabled = false;
+            this.projectUsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.projectUsable.Location = new System.Drawing.Point(1137, 31);
+            this.projectUsable.Name = "projectUsable";
+            this.projectUsable.Size = new System.Drawing.Size(75, 23);
+            this.projectUsable.TabIndex = 22;
+            this.projectUsable.UseVisualStyleBackColor = false;
+            // 
+            // RegisterVariousButton
+            // 
+            this.RegisterVariousButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RegisterVariousButton.Location = new System.Drawing.Point(151, 61);
+            this.RegisterVariousButton.Name = "RegisterVariousButton";
+            this.RegisterVariousButton.Size = new System.Drawing.Size(132, 27);
+            this.RegisterVariousButton.TabIndex = 23;
+            this.RegisterVariousButton.Text = "Registro Varie";
+            this.RegisterVariousButton.UseVisualStyleBackColor = true;
+            this.RegisterVariousButton.Click += new System.EventHandler(this.RegisterVariousButton_Click);
+            // 
+            // addFormVarious
+            // 
+            this.addFormVarious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addFormVarious.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addFormVarious.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addFormVarious.Location = new System.Drawing.Point(1081, 165);
+            this.addFormVarious.Name = "addFormVarious";
+            this.addFormVarious.Size = new System.Drawing.Size(133, 65);
+            this.addFormVarious.TabIndex = 25;
+            this.addFormVarious.Text = "Aggiungi Formulario Varie";
+            this.addFormVarious.UseVisualStyleBackColor = true;
+            this.addFormVarious.Click += new System.EventHandler(this.addFormVarious_Click);
+            // 
+            // dataBox
+            // 
+            this.dataBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.invalidAnalysisBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidAnalysisBox.Location = new System.Drawing.Point(13, 84);
-            this.invalidAnalysisBox.Name = "invalidAnalysisBox";
-            this.invalidAnalysisBox.Size = new System.Drawing.Size(857, 470);
-            this.invalidAnalysisBox.TabIndex = 19;
-            this.invalidAnalysisBox.Text = "";
+            this.dataBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataBox.Location = new System.Drawing.Point(10, 118);
+            this.dataBox.Name = "dataBox";
+            this.dataBox.ReadOnly = true;
+            this.dataBox.Size = new System.Drawing.Size(1064, 613);
+            this.dataBox.TabIndex = 26;
+            this.dataBox.Text = "";
+            // 
+            // readOnlyTextBox1
+            // 
+            this.readOnlyTextBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(13, 94);
+            this.readOnlyTextBox1.Multiline = true;
+            this.readOnlyTextBox1.Name = "readOnlyTextBox1";
+            this.readOnlyTextBox1.ReadOnly = true;
+            this.readOnlyTextBox1.Size = new System.Drawing.Size(49, 20);
+            this.readOnlyTextBox1.TabIndex = 27;
+            this.readOnlyTextBox1.TabStop = false;
+            this.readOnlyTextBox1.Text = "Filtri:";
+            // 
+            // table
+            // 
+            this.table.AllowUserToAddRows = false;
+            this.table.AllowUserToDeleteRows = false;
+            this.table.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.table.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.table.Location = new System.Drawing.Point(12, 118);
+            this.table.Name = "table";
+            this.table.ReadOnly = true;
+            this.table.Size = new System.Drawing.Size(1062, 610);
+            this.table.TabIndex = 28;
+            // 
+            // monthButton
+            // 
+            this.monthButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthButton.Location = new System.Drawing.Point(427, 61);
+            this.monthButton.Name = "monthButton";
+            this.monthButton.Size = new System.Drawing.Size(132, 27);
+            this.monthButton.TabIndex = 29;
+            this.monthButton.Text = "Mesi";
+            this.monthButton.UseVisualStyleBackColor = true;
+            this.monthButton.Click += new System.EventHandler(this.monthButton_Click);
             // 
             // MainForm
             // 
@@ -289,21 +338,24 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1018, 566);
-            this.Controls.Add(this.invalidAnalysisBox);
+            this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.Controls.Add(this.monthButton);
+            this.Controls.Add(this.table);
+            this.Controls.Add(this.readOnlyTextBox1);
+            this.Controls.Add(this.dataBox);
+            this.Controls.Add(this.addFormVarious);
+            this.Controls.Add(this.RegisterVariousButton);
+            this.Controls.Add(this.projectUsable);
+            this.Controls.Add(this.invalidAnalysisButton);
             this.Controls.Add(this.missingAnalysisButton);
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.analysisButton);
             this.Controls.Add(this.siteButton);
             this.Controls.Add(this.firmButton);
-            this.Controls.Add(this.firmBox);
-            this.Controls.Add(this.siteBox);
-            this.Controls.Add(this.analysisBox);
             this.Controls.Add(this.printButton);
             this.Controls.Add(this.addPlate);
-            this.Controls.Add(this.addRegister);
+            this.Controls.Add(this.addFormImplant);
             this.Controls.Add(this.addAnalysis);
-            this.Controls.Add(this.registerBox);
             this.Controls.Add(this.addSite);
             this.Controls.Add(this.addFirm);
             this.Controls.Add(this.menuStrip1);
@@ -313,6 +365,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,20 +379,23 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Button addSite;
         private System.Windows.Forms.Button addFirm;
-        private System.Windows.Forms.RichTextBox registerBox;
         private System.Windows.Forms.Button addAnalysis;
-        private System.Windows.Forms.Button addRegister;
+        private System.Windows.Forms.Button addFormImplant;
         private System.Windows.Forms.Button addPlate;
         private System.Windows.Forms.Button printButton;
-        private System.Windows.Forms.RichTextBox analysisBox;
-        private System.Windows.Forms.RichTextBox siteBox;
-        private System.Windows.Forms.RichTextBox firmBox;
         private System.Windows.Forms.Button firmButton;
         private System.Windows.Forms.Button siteButton;
         private System.Windows.Forms.Button analysisButton;
         private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.Button missingAnalysisButton;
-        private System.Windows.Forms.RichTextBox invalidAnalysisBox;
+        private System.Windows.Forms.Button invalidAnalysisButton;
+        private System.Windows.Forms.Button projectUsable;
+        private System.Windows.Forms.Button RegisterVariousButton;
+        private System.Windows.Forms.Button addFormVarious;
+        private System.Windows.Forms.RichTextBox dataBox;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox1;
+        private System.Windows.Forms.DataGridView table;
+        private System.Windows.Forms.Button monthButton;
     }
 }
 

@@ -23,11 +23,12 @@ namespace WindowsFormsApp1.AddForms
         private string[] siteNames;
 
 
-        public string date;
+        public DateTime date;
         public string CER;
         public string producer;
         public string siteLocation;
         public string siteName;
+        public string validity;
 
         public DnewAnalysis(List<Firm> firms, List<Site> sites, string[] cer)
         {
@@ -99,11 +100,14 @@ namespace WindowsFormsApp1.AddForms
         {
             if (checkIfValid()) {
 
-                this.date = this.dateTimePicker.Value.ToString();
+                this.date = this.dateTimePicker.Value;
                 this.CER = this.cerBox.SelectedItem.ToString();
                 this.producer = this.producerBox.SelectedItem.ToString();
                 this.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.siteName = this.siteNameBox.SelectedItem.ToString();
+                this.validity = "ok";
+                if (DateTime.Compare(this.date.AddYears(1), DateTime.Now) < 0)
+                    this.validity = "scaduta";
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

@@ -16,5 +16,16 @@ namespace WindowsFormsApp1.dataClasses
             this.location   = location_;
             this.names      = names_;
         }
+        public string getString(string separator)
+        {
+            string text = "";
+
+            text += this.location;
+
+            for (int i = 0; i < this.names.Length; i++)
+                text += separator + this.names[i];
+
+            return text;
+        }
     }
 }

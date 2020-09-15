@@ -50,7 +50,6 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DopenWarning.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewRegister.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\BouncyCastle.Crypto.dll
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Common.Logging.Core.dll
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Common.Logging.dll
@@ -78,3 +77,5 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\itext.s
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\itext.styledxmlparser.xml
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\itext.svg.xml
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Print.DselectPrint.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewModule.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.WarningMessage.resources
