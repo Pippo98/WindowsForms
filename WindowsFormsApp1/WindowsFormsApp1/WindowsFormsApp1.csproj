@@ -152,6 +152,7 @@
     <Compile Include="dataClasses\Site.cs" />
     <Compile Include="dataClasses\Stat.cs" />
     <Compile Include="dataClasses\StatManager.cs" />
+    <Compile Include="dataClasses\StatusElement.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

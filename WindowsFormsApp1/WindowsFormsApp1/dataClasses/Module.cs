@@ -20,14 +20,14 @@ namespace WindowsFormsApp1.dataClasses
         public string destination;
         public string plate;
         public string dimension;
-        public string CER;
+        public int CER;
         public bool toBreak;
         public int kg;
         public string siteLocation;
         public string siteName;
         public string note;
 
-        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, string CER, string siteLocation, string siteName, bool toBreak, int kg, string note, string destination = "")
+        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, bool toBreak, int kg, string note, string destination = "")
         {
             this.id = id;
             this.date = date;
@@ -45,43 +45,89 @@ namespace WindowsFormsApp1.dataClasses
             this.note = note;
         }
 
-        public object[] getOjb()
+        public object[] getObj(string type)
         {
-            object[] obj =
+            object[] obj;
+            if (type == "Implant")
             {
-                id,
-                date,
-                loadUnload,
-                producer,
-                carrier,
-                //destination,
-                dimension + "-" + plate,
-                CER,
-                toBreak,
-                kg,
-                siteLocation,
-                siteName,
-                note,
-            };
+                obj = new object[]
+                {
+                    id,
+                    date.ToShortDateString(),
+                    loadUnload,
+                    producer,
+                    carrier,
+                    dimension + "-" + plate,
+                    CER,
+                    toBreak,
+                    kg,
+                    siteLocation,
+                    siteName,
+                    note,
+                };
+            }
+            else
+            {
+                obj = new object[]
+                {
+                    id,
+                    date.ToShortDateString(),
+                    loadUnload,
+                    producer,
+                    carrier,
+                    destination,
+                    dimension + "-" + plate,
+                    CER,
+                    toBreak,
+                    kg,
+                    siteLocation,
+                    siteName,
+                    note,
+                };
+            }
             return obj;
         }
 
-        public string[] getFields()
+        public string[] getFields(string type)
         {
-            string[] ret =
+            string[] ret;
+            if (type == "Implant")
             {
-                "ID",
-                "Data",
-                "Carico/Scarico",
-                "Produttore",
-                "Trasportatore",
-                "Mezzo",
-                "CER",
-                "Pizare",
-                "Kg",
-                "Comune",
-                "Cantiere"
-            };
+                ret = new string[]
+                {
+                    "ID",
+                    "Data",
+                    "Carico/Scarico",
+                    "Produttore",
+                    "Trasportatore",
+                    "Mezzo",
+                    "CER",
+                    "Pizare",
+                    "Kg",
+                    "Comune",
+                    "Cantiere",
+                    "Note"
+                };
+            }
+            else
+            {
+                ret = new string[]
+                {
+                    "ID",
+                    "Data",
+                    "Carico/Scarico",
+                    "Produttore",
+                    "Trasportatore",
+                    "Destinazione",
+                    "Mezzo",
+                    "CER",
+                    "Pizare",
+                    "Kg",
+                    "Comune",
+                    "Cantiere",
+                    "Note"
+                };
+            }
 
             return ret;
         }
@@ -91,14 +137,14 @@ namespace WindowsFormsApp1.dataClasses
             string text = "";
 
             text += this.id.ToString() + separator;
-            text += this.date.ToString() + separator;
+            text += this.date.ToString("d") + separator;
             text += this.loadUnload + separator;
             text += this.producer + separator;
             text += this.carrier + separator;
             if(destination != "")
                 text += this.destination + separator;
             text += this.dimension + "-" + this.plate + separator;
-            text += this.CER + separator;
+            text += this.CER.ToString() + separator;
             text += this.toBreak + separator;
             text += this.kg.ToString() + separator;
             text += this.siteLocation + separator;

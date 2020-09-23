@@ -6,17 +6,21 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iText.IO.Font;
 using iText.IO.Font.Otf;
 using iText.Kernel.Counter.Data;
 using iText.Kernel.Geom;
 using iText.Layout.Element;
 using iText.Signatures;
 using Org.BouncyCastle.Asn1.Cms;
+using Org.BouncyCastle.Cmp;
 using WindowsFormsApp1.AddForms;
 using WindowsFormsApp1.dataClasses;
 using WindowsFormsApp1.NewFolder1;
@@ -28,11 +32,11 @@ namespace WindowsFormsApp1
     {
         private string      basePath;
         private string      projectPath;
-        private string[]    formats;
+        private string      currentTableDataType;
 
         private bool isProjectOpen;
 
-        private string[] CER;
+        private int[] CER;
 
         private List<Firm> firmData;
         private List<Site> siteData;
@@ -48,6 +52,9 @@ namespace WindowsFormsApp1
         private int formVariousLastId = 0;
 
         private List<List<MonthElement>> months;
+        private string[] monthNames;
+
+        private List<StatusElement> status;
 
         private string[] dimensions;
         private string[] firmNames;
@@ -86,30 +93,28 @@ namespace WindowsFormsApp1
             // this.basePath= Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             Console.WriteLine(this.basePath);
 
-            this.formats = new string[]{"gg/dd/yyyy "};
-
             this.basePath += "\\TerraGroup";
 
             this.isProjectOpen = false;
-            CER = new string[]
+            CER = new int[]
             {
-                "120301",
-                "130205",
-                "150102",
-                "150106",
-                "150107",
-                "170302",
-                "170405",
-                "160601",
-                "170101",
-                "170107",
-                "170302",
-                "170405",
-                "170504",
-                "170508",
-                "170604",
-                "170904",
-                "200201",
+                170904,
+                170302,
+                170508,
+                170504,
+                120301,
+                130205,
+                150102,
+                150106,
+                150107,
+                170405,
+                160601,
+                170101,
+                170107,
+                170302,
+                170405,
+                170604,
+                200201,
             };
 
             this.dimensions = new string[]
@@ -120,7 +125,28 @@ namespace WindowsFormsApp1
                 "4 assi",
                 "bilico"
             };
+            this.monthNames = new string[]
+            {
+                "Gennaio",
+                "Febbraio",
+                "Marzo",
+                "Aprile",
+                "Maggio",
+                "Giugno",
+                "Luglio",
+                "Agosto",
+                "Settembre",
+                "Ottobre",
+                "Novembre",
+                "Dicembre"
+            };
+            this.monthComboBox.Items.AddRange(this.monthNames);
+            this.monthComboBox.SelectedIndex = 0;
         }
+
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
 
         private void openProject(string prjPath, bool updateStat)
         {
@@ -158,11 +184,6 @@ namespace WindowsFormsApp1
 
             this.loadAllData();
         }
-
-
-        //-----------------------------------------------------------------------------------------------//
-        //-----------------------------------------------------------------------------------------------//
-        //-----------------------------------------------------------------------------------------------//
 
         private void newProject_Click(object sender, EventArgs e)
         {
@@ -262,6 +283,10 @@ namespace WindowsFormsApp1
 
         }
 
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+
         private void addImpresa_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -280,6 +305,7 @@ namespace WindowsFormsApp1
                 file.Close();
 
                 this.LoadFirmData();
+                this.updateTable();
             }
         }
 
@@ -307,6 +333,7 @@ namespace WindowsFormsApp1
                 File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
 
                 this.LoadFirmData();
+                this.updateTable();
             }
         }
 
@@ -328,6 +355,7 @@ namespace WindowsFormsApp1
                 file.Close();
 
                 this.updateAnalysisData();
+                this.updateTable();
 
             }
         }
@@ -366,6 +394,8 @@ namespace WindowsFormsApp1
 
                 this.LoadRegisterImplantData();
                 this.LinkRegisterAnalysis();
+                this.CreateMonthTable();
+                this.updateTable();
             }
         }
 
@@ -403,6 +433,7 @@ namespace WindowsFormsApp1
 
                 this.LoadRegisterVariousData();
                 this.LinkRegisterAnalysis();
+                this.updateTable();
             }
         }
 
@@ -449,6 +480,7 @@ namespace WindowsFormsApp1
                 }
 
                 this.LoadSiteData();
+                this.updateTable();
             }
             else
             {
@@ -457,7 +489,7 @@ namespace WindowsFormsApp1
             dialog.Dispose();
         }
 
-        ///////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void firmButton_Click(object sender, EventArgs e)
         {
@@ -466,12 +498,12 @@ namespace WindowsFormsApp1
 
         private void siteButton_Click(object sender, EventArgs e)
         {
-            this.DisplayData("Cantieri");
+            this.fillTable("Cantieri");
         }
 
         private void analysisButton_Click(object sender, EventArgs e)
         {
-            this.DisplayData("Analisi");
+            this.fillTable("Analisi");
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -481,22 +513,28 @@ namespace WindowsFormsApp1
 
         private void RegisterVariousButton_Click(object sender, EventArgs e)
         {
-            this.DisplayData("Registro Varie");
+            this.fillTable("Registro Varie");
         }
 
         private void missingAnalysisButton_Click(object sender, EventArgs e)
         {
-            this.DisplayData("Analisi Mancanti");
-        }
-
-        private void invalidAnalysisButton_Click(object sender, EventArgs e)
-        {
-            this.DisplayData("Analisi Scadute");
+            this.fillTable("Analisi Mancanti");
         }
 
         private void monthButton_Click(object sender, EventArgs e)
         {
             this.fillTable("Mese");
+        }
+
+        private void monthComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(this.currentTableDataType == "Mese")
+                this.fillTable("Mese");
+        }
+
+        private void situationButton_Click(object sender, EventArgs e)
+        {
+            this.fillTable("Situazione");
         }
 
         //-----------------------------------------------------------------------------------------------//
@@ -549,7 +587,9 @@ namespace WindowsFormsApp1
             this.CheckAnalysisValidity();
             await this.CreateMonthTable();
 
-            this.fillTable("Mese");
+            this.CreateStatusTable();
+
+            this.fillTable("Situazione");
 
             this.projectUsable.BackColor = Color.Green;
         }
@@ -617,8 +657,6 @@ namespace WindowsFormsApp1
             }
             this.firmData = firms;
 
-            this.DisplayData("Imprese");
-
         }
 
         private async Task LoadSiteData()
@@ -636,29 +674,20 @@ namespace WindowsFormsApp1
 
                 Site site;
                 string[] line = lines[i].Split(';');
+                string location = line[0];
+                List<string> names = new List<string>();
+
                 if (line.Length > 1)
-                {
-                    string location = line[0];
-                    string[] names = new string[line.Length - 1];
-                    for (int j = 0; j < names.Length; j++)
-                    {
-                        names[j] = line[j + 1];
-                    }
-                    site = new Site(location, names);
-                    sites.Add(site);
-                }
+                    for (int j = 1; j < line.Length; j++)
+                        names.Add(line[j]);
                 else
-                {
-                    string location = line[0];
-                    string[] names = { "" };
-                    site = new Site(location, names);
-                    sites.Add(site);
-                }
+                    names.Add("");
+
+                site = new Site(location, names);
+                sites.Add(site);
             }
 
             this.siteData = sites;
-
-            this.DisplayData("Cantieri");
         }
 
         private async Task LoadRegisterImplantData()
@@ -679,11 +708,13 @@ namespace WindowsFormsApp1
                     int id = 0;
                     Int32.TryParse(l[0], out id);
 
+                    int CER = 0;
+                    Int32.TryParse(l[6], out CER);
+
                     DateTime date = DateTime.Parse(l[1]);
                     string loadUnload = l[2];
                     string producer = l[3];
                     string carrier = l[4];
-                    string CER = l[6];
                     int kg = int.Parse(l[7]);
                     string siteLocation = l[8];
                     string siteName = l[9];
@@ -713,26 +744,8 @@ namespace WindowsFormsApp1
                 }
             }
             this.formImplantData = formList;
-            this.DisplayData("Registro Impianto");
-            /*
-            int width = 100;
-            StringBuilder table = new StringBuilder();
-            table.Append(@"{\rtf1 ");
-            var text = "";
-            foreach (var el in this.formImplantData)
-            {
-                table.Append(@"\trowd");
-                table.Append(@"\cellx" + width.ToString());
 
-
-                table.Append(@"\intbl \cell \row");
-            }
-
-
-            table.Append(@"\pard");
-            table.Append(@"}");*/
-
-            Debug.Print("Registro -> Found " + this.formImplantData.Count + " readable elements");
+            Debug.Print("Registro Impianto -> Found " + this.formImplantData.Count + " readable elements");
         }
 
         private async Task LoadRegisterVariousData()
@@ -753,12 +766,14 @@ namespace WindowsFormsApp1
                     int id = 0;
                     Int32.TryParse(l[0], out id);
 
+                    int CER = 0;
+                    Int32.TryParse(l[7], out CER);
+
                     DateTime date = DateTime.Parse(l[1]);
                     string loadUnload = l[2];
                     string producer = l[3];
                     string carrier = l[4];
                     string destination = l[5];
-                    string CER = l[7];
                     int kg = int.Parse(l[8]);
                     string siteLocation = l[9];
                     string siteName = l[10];
@@ -789,9 +804,7 @@ namespace WindowsFormsApp1
             }
             this.formVariousData = formList;
 
-            this.DisplayData("Registro Varie");
-
-            Debug.Print("Registro -> Found " + this.formImplantData.Count + " readable elements");
+            Debug.Print("Registro Varie -> Found " + this.formImplantData.Count + " readable elements");
         }
 
         private async Task LoadAnalysisData()
@@ -812,6 +825,9 @@ namespace WindowsFormsApp1
                     if (l[1] == "" && l[2] == "" && l[3] == "")
                         continue;
 
+                    int CER = 0;
+                    Int32.TryParse(l[2], out CER);
+
                     int id = 0;
                     Int32.TryParse(l[0], out id);
 
@@ -824,13 +840,20 @@ namespace WindowsFormsApp1
                         Console.WriteLine(l[1] + "\t" + id.ToString());
                     }
 
-                    Analysis analysis = new Analysis(id, date, l[2], l[3], l[4], l[5], l[7]);
+                    if (DateTime.Compare(date.AddYears(1), DateTime.Now) < 0)
+                    {
+                        l[7] = "False";
+                    }
+                    else
+                    {
+                        l[7] = "True";
+                    }
+
+                    Analysis analysis = new Analysis(id, date, CER, l[3], l[4], l[5], l[7]);
                     analysisList.Add(analysis);
                 }
             }
             this.analysisData = analysisList;
-
-            this.DisplayData("Analisi");
 
             Debug.Print("Analisi -> Found " + this.analysisData.Count + " readable elements");
         }
@@ -847,11 +870,11 @@ namespace WindowsFormsApp1
             {
                 Analysis analysis;
                 analysis = this.analysisData.Find(x => (
-                this.formImplantData[i].CER.Contains(x.CER) &&
+                this.formImplantData[i].CER == x.CER &&
                 this.formImplantData[i].siteLocation.Contains(x.siteLocation) &&
                 x.siteName == this.formImplantData[i].siteName
                 ));
-                if (analysis != null || this.formImplantData[i].CER.Contains("170405"))
+                if (analysis != null || this.formImplantData[i].CER == 170405)
                 {
                     count++;
                 }
@@ -881,8 +904,6 @@ namespace WindowsFormsApp1
         private async Task CreateMonthTable()
         {
 
-            checkAndCreatePath(this.projectPath + "\\months");
-
             List<List<MonthElement>> months = new List<List<MonthElement>>();
 
             for (int i = 1; i <= 12; i++)
@@ -891,7 +912,6 @@ namespace WindowsFormsApp1
                 forms = this.formImplantData.FindAll(x => (x.date.Month == i));
                 if (forms.Count > 0)
                 {
-                    StreamWriter file = File.CreateText(this.projectPath + "\\months\\" + i.ToString() + ".tg");
 
                     List<MonthElement> month = new List<MonthElement>();
 
@@ -929,7 +949,7 @@ namespace WindowsFormsApp1
                             List<(DateTime date, int count)> date = new List<(DateTime date, int count)>();
                             foreach (var el in sameVeichle)
                             {
-                                var match = date.FindAll(x => (DateTime.Compare(x.date, el.date) == 0));
+                                var match = date.FindAll(x => (x.date.Date == el.date.Date));
                                 if (match.Count > 0)
                                 {
                                     var idx = date.IndexOf(match[0]);
@@ -957,62 +977,102 @@ namespace WindowsFormsApp1
 
                         MonthElement monthElement = new MonthElement(form.carrier, veichleList);
                         month.Add(monthElement);
-                        file.WriteLine(monthElement.getString(" "));
                     }
                     months.Add(month);
-                    file.Close();
                 }
             }
             this.months = months;
         }
-        
-        private async Task DisplayData(string type)
+
+        private void CreateStatusTable()
         {
-            string text = type + "\n";
-            this.dataBox.Text = text;
-            this.dataBox.Select(0, text.Length);
-            this.dataBox.SelectionColor = Color.Black;
-            this.dataBox.SelectionFont = new Font("Microsoft Sans Serif", 25, FontStyle.Bold);
-            this.dataBox.SelectionAlignment = HorizontalAlignment.Center;
-            this.dataBox.Select(0, 0);
-            text = "";
 
-            var x = this.firmData.ToArray();
+            var bff = File.AppendText(this.projectPath + "bff.txt");
 
-            if (type == "Registro Impianto")
-                foreach (var el in this.formImplantData)
-                    text += el.getString("\t") + "\n";
+            // Table with situation and movements each day for every year.
+            List<StatusElement> statusElements = new List<StatusElement>();
+            List<CERElement> CERs = new List<CERElement>();
+            List<(int cer, int total)> status = new List<(int, int)>();
 
-            if (type == "Registro Varie")
-                foreach (var el in this.formImplantData)
-                    text += el.getString("\t") + "\n";
+            // Initialize status for each CER
+            foreach (var cer in this.CER)
+                status.Add((cer, 0));
 
-            if (type == "Imprese")
-                foreach (var el in this.firmData)
-                    text += el.getString("\t") + "\n";
-
-            if (type == "Analisi")
-                foreach (var el in this.analysisData)
-                    text += el.getString("\t") + "\n";
-
-            if (type == "Cantieri")
-                foreach (var el in this.siteData)
-                    text += el.getString("\t") + "\n";
-
-            if (type == "Analisi Scadute")
-                foreach (var el in this.expiredAnalysis)
-                    text += el.getString("\t") + "\n";
-
-            if (type == "Analisi Mancanti")
-                foreach (var el in this.missingAnalysis)
-                    text += el.getString("\t") + "\n";
+            // Initializing list with empty ements
+            foreach (var el in this.CER)
+                CERs.Add(new CERElement(el, 0, 0, 0));
 
 
-            this.dataBox.AppendText(text);
+            int currentYear = 0;
+            if (this.formImplantData.Count > 0)
+                currentYear = this.formImplantData[0].date.Year;
+
+            // Creating list with all dates in this current year
+            List<DateTime> dates = new List<DateTime>();
+            for (int month = 1; month <= 12; month++)
+                for (int day = 1; day < DateTime.DaysInMonth(currentYear, month); day++)
+                    dates.Add(DateTime.Parse(day.ToString() + "/" + month.ToString() + "/" + currentYear.ToString()));
+
+
+            foreach(var date in dates)
+            {
+
+                for (int i = 0; i < CERs.Count; i++)
+                {
+                    CERs[i].load = 0;
+                    CERs[i].unload = 0;
+                }
+
+                var elements = this.formImplantData.FindAll(x => x.date.Date == date.Date);
+
+                bool hasLoaded = false;
+                bool hasUnloaded = false;
+
+                int total = 0;
+
+                foreach(var element in elements)
+                {
+                    var cer = CERs.Find(x => x.CER == element.CER);
+                    int idx = CERs.IndexOf(cer);
+
+                    if (element.loadUnload == "Carico")
+                    {
+                        cer.load += element.kg;
+                        cer.CERTotal += element.kg;
+                        hasLoaded = true;
+                    }
+                    else
+                    {
+                        cer.unload += element.kg;
+                        cer.CERTotal -= element.kg;
+                        hasUnloaded = true;
+                    }
+                    total += element.kg;
+
+                    CERs[idx] = cer;
+                }
+
+                var newCERs = new List<CERElement>();
+                foreach(var el in CERs)
+                    newCERs.Add(new CERElement(el.CER, el.load, el.unload, el.CERTotal));
+
+                statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded));
+            }
+
+
+            this.status = statusElements;
+
         }
 
-        private void fillTable(string type, int index = 0)
+        private void fillTable(string type)
         {
+            int dataIndex = 0;
+            DataSet ds = new DataSet();
+            ds.Tables.Add();
+
+            this.currentTableDataType = type;
+            this.table.ColumnHeadersVisible = false;
+
             if (type == "Registro Impianto")
             {
 
@@ -1020,24 +1080,47 @@ namespace WindowsFormsApp1
                 this.table.RowCount = 0;
 
                 if (this.formImplantData.Count > 0)
-                    this.table.ColumnCount = this.formImplantData[0].getString(";").Split(';').Length;
+                    this.table.ColumnCount = this.formImplantData[0].getFields("Implant").Length;
                 else return;
 
-                foreach (var el in this.formImplantData[0].getFields())
+                foreach (var el in this.formImplantData[0].getFields("Implant"))
                 {
-                    this.table.Columns[Array.IndexOf(formImplantData[0].getFields(), el)].Name = el;
+                    this.table.Columns[Array.IndexOf(formImplantData[0].getFields("Implant"), el)].Name = el;
                 }
-
+                
                 foreach (var reg in this.formImplantData)
                 {
-                    this.table.Rows.Add(reg.getOjb());
+                    this.table.Rows.Add(reg.getObj("Implant"));
                 }
             }
-            if (type == "Mese")
+
+            if (type == "Registro Varie")
             {
+
                 this.table.ColumnCount = 0;
                 this.table.RowCount = 0;
-                if (this.months.Count > index)
+
+                if (this.formVariousData.Count > 0)
+                    this.table.ColumnCount = this.formVariousData[0].getFields("").Length;
+                else return;
+
+                foreach (var el in this.formVariousData[0].getFields(""))
+                {
+                    this.table.Columns[Array.IndexOf(formVariousData[0].getFields(""), el)].Name = el;
+                }
+
+                foreach (var reg in this.formVariousData)
+                {
+                    this.table.Rows.Add(reg.getObj(""));
+                }
+            }
+
+            if (type == "Mese")
+            {
+                int index = this.monthComboBox.SelectedIndex;
+                this.table.ColumnCount = 0;
+                this.table.RowCount = 0;
+                if (this.months != null && this.months.Count > index)
                 {
                     var month = this.months[index];
                     if (month.Count > 0)
@@ -1065,16 +1148,16 @@ namespace WindowsFormsApp1
 
                         foreach (var element in month)
                         {
-                            List<object> line = new List<object>();
-
-                            if (month.IndexOf(element) == 0)
-                                line.Add(element.firm);
-                            else
-                                line.Add("");
 
                             // For every veichle in this current firm
                             foreach (var veichle in element.veichles)
                             {
+                                List<object> line = new List<object>();
+
+                                if (element.veichles.IndexOf(veichle) == 0)
+                                    line.Add(element.firm);
+                                else
+                                    line.Add("");
                                 // Create cell with veichle informations
                                 line.Add(veichle.veichle.plate);
 
@@ -1086,9 +1169,9 @@ namespace WindowsFormsApp1
                                     var datestring = day.ToString() + "/" + currMonth.ToString() + "/" + currYear.ToString();
                                     var date = DateTime.Parse(datestring);
 
-                                    if (veichle.dates.FindAll(x => (x.date == date)).Count > 0)
+                                    if (veichle.dates.FindAll(x => (x.date.Date == date.Date)).Count > 0)
                                     {
-                                        var count = veichle.dates.FindAll(x => (x.date == date))[0].count;
+                                        var count = veichle.dates.FindAll(x => (x.date.Date == date.Date))[0].count;
                                         line.Add(count.ToString());
                                     }
                                     else
@@ -1116,7 +1199,7 @@ namespace WindowsFormsApp1
                 this.table.RowCount = 0;
 
                 if (this.firmData.Count > 0)
-                    this.table.ColumnCount = this.firmData[0].getString(";").Split(';').Length;
+                    this.table.ColumnCount = this.firmData[0].getFields().Length;
                 else return;
 
                 foreach (var el in this.firmData[0].getFields())
@@ -1145,6 +1228,139 @@ namespace WindowsFormsApp1
 
                 }
             }
+
+            if(type == "Analisi")
+            {
+                this.table.ColumnCount = 0;
+                this.table.RowCount = 0;
+
+                if (this.analysisData.Count == 0)
+                    return;
+
+                var fields = this.analysisData[0].getFields();
+                this.table.ColumnCount = fields.Length;
+
+                for (int i = 0; i < fields.Length; i++)
+                    this.table.Columns[i].Name = fields[i];
+
+                foreach(var el in this.analysisData)
+                {
+                    this.table.Rows.Add(el.getObj());
+
+                    if (el.validity == "False")
+                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.IndianRed;
+                }
+            }
+
+            if(type == "Analisi Mancanti")
+            {
+                this.table.ColumnCount = 0;
+                this.table.RowCount = 0;
+
+                if (this.missingAnalysis.Count == 0)
+                    return;
+
+                var fields = this.missingAnalysis[0].getFields("Impianto");
+                this.table.ColumnCount = fields.Length;
+
+                for (int i = 0; i < fields.Length; i++)
+                    this.table.Columns[i].Name = fields[i];
+
+                foreach (var el in this.missingAnalysis)
+                {
+                    this.table.Rows.Add(el.getObj("Impianto"));
+                }
+            }
+
+            if(type == "Situazione")
+            {
+
+                this.table.ColumnCount = 0;
+                this.table.RowCount = 0;
+
+                if (this.status.Count == 0)
+                    return;
+
+                var fields = this.status[0].getFields();
+                this.table.ColumnCount = fields.Length;
+
+                for (int i = 0; i < fields.Length; i ++)
+                    this.table.Columns[i].Name = fields[i];
+
+                foreach (var el in this.status)
+                {
+                    this.table.Rows.Add(el.getObj());
+
+                    //ds.Tables[dataIndex].Rows.Add(el.getObj());
+
+                    // Changing row style to hilight activity
+                    if(el.hasLoaded && el.hasUnloaded)
+                        this.table.Rows[this.table.RowCount-1].DefaultCellStyle.BackColor = Color.MediumPurple;
+                    else if(el.hasLoaded)
+                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+                    else if(el.hasUnloaded)
+                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.IndianRed;
+
+                }
+            }
+
+            if (type == "Cantieri")
+            {
+                this.table.ColumnCount = 0;
+                this.table.RowCount = 0;
+
+                if (this.siteData.Count > 0)
+                    this.table.ColumnCount = this.siteData[0].getFields().Length;
+                else return;
+
+                foreach (var el in this.siteData[0].getFields())
+                {
+                    this.table.Columns[Array.IndexOf(this.siteData[0].getFields(), el)].Name = el;
+                }
+
+                foreach (var el in this.siteData)
+                {
+
+                    foreach (var name in el.names)
+                    {
+                        List<object> line = new List<object>();
+                        if (el.names.IndexOf(name) == 0)
+                        {
+                            line.Add(el.location);
+                            line.Add(name);
+                        }
+                        else
+                        {
+                            line.Add("");
+                            line.Add(name);
+                        }
+                        this.table.Rows.Add(line.ToArray());
+                    }
+
+                }
+            }
+
+
+            this.table.ColumnHeadersVisible = true;
+
+            // Using double buffer to speedup UI updates like scrolling
+            Type typ = this.table.GetType();
+            PropertyInfo pi = typ.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.table, true, null);
+
+
+            //var dv = new DataView(ds.Tables[0]);
+            //this.table.DataSource = dv;
+
+        }   
+
+        private void updateTable()
+        {
+            this.fillTable(currentTableDataType);
+        }
+
+        private void filter()
+        {
         }
     }
 }

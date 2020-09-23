@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace WindowsFormsApp1.AddForms
         private List<Firm> firmData;
         private string[] firmNames;
 
-        private string[] CERs;
+        private int[] CERs;
 
         private List<Site> siteData;
         private string[] siteLocations;
@@ -30,7 +31,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteName;
         public string validity;
 
-        public DnewAnalysis(List<Firm> firms, List<Site> sites, string[] cer)
+        public DnewAnalysis(List<Firm> firms, List<Site> sites, int[] cer)
         {
             InitializeComponent();
 
@@ -61,7 +62,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocationBox.Items.AddRange(siteLocations);
             }
 
-            this.cerBox.Items.AddRange(this.CERs);
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x=>x.ToString()));
 
         }
 
@@ -71,7 +72,7 @@ namespace WindowsFormsApp1.AddForms
             {
                 if (this.siteData[i].location == location)
                 {
-                    this.siteNames = this.siteData[i].names;
+                    this.siteNames = this.siteData[i].names.ToArray();
                 }
             }
             this.siteNameBox.Items.Clear();

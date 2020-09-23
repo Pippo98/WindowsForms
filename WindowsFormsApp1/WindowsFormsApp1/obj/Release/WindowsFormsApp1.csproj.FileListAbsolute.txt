@@ -40,7 +40,6 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Windo
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewPlate.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewSite.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewProject.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewRegister.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DopenProject.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DopenWarning.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.MainForm.resources
@@ -52,3 +51,5 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Windo
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.CopyComplete
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewModule.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.WarningMessage.resources

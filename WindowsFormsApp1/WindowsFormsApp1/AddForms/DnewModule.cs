@@ -21,7 +21,7 @@ namespace WindowsFormsApp1.AddForms
         private string[]    plates;
         private string[]    platesDimension;
 
-        private string[]    CERs;
+        private int[]    CERs;
 
         private List<Site>      siteData;
         private string[]        siteLocations;
@@ -43,7 +43,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteName;
 
 
-        public DnewModule(List<Firm> firms, List<Site> sites, string[] cer, string moduleType)
+        public DnewModule(List<Firm> firms, List<Site> sites, int[] cer, string moduleType)
         {
             InitializeComponent();
 
@@ -81,7 +81,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocationBox.Items.AddRange(siteLocations);
             }
 
-            this.cerBox.Items.AddRange(this.CERs);
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x=>x.ToString()));
             this.loadUnloadBox.Items.Add("Carico");
             this.loadUnloadBox.Items.Add("Scarico");
             this.loadUnloadBox.SelectedIndex = 0;
@@ -119,7 +119,7 @@ namespace WindowsFormsApp1.AddForms
             {
                 if(this.siteData[i].location == location)
                 {
-                    this.siteNames = this.siteData[i].names;
+                    this.siteNames = this.siteData[i].names.ToArray();
                 }
             }
             this.siteNameBox.Items.Clear();

@@ -44,16 +44,18 @@
             this.analysisButton = new System.Windows.Forms.Button();
             this.registerButton = new System.Windows.Forms.Button();
             this.missingAnalysisButton = new System.Windows.Forms.Button();
-            this.invalidAnalysisButton = new System.Windows.Forms.Button();
             this.projectUsable = new System.Windows.Forms.Button();
             this.RegisterVariousButton = new System.Windows.Forms.Button();
             this.addFormVarious = new System.Windows.Forms.Button();
-            this.dataBox = new System.Windows.Forms.RichTextBox();
             this.readOnlyTextBox1 = new System.Web.Management.ReadOnlyTextBox();
             this.table = new System.Windows.Forms.DataGridView();
             this.monthButton = new System.Windows.Forms.Button();
+            this.monthComboBox = new System.Windows.Forms.ComboBox();
+            this.situationButton = new System.Windows.Forms.Button();
+            this.dataView = new System.Data.DataView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -145,7 +147,7 @@
             this.addFormImplant.Location = new System.Drawing.Point(1080, 94);
             this.addFormImplant.Name = "addFormImplant";
             this.addFormImplant.Size = new System.Drawing.Size(133, 65);
-            this.addFormImplant.TabIndex = 8;
+            this.addFormImplant.TabIndex = 0;
             this.addFormImplant.Text = "Aggiungi Formulario Impianto";
             this.addFormImplant.UseVisualStyleBackColor = true;
             this.addFormImplant.Click += new System.EventHandler(this.addFormImplant_Click);
@@ -223,24 +225,13 @@
             // missingAnalysisButton
             // 
             this.missingAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.missingAnalysisButton.Location = new System.Drawing.Point(427, 31);
+            this.missingAnalysisButton.Location = new System.Drawing.Point(289, 61);
             this.missingAnalysisButton.Name = "missingAnalysisButton";
             this.missingAnalysisButton.Size = new System.Drawing.Size(132, 27);
             this.missingAnalysisButton.TabIndex = 18;
             this.missingAnalysisButton.Text = "Analisi Mancanti";
             this.missingAnalysisButton.UseVisualStyleBackColor = true;
             this.missingAnalysisButton.Click += new System.EventHandler(this.missingAnalysisButton_Click);
-            // 
-            // invalidAnalysisButton
-            // 
-            this.invalidAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidAnalysisButton.Location = new System.Drawing.Point(289, 61);
-            this.invalidAnalysisButton.Name = "invalidAnalysisButton";
-            this.invalidAnalysisButton.Size = new System.Drawing.Size(132, 27);
-            this.invalidAnalysisButton.TabIndex = 21;
-            this.invalidAnalysisButton.Text = "Analisi Scadute";
-            this.invalidAnalysisButton.UseVisualStyleBackColor = true;
-            this.invalidAnalysisButton.Click += new System.EventHandler(this.invalidAnalysisButton_Click);
             // 
             // projectUsable
             // 
@@ -278,19 +269,6 @@
             this.addFormVarious.UseVisualStyleBackColor = true;
             this.addFormVarious.Click += new System.EventHandler(this.addFormVarious_Click);
             // 
-            // dataBox
-            // 
-            this.dataBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataBox.Location = new System.Drawing.Point(10, 118);
-            this.dataBox.Name = "dataBox";
-            this.dataBox.ReadOnly = true;
-            this.dataBox.Size = new System.Drawing.Size(1064, 613);
-            this.dataBox.TabIndex = 26;
-            this.dataBox.Text = "";
-            // 
             // readOnlyTextBox1
             // 
             this.readOnlyTextBox1.BackColor = System.Drawing.SystemColors.Window;
@@ -317,19 +295,39 @@
             this.table.Location = new System.Drawing.Point(12, 118);
             this.table.Name = "table";
             this.table.ReadOnly = true;
-            this.table.Size = new System.Drawing.Size(1062, 610);
+            this.table.Size = new System.Drawing.Size(1062, 613);
             this.table.TabIndex = 28;
             // 
             // monthButton
             // 
             this.monthButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthButton.Location = new System.Drawing.Point(427, 61);
+            this.monthButton.Location = new System.Drawing.Point(427, 31);
             this.monthButton.Name = "monthButton";
             this.monthButton.Size = new System.Drawing.Size(132, 27);
             this.monthButton.TabIndex = 29;
             this.monthButton.Text = "Mesi";
             this.monthButton.UseVisualStyleBackColor = true;
             this.monthButton.Click += new System.EventHandler(this.monthButton_Click);
+            // 
+            // monthComboBox
+            // 
+            this.monthComboBox.FormattingEnabled = true;
+            this.monthComboBox.Location = new System.Drawing.Point(565, 33);
+            this.monthComboBox.Name = "monthComboBox";
+            this.monthComboBox.Size = new System.Drawing.Size(121, 21);
+            this.monthComboBox.TabIndex = 30;
+            this.monthComboBox.SelectedValueChanged += new System.EventHandler(this.monthComboBox_SelectedValueChanged);
+            // 
+            // situationButton
+            // 
+            this.situationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.situationButton.Location = new System.Drawing.Point(427, 61);
+            this.situationButton.Name = "situationButton";
+            this.situationButton.Size = new System.Drawing.Size(132, 27);
+            this.situationButton.TabIndex = 31;
+            this.situationButton.Text = "Situazione";
+            this.situationButton.UseVisualStyleBackColor = true;
+            this.situationButton.Click += new System.EventHandler(this.situationButton_Click);
             // 
             // MainForm
             // 
@@ -339,14 +337,14 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.Controls.Add(this.situationButton);
+            this.Controls.Add(this.monthComboBox);
             this.Controls.Add(this.monthButton);
             this.Controls.Add(this.table);
             this.Controls.Add(this.readOnlyTextBox1);
-            this.Controls.Add(this.dataBox);
             this.Controls.Add(this.addFormVarious);
             this.Controls.Add(this.RegisterVariousButton);
             this.Controls.Add(this.projectUsable);
-            this.Controls.Add(this.invalidAnalysisButton);
             this.Controls.Add(this.missingAnalysisButton);
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.analysisButton);
@@ -366,6 +364,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,14 +387,15 @@
         private System.Windows.Forms.Button analysisButton;
         private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.Button missingAnalysisButton;
-        private System.Windows.Forms.Button invalidAnalysisButton;
         private System.Windows.Forms.Button projectUsable;
         private System.Windows.Forms.Button RegisterVariousButton;
         private System.Windows.Forms.Button addFormVarious;
-        private System.Windows.Forms.RichTextBox dataBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox1;
         private System.Windows.Forms.DataGridView table;
         private System.Windows.Forms.Button monthButton;
+        private System.Windows.Forms.ComboBox monthComboBox;
+        private System.Windows.Forms.Button situationButton;
+        private System.Data.DataView dataView;
     }
 }
 

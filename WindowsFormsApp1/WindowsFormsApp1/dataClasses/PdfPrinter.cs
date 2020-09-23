@@ -23,6 +23,9 @@ namespace WindowsFormsApp1.dataClasses
     class PdfPrinter
     {
 
+        private int fieldFontSize = 8;
+        private int parFontSize = 6;
+
         public int printFirms(string folder, List<Firm> firms)
         {
             PdfWriter writer;
@@ -156,20 +159,21 @@ namespace WindowsFormsApp1.dataClasses
                     table.AddCell(cell);
 
                     // Filling Table
-                    for (int i = 0; i < analysis.Count; i++)
+                    foreach (var a in analysis)
                     {
-                        Analysis a = analysis[i];
-                        if (a == null)
-                            continue;
-
-                        cell = new Cell();
-                        cell.Add(new Paragraph(a.id.ToString()));
-                        table.AddCell(cell);
+                        var elements = a.getString(";").Split(';');
+                        foreach(var el in elements)
+                        {
+                            cell = new Cell();
+                            cell.Add(new Paragraph(el).SetFontSize(6));
+                            table.AddCell(cell);
+                        }
+                        /*
                         cell = new Cell();
                         cell.Add(new Paragraph(a.date.ToString()));
                         table.AddCell(cell);
                         cell = new Cell();
-                        cell.Add(new Paragraph(a.CER));
+                        cell.Add(new Paragraph(a.CER.ToString()));
                         table.AddCell(cell);
                         cell = new Cell();
                         cell.Add(new Paragraph(a.siteName));
@@ -182,7 +186,7 @@ namespace WindowsFormsApp1.dataClasses
                         table.AddCell(cell);
                         cell = new Cell();
                         cell.Add(new Paragraph(a.validity));
-                        table.AddCell(cell);
+                        table.AddCell(cell);*/
                     }
 
                     doc.Add(table);
@@ -210,7 +214,7 @@ namespace WindowsFormsApp1.dataClasses
                     var doc = new iText.Layout.Document(pdfDoc);
                     // Doc Title
                     Paragraph title = new Paragraph();
-                    title.Add("Registro");
+                    title.Add("Registro Impianto");
                     title.SetFontSize(30);
                     title.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
                     doc.Add(title);
@@ -265,7 +269,7 @@ namespace WindowsFormsApp1.dataClasses
                         {
                             cell = new Cell();
                             Paragraph par = new Paragraph(field);
-                            par.SetFontSize(8);
+                            par.SetFontSize(parFontSize);
                             cell.Add(par);
                             table.AddCell(cell);
                         }
@@ -321,13 +325,13 @@ namespace WindowsFormsApp1.dataClasses
                         string[] fields = siteString.Split(';');
 
                         cell = new Cell(fields.Length-1, 1);
-                        cell.Add(new Paragraph(fields[0]));
+                        cell.Add(new Paragraph(fields[0]).SetFontSize(9));
                         table.AddCell(cell);
 
                         for(int j = 1; j < fields.Length ; j++)
                         {
                             cell = new Cell();
-                            cell.Add(new Paragraph(fields[j]));
+                            cell.Add(new Paragraph(fields[j]).SetFontSize(8));
                             table.AddCell(cell);
                         }
                     }
@@ -441,9 +445,9 @@ namespace WindowsFormsApp1.dataClasses
                                     var datestring = day.ToString() + "/" + currMonth.ToString() + "/" + currYear.ToString();
                                     var date = DateTime.Parse(datestring);
 
-                                    if(veichle.dates.FindAll(x=>(x.date == date)).Count > 0)
+                                    if(veichle.dates.FindAll(x=>(x.date.Date == date.Date)).Count > 0)
                                     {
-                                        var count = veichle.dates.FindAll(x => (x.date == date))[0].count;
+                                        var count = veichle.dates.FindAll(x => (x.date.Date == date.Date))[0].count;
                                         cell = new Cell();
                                         cell.Add(new Paragraph(count.ToString()).SetFontSize(8).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));
                                         table.AddCell(cell);
