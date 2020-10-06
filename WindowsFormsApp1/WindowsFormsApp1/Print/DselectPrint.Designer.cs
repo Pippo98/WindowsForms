@@ -35,17 +35,22 @@
             // 
             // optionsList
             // 
+            this.optionsList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.optionsList.CheckOnClick = true;
+            this.optionsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.optionsList.FormattingEnabled = true;
             this.optionsList.Location = new System.Drawing.Point(12, 12);
             this.optionsList.Name = "optionsList";
-            this.optionsList.Size = new System.Drawing.Size(245, 349);
+            this.optionsList.Size = new System.Drawing.Size(307, 193);
             this.optionsList.TabIndex = 0;
             this.optionsList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.optionsList_ItemCheck);
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(31, 431);
+            this.cancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cancel.Location = new System.Drawing.Point(78, 227);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 1;
@@ -55,7 +60,8 @@
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(136, 431);
+            this.ok.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.ok.Location = new System.Drawing.Point(183, 227);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(75, 23);
             this.ok.TabIndex = 2;
@@ -67,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 549);
+            this.ClientSize = new System.Drawing.Size(334, 290);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.optionsList);

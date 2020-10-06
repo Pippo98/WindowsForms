@@ -21,13 +21,13 @@ namespace WindowsFormsApp1.dataClasses
         public string plate;
         public string dimension;
         public int CER;
-        public bool toBreak;
+        public string toBreak;
         public int kg;
         public string siteLocation;
         public string siteName;
         public string note;
 
-        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, bool toBreak, int kg, string note, string destination = "")
+        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, string toBreak, int kg, string note, string destination = "")
         {
             this.id = id;
             this.date = date;

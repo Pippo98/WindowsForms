@@ -1,4 +1,5 @@
 ﻿using Org.BouncyCastle.Asn1.Esf;
+using Org.BouncyCastle.Crypto.Engines;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,7 @@ namespace WindowsFormsApp1.AddForms
     public partial class DnewModule : Form
     {
         private List<Firm>      firmData;
-        private string[]    firmNames;
+        private List<string>    firmNames;
         private Tuple<string, string>[] platesTuple;
         private string[]    plates;
         private string[]    platesDimension;
@@ -24,7 +25,7 @@ namespace WindowsFormsApp1.AddForms
         private int[]    CERs;
 
         private List<Site>      siteData;
-        private string[]        siteLocations;
+        private List<string>        siteLocations;
         private string[]        siteNames;
         private string          moduleType;
 
@@ -37,7 +38,7 @@ namespace WindowsFormsApp1.AddForms
         public string carrierPlate;
         public string carrierDimension;
         public string CER;
-        public bool toBreak;
+        public string Other;
         public int Kg;
         public string siteLocation;
         public string siteName;
@@ -55,30 +56,28 @@ namespace WindowsFormsApp1.AddForms
 
             if (firmData.Count > 0)
             {
-                firmNames = new string[this.firmData.Count];
+                firmNames = new List<string>();
+                
 
-                for (int i = 0; i < this.firmData.Count; i++)
+                foreach(var el in this.firmData)
                 {
-                    if (this.firmData[i] == null)
-                    {
-                        continue;
-                    }
-                    firmNames[i] = this.firmData[i].name;
+                    if (el != null)
+                        firmNames.Add(el.name);
                 }
-                this.producerBox.Items.AddRange(this.firmNames);
-                this.carrierBox.Items.AddRange(this.firmNames);
-                this.destinationBox.Items.AddRange(this.firmNames);
+                this.producerBox.Items.AddRange(this.firmNames.ToArray());
+                this.carrierBox.Items.AddRange(this.firmNames.ToArray());
+                this.destinationBox.Items.AddRange(this.firmNames.ToArray());
             }
 
             if (siteData.Count > 0)
             {
-                siteLocations = new string[this.siteData.Count];
+                siteLocations = new List<string>();
 
-                for(int i = 0; i < this.siteData.Count; i++)
+                foreach(var el in this.siteData)
                 {
-                    siteLocations[i] = this.siteData[i].location;
+                    siteLocations.Add(el.location);
                 }
-                this.siteLocationBox.Items.AddRange(siteLocations);
+                this.siteLocationBox.Items.AddRange(siteLocations.ToArray());
             }
 
             this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x=>x.ToString()));
@@ -142,7 +141,12 @@ namespace WindowsFormsApp1.AddForms
                     this.carrierPlate = this.plates[this.plateBox.SelectedIndex];
                 this.loadUnload = this.loadUnloadBox.SelectedItem.ToString();
                 this.CER = this.cerBox.SelectedItem.ToString();
-                this.toBreak = this.toBreakCheck.Checked;
+                if (this.toBreakCheckBox.Checked == true)
+                    this.Other = "p";
+                else if (this.asphaltCheckBox.Checked == true)
+                    this.Other = "a";
+                else
+                    this.Other = "";
                 this.Kg = int.Parse(this.KgBox.Text);
                 this.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.siteName = this.siteNameBox.SelectedItem.ToString();
@@ -233,6 +237,18 @@ namespace WindowsFormsApp1.AddForms
         private void KgBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void toBreakCheckBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (this.toBreakCheckBox.Checked)
+                this.asphaltCheckBox.Checked = false;
+        }
+
+        private void asphaltCheckBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (this.asphaltCheckBox.Checked)
+                this.toBreakCheckBox.Checked = false;
         }
     }
 }

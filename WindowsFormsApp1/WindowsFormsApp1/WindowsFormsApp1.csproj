@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9B0F287E-C8B4-4ADC-A4FC-3DA0EFAA309E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WindowsFormsApp1</RootNamespace>
-    <AssemblyName>WindowsFormsApp1</AssemblyName>
+    <RootNamespace>Rifiuti</RootNamespace>
+    <AssemblyName>Rifiuti</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Asset 3.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="aspnet_regsql">
       <HintPath>C:\WINDOWS\microsoft.net\framework\v2.0.50727\aspnet_regsql.exe</HintPath>
@@ -44,6 +47,9 @@
     </Reference>
     <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DataGridViewAutoFilter">
+      <HintPath>.\DataGridViewAutoFilter.dll</HintPath>
     </Reference>
     <Reference Include="itext.barcodes, Version=7.1.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext7.7.1.12\lib\net40\itext.barcodes.dll</HintPath>
@@ -144,6 +150,8 @@
     <Compile Include="dataClasses\ExtendedTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="dataClasses\ExtraProcessing.cs" />
+    <Compile Include="dataClasses\FilterManager.cs" />
     <Compile Include="dataClasses\Firm.cs" />
     <Compile Include="dataClasses\Month.cs" />
     <Compile Include="dataClasses\MonthElement.cs" />
@@ -214,6 +222,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -247,6 +256,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Asset 3.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

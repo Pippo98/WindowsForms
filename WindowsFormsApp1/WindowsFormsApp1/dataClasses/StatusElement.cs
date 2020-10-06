@@ -25,7 +25,7 @@ namespace WindowsFormsApp1.dataClasses
             this.hasUnloaded = hasUnloaded;
         }
 
-        public string[] getFields()
+        public string[] getFields(int[] cers)
         {
             List<string> ret = new List<string>();
 
@@ -33,7 +33,7 @@ namespace WindowsFormsApp1.dataClasses
             ret.Add("Totale");
             foreach (var element in CERElements)
                 foreach(var el in element.getFields())
-                    ret.Add(el);
+                    ret.Add(element.CER.ToString() + "\n" + el);
 
             return ret.ToArray();
         }
@@ -95,7 +95,6 @@ namespace WindowsFormsApp1.dataClasses
         {
             string[] ret = new string[]
             {
-                "CER",
                 "Load",
                 "Unload",
                 "Total"
@@ -106,7 +105,6 @@ namespace WindowsFormsApp1.dataClasses
         public object[] getObj()
         {
             List<object> obj = new List<object>();
-            obj.Add(this.CER);
             obj.Add(this.load);
             obj.Add(this.unload);
             obj.Add(this.CERTotal);

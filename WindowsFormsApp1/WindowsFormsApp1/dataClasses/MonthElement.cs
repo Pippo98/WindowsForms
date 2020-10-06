@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iText.StyledXmlParser.Node;
+using Microsoft.VisualBasic.Logging;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -41,14 +42,16 @@ namespace WindowsFormsApp1.dataClasses
         public List<(DateTime date, int count)> dates;
         public int normalCount;
         public int toBreakCount;
+        public int asphaltCount;
         public int totalCount;
 
-        public VeichleElement((string plate, string plateType) veichle, List<(DateTime date, int count)> dates, int normalCount, int toBreakCount, int totalCount)
+        public VeichleElement((string plate, string plateType) veichle, List<(DateTime date, int count)> dates, int normalCount, int toBreakCount, int asphaltCount, int totalCount)
         {
             this.veichle = veichle;
             this.dates = dates;
             this.normalCount = normalCount;
             this.toBreakCount = toBreakCount;
+            this.asphaltCount = asphaltCount;
             this.totalCount = totalCount;
         }
 

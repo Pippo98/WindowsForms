@@ -24,9 +24,6 @@ D:\Codes\TerraGroup\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1
 D:\Codes\TerraGroup\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewAnalysis.resources
 D:\Codes\TerraGroup\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewTransaction.resources
 D:\Codes\TerraGroup\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewPlate.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\aspnet_regsql.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\aspnet_regsql.exe.config
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\it\aspnet_regsql.resources.dll
@@ -43,12 +40,9 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DopenProject.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.MainForm.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.NewFolder1.aggiungiImpresa.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DopenWarning.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\BouncyCastle.Crypto.dll
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Common.Logging.Core.dll
@@ -79,3 +73,10 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\itext.s
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Print.DselectPrint.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewModule.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.WarningMessage.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\DataGridViewAutoFilter.dll
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Rifiuti.exe.config
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Rifiuti.exe
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Rifiuti.pdb
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.Properties.Resources.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.exe
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.pdb

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -25,6 +26,7 @@ using WindowsFormsApp1.AddForms;
 using WindowsFormsApp1.dataClasses;
 using WindowsFormsApp1.NewFolder1;
 using WindowsFormsApp1.Print;
+using DataGridViewAutoFilter;
 
 namespace WindowsFormsApp1
 {
@@ -42,6 +44,7 @@ namespace WindowsFormsApp1
         private List<Site> siteData;
         private List<dataClasses.Module> formImplantData;
         private List<dataClasses.Module> formVariousData;
+        private List<string> extraProcessingData;
         private List<Analysis> analysisData;
 
         private List<dataClasses.Module> missingAnalysis;
@@ -59,6 +62,13 @@ namespace WindowsFormsApp1
         private string[] dimensions;
         private string[] firmNames;
 
+        private string filter;
+        private List<object> filterControls = new List<object>();
+        StatusStrip statusStrip1 = new StatusStrip();
+        ToolStripStatusLabel filterStatusLabel = new ToolStripStatusLabel();
+        ToolStripStatusLabel showAllLabel = new ToolStripStatusLabel("Show &All");
+
+        FilterManager filterM;
         StatManager manager;
         PdfPrinter printer;
 
@@ -73,6 +83,8 @@ namespace WindowsFormsApp1
             this.printer = new PdfPrinter();
 
             this.manager = new StatManager(this.basePath);
+
+            this.filterM = new FilterManager();
 
             manager.loadStats();
 
@@ -111,8 +123,6 @@ namespace WindowsFormsApp1
                 160601,
                 170101,
                 170107,
-                170302,
-                170405,
                 170604,
                 200201,
             };
@@ -142,6 +152,27 @@ namespace WindowsFormsApp1
             };
             this.monthComboBox.Items.AddRange(this.monthNames);
             this.monthComboBox.SelectedIndex = 0;
+
+            /*
+            // Initialize AutoFilter for table
+            this.table.BindingContextChanged += new EventHandler(dataGridView1_BindingContextChanged);
+            this.table.KeyDown += new KeyEventHandler(dataGridView1_KeyDown);
+            this.table.DataBindingComplete +=
+                new DataGridViewBindingCompleteEventHandler(
+                dataGridView1_DataBindingComplete);
+
+            showAllLabel.Visible = false;
+            showAllLabel.IsLink = true;
+            showAllLabel.LinkBehavior = LinkBehavior.HoverUnderline;
+            showAllLabel.Click += new EventHandler(showAllLabel_Click);
+
+            statusStrip1.Cursor = Cursors.Default;
+            statusStrip1.Items.AddRange(new ToolStripItem[] {
+                filterStatusLabel, showAllLabel });
+
+            this.Controls.AddRange(new Control[] {
+                this.table, statusStrip1 });
+            */
         }
 
         //-----------------------------------------------------------------------------------------------//
@@ -199,6 +230,7 @@ namespace WindowsFormsApp1
                     "Analisi",
                     "Registro Impianto",
                     "Registro Varie",
+                    "Lavorazioni Extra"
                 };
                 for (int i = 0; i < Filenames.Length; i++)
                 {
@@ -305,6 +337,7 @@ namespace WindowsFormsApp1
                 file.Close();
 
                 this.LoadFirmData();
+                this.sortAll();
                 this.updateTable();
             }
         }
@@ -333,6 +366,7 @@ namespace WindowsFormsApp1
                 File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
 
                 this.LoadFirmData();
+                this.sortAll();
                 this.updateTable();
             }
         }
@@ -355,8 +389,8 @@ namespace WindowsFormsApp1
                 file.Close();
 
                 this.updateAnalysisData();
+                this.sortAll();
                 this.updateTable();
-
             }
         }
 
@@ -383,7 +417,7 @@ namespace WindowsFormsApp1
                     dialog.Kg.ToString(),
                     dialog.siteLocation,
                     dialog.siteName,
-                    dialog.toBreak.ToString(),
+                    dialog.Other,
                     dialog.note,
                 };
                 string form = String.Join(";", buffer) + ";";
@@ -395,6 +429,7 @@ namespace WindowsFormsApp1
                 this.LoadRegisterImplantData();
                 this.LinkRegisterAnalysis();
                 this.CreateMonthTable();
+                this.sortAll();
                 this.updateTable();
             }
         }
@@ -422,7 +457,7 @@ namespace WindowsFormsApp1
                     dialog.Kg.ToString(),
                     dialog.siteLocation,
                     dialog.siteName,
-                    dialog.toBreak.ToString(),
+                    dialog.Other,
                     dialog.note,
                 };
                 string form = String.Join(";", buffer) + ";";
@@ -433,6 +468,7 @@ namespace WindowsFormsApp1
 
                 this.LoadRegisterVariousData();
                 this.LinkRegisterAnalysis();
+                this.sortAll();
                 this.updateTable();
             }
         }
@@ -480,6 +516,7 @@ namespace WindowsFormsApp1
                 }
 
                 this.LoadSiteData();
+                this.sortAll();
                 this.updateTable();
             }
             else
@@ -567,15 +604,17 @@ namespace WindowsFormsApp1
         private async void loadAllData()
         {
 
+            // UI loading indicator
             this.projectUsable.BackColor = Color.Orange;
 
             Refresh();
 
-            Task firm = this.LoadFirmData();
-            Task site =  this.LoadSiteData();
-            Task formImplant = this.LoadRegisterImplantData();
-            Task formVarious = this.LoadRegisterVariousData();
-            Task analysis = this.LoadAnalysisData();
+            // Loading data from project files
+            Task firm           = this.LoadFirmData();
+            Task site           =  this.LoadSiteData();
+            Task formImplant    = this.LoadRegisterImplantData();
+            Task formVarious    = this.LoadRegisterVariousData();
+            Task analysis       = this.LoadAnalysisData();
 
             await firm;
             await site;
@@ -583,15 +622,22 @@ namespace WindowsFormsApp1
             await formVarious;
             await analysis;
 
+            this.sortAll();
+
             this.LinkRegisterAnalysis();
             this.CheckAnalysisValidity();
-            await this.CreateMonthTable();
 
+            // Creating tables
+            await this.CreateMonthTable();
             this.CreateStatusTable();
 
+            // Displaying tables
             this.fillTable("Situazione");
-
+            
+            // UI loading indicator
             this.projectUsable.BackColor = Color.Green;
+
+            Refresh();
         }
 
         private async void updateAnalysisData()
@@ -719,9 +765,7 @@ namespace WindowsFormsApp1
                     string siteLocation = l[8];
                     string siteName = l[9];
                     string note = l[11];
-                    bool toBreak = false;
-                    if (l[10] == "true")
-                        toBreak = true;
+                    string toBreak = l[10];
 
                     string plate = "";
                     string dimension = "";
@@ -778,9 +822,7 @@ namespace WindowsFormsApp1
                     string siteLocation = l[9];
                     string siteName = l[10];
                     string note = l[12];
-                    bool toBreak = false;
-                    if (l[11] == "true")
-                        toBreak = true;
+                    string toBreak = l[11];
 
                     string plate = "";
                     string dimension = "";
@@ -805,6 +847,11 @@ namespace WindowsFormsApp1
             this.formVariousData = formList;
 
             Debug.Print("Registro Varie -> Found " + this.formImplantData.Count + " readable elements");
+        }
+
+        private async Task LoadExtraData()
+        {
+
         }
 
         private async Task LoadAnalysisData()
@@ -939,6 +986,7 @@ namespace WindowsFormsApp1
 
                             int normalCount = 0;
                             int toBreakCount = 0;
+                            int asphaltCount = 0;
                             int totalCount = 0;
 
                             // forms with same carrier veichle
@@ -954,16 +1002,20 @@ namespace WindowsFormsApp1
                                 {
                                     var idx = date.IndexOf(match[0]);
                                     date[idx] = (match[0].date, date[idx].count+1);
-                                    if (el.toBreak)
+                                    if (el.toBreak == "p")
                                         toBreakCount += 1;
+                                    else if (el.toBreak == "a")
+                                        asphaltCount += 1;
                                     else
                                         normalCount += 1;
                                     totalCount += 1;
                                 }
                                 else
                                 {
-                                    if (el.toBreak)
+                                    if (el.toBreak == "p")
                                         toBreakCount += 1;
+                                    else if (el.toBreak == "a")
+                                        asphaltCount += 1;
                                     else
                                         normalCount += 1;
                                     totalCount += 1;
@@ -971,7 +1023,7 @@ namespace WindowsFormsApp1
                                 }
                             }
 
-                            VeichleElement newElement = new VeichleElement((sameVeichle[0].plate, sameVeichle[0].dimension), date, normalCount, toBreakCount, totalCount);
+                            VeichleElement newElement = new VeichleElement((sameVeichle[0].plate, sameVeichle[0].dimension), date, normalCount, toBreakCount, asphaltCount, totalCount);
                             veichleList.Add(newElement);
                         }
 
@@ -1040,6 +1092,7 @@ namespace WindowsFormsApp1
                         cer.load += element.kg;
                         cer.CERTotal += element.kg;
                         hasLoaded = true;
+                        total += element.kg;
                     }
                     else
                     {
@@ -1047,7 +1100,6 @@ namespace WindowsFormsApp1
                         cer.CERTotal -= element.kg;
                         hasUnloaded = true;
                     }
-                    total += element.kg;
 
                     CERs[idx] = cer;
                 }
@@ -1066,60 +1118,69 @@ namespace WindowsFormsApp1
 
         private void fillTable(string type)
         {
+            if(type != this.currentTableDataType)
+            {
+                this.filterM.ClearFilters();
+                this.currentTableDataType = type;
+                this.setupFilterBoxes();
+            }
+            
+            this.currentTableDataType = type;
+
+            // Initialize Dataset
             int dataIndex = 0;
             DataSet ds = new DataSet();
             ds.Tables.Add();
 
-            this.currentTableDataType = type;
+            // Set Filter Context
+            this.filterM.SetFilterContext(type);
+
+            List<(int index, Color color)> hilightRows = new List<(int index, Color color)>();
+            List<object> rows = new List<object>();
+
             this.table.ColumnHeadersVisible = false;
 
             if (type == "Registro Impianto")
             {
 
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
+                var fields = this.formImplantData[0].getFields("Implant");
 
-                if (this.formImplantData.Count > 0)
-                    this.table.ColumnCount = this.formImplantData[0].getFields("Implant").Length;
-                else return;
-
-                foreach (var el in this.formImplantData[0].getFields("Implant"))
+                for (int i = 0; i < fields.Length; i++)
                 {
-                    this.table.Columns[Array.IndexOf(formImplantData[0].getFields("Implant"), el)].Name = el;
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
                 }
-                
+
                 foreach (var reg in this.formImplantData)
                 {
-                    this.table.Rows.Add(reg.getObj("Implant"));
+                    ds.Tables[dataIndex].Rows.Add(reg.getObj("Implant"));
                 }
             }
 
             if (type == "Registro Varie")
             {
 
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
+                if (this.formVariousData.Count == 0)
+                    return;
 
-                if (this.formVariousData.Count > 0)
-                    this.table.ColumnCount = this.formVariousData[0].getFields("").Length;
-                else return;
+                var fields = this.formVariousData[0].getFields("");
 
-                foreach (var el in this.formVariousData[0].getFields(""))
+                for (int i = 0; i < fields.Length; i++)
                 {
-                    this.table.Columns[Array.IndexOf(formVariousData[0].getFields(""), el)].Name = el;
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
                 }
 
                 foreach (var reg in this.formVariousData)
                 {
-                    this.table.Rows.Add(reg.getObj(""));
+                    ds.Tables[dataIndex].Rows.Add(reg.getObj(""));
                 }
             }
 
             if (type == "Mese")
             {
                 int index = this.monthComboBox.SelectedIndex;
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
+
                 if (this.months != null && this.months.Count > index)
                 {
                     var month = this.months[index];
@@ -1127,28 +1188,24 @@ namespace WindowsFormsApp1
                     {
                         var currYear = month[0].veichles[0].dates[0].date.Year;
                         var currMonth = months.IndexOf(month) + 1;
-                        this.table.ColumnCount = DateTime.DaysInMonth(currYear, currMonth) + 2 + 2 + 1;
 
-                        this.table.Columns[0].Name = "Impresa";
-                        this.table.Columns[1].Name = "Mezzo";
+                        ds.Tables[dataIndex].Columns.Add("Impresa");
+                        ds.Tables[dataIndex].Columns.Add("Mezzo");
 
-                        int n = 0;
                         // Days
                         for (int day = 1; day <= DateTime.DaysInMonth(currYear, currMonth); day++)
                         {
                             var date = day.ToString() + "/" + currMonth.ToString() + "/" + currYear.ToString();
-                            n = day + 1;
-                            this.table.Columns[n].Name = date;
+                            ds.Tables[dataIndex].Columns.Add(date);
                         }
 
-                        this.table.Columns[n + 1].Name = "N";
-                        this.table.Columns[n + 2].Name = "P";
-                        this.table.Columns[n + 3].Name = "Totale";
-
+                        ds.Tables[dataIndex].Columns.Add("N");
+                        ds.Tables[dataIndex].Columns.Add("P");
+                        ds.Tables[dataIndex].Columns.Add("A");
+                        ds.Tables[dataIndex].Columns.Add("Totale");
 
                         foreach (var element in month)
                         {
-
                             // For every veichle in this current firm
                             foreach (var veichle in element.veichles)
                             {
@@ -1183,28 +1240,28 @@ namespace WindowsFormsApp1
                                 // Create cell whith total trip count int this current month for this specific veichle
                                 line.Add(veichle.normalCount);
                                 line.Add(veichle.toBreakCount);
+                                line.Add(veichle.asphaltCount);
                                 line.Add(veichle.totalCount);
-                                this.table.Rows.Add(line.ToArray());
+                                ds.Tables[dataIndex].Rows.Add(line.ToArray());
                             }
                         }
-
                     }
 
                 }
             }
 
-            if(type == "Imprese")
+            if (type == "Imprese")
             {
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
 
-                if (this.firmData.Count > 0)
-                    this.table.ColumnCount = this.firmData[0].getFields().Length;
-                else return;
+                if (this.firmData.Count == 0)
+                    return;
 
-                foreach (var el in this.firmData[0].getFields())
+                var fields = this.firmData[0].getFields();
+
+                for (int i = 0; i < fields.Length; i++)
                 {
-                    this.table.Columns[Array.IndexOf(this.firmData[0].getFields(), el)].Name = el;
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
                 }
 
                 foreach (var el in this.firmData)
@@ -1223,99 +1280,101 @@ namespace WindowsFormsApp1
                             line.Add("");
                             line.Add(plate);
                         }
-                        this.table.Rows.Add(line.ToArray());
+                        ds.Tables[dataIndex].Rows.Add(line.ToArray());
                     }
 
                 }
             }
 
-            if(type == "Analisi")
+            if (type == "Analisi")
             {
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
 
                 if (this.analysisData.Count == 0)
                     return;
 
                 var fields = this.analysisData[0].getFields();
-                this.table.ColumnCount = fields.Length;
 
                 for (int i = 0; i < fields.Length; i++)
-                    this.table.Columns[i].Name = fields[i];
-
-                foreach(var el in this.analysisData)
                 {
-                    this.table.Rows.Add(el.getObj());
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
+                }
+
+                foreach (var el in this.analysisData)
+                {
+                    ds.Tables[dataIndex].Rows.Add(el.getObj());
+
 
                     if (el.validity == "False")
-                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.IndianRed;
+                        hilightRows.Add((this.analysisData.IndexOf(el), Color.IndianRed));
+                    
                 }
             }
 
-            if(type == "Analisi Mancanti")
+            if (type == "Analisi Mancanti")
             {
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
 
                 if (this.missingAnalysis.Count == 0)
                     return;
 
                 var fields = this.missingAnalysis[0].getFields("Impianto");
-                this.table.ColumnCount = fields.Length;
 
                 for (int i = 0; i < fields.Length; i++)
-                    this.table.Columns[i].Name = fields[i];
+                {
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
+                }
 
                 foreach (var el in this.missingAnalysis)
                 {
-                    this.table.Rows.Add(el.getObj("Impianto"));
+                    ds.Tables[dataIndex].Rows.Add(el.getObj("Impianto"));
                 }
             }
 
-            if(type == "Situazione")
+            if (type == "Situazione")
             {
-
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
+                var reqCERs = this.CER;
 
                 if (this.status.Count == 0)
                     return;
 
-                var fields = this.status[0].getFields();
-                this.table.ColumnCount = fields.Length;
+                var fields = this.status[0].getFields(reqCERs);
 
-                for (int i = 0; i < fields.Length; i ++)
-                    this.table.Columns[i].Name = fields[i];
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
+                }
 
                 foreach (var el in this.status)
                 {
-                    this.table.Rows.Add(el.getObj());
 
-                    //ds.Tables[dataIndex].Rows.Add(el.getObj());
+                    ds.Tables[dataIndex].Rows.Add(el.getObj());
 
+
+                    rows.Add(el.getObj());
+                    
                     // Changing row style to hilight activity
                     if(el.hasLoaded && el.hasUnloaded)
-                        this.table.Rows[this.table.RowCount-1].DefaultCellStyle.BackColor = Color.MediumPurple;
+                        hilightRows.Add((this.status.IndexOf(el), Color.MediumPurple));
                     else if(el.hasLoaded)
-                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.LightGreen;
+                        hilightRows.Add((this.status.IndexOf(el), Color.LightGreen));
                     else if(el.hasUnloaded)
-                        this.table.Rows[this.table.RowCount - 1].DefaultCellStyle.BackColor = Color.IndianRed;
-
+                        hilightRows.Add((this.status.IndexOf(el), Color.IndianRed));
                 }
             }
 
             if (type == "Cantieri")
             {
-                this.table.ColumnCount = 0;
-                this.table.RowCount = 0;
 
-                if (this.siteData.Count > 0)
-                    this.table.ColumnCount = this.siteData[0].getFields().Length;
-                else return;
+                if (this.siteData.Count == 0)
+                    return;
+                var fields = this.siteData[0].getFields();
 
-                foreach (var el in this.siteData[0].getFields())
+                for (int i = 0; i < fields.Length; i++)
                 {
-                    this.table.Columns[Array.IndexOf(this.siteData[0].getFields(), el)].Name = el;
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
                 }
 
                 foreach (var el in this.siteData)
@@ -1334,33 +1393,268 @@ namespace WindowsFormsApp1
                             line.Add("");
                             line.Add(name);
                         }
-                        this.table.Rows.Add(line.ToArray());
+                        ds.Tables[dataIndex].Rows.Add(line.ToArray());
                     }
-
                 }
             }
 
+            var dv = new DataView(ds.Tables[dataIndex]);
 
-            this.table.ColumnHeadersVisible = true;
+            // Enabing filter on rows
+            this.filter = this.filterM.ParseFilters();
+            if (this.filter != "")
+                dv.RowFilter = filter;
+
+            this.table.DataSource = dv;
+
+            this.stylizeTable();
+
+            this.table.ColumnHeadersDefaultCellStyle.Font = new Font(DataGridView.DefaultFont.FontFamily, 12);
+
+            /*
+            for (int i = 0; i < this.table.RowCount; i++)
+            {
+                var el = hilightRows.Find(x => x.index == i);
+                if (el != (null,null))
+                    this.table.Rows[i].DefaultCellStyle.BackColor = el.color;
+                // this.table.Rows[el.index].DefaultCellStyle.ForeColor = el.color;
+            }
+            */
 
             // Using double buffer to speedup UI updates like scrolling
             Type typ = this.table.GetType();
             PropertyInfo pi = typ.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.table, true, null);
 
+            this.table.ColumnHeadersVisible = true;
+        }
 
-            //var dv = new DataView(ds.Tables[0]);
-            //this.table.DataSource = dv;
+        private void stylizeTable()
+        {
+            if(this.currentTableDataType == "Situazione")
+            {
+                for(int i = 0; i <this.table.RowCount; i++)
+                {
 
-        }   
+                    var fields = this.status[0].getFields(this.CER).ToList();
+                    /*
+                    if (((StatusElement)row).hasLoaded && ((StatusElement)row).hasUnloaded)
+                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.MediumPurple;
+                    else if (((StatusElement)row).hasLoaded)
+                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.LightGreen;
+                    else if (((StatusElement)row).hasUnloaded)
+                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.IndianRed;
+                    */
+                }
+                for (int i = 0; i < this.table.ColumnCount; i++)
+                {
+                    if ((i) % 3 == 1)
+                    {
+                        this.table.Columns[i].DividerWidth = 1;
+                    }
+                }
+                this.table.GridColor = Color.FromArgb(20, 20, 20);
+            }
+        }
+
+        /*
+
+        // Configures the autogenerated columns, replacing their header
+        // cells with AutoFilter header cells. 
+        private void dataGridView1_BindingContextChanged(object sender, EventArgs e)
+        {
+            // Continue only if the data source has been set.
+            if (this.table.DataSource == null)
+            {
+                return;
+            }
+
+            // Add the AutoFilter header cell to each column.
+            foreach (DataGridViewColumn col in this.table.Columns)
+            {
+                col.HeaderCell = new
+                    DataGridViewAutoFilterColumnHeaderCell(col.HeaderCell);
+            }
+
+            // Format the OrderTotal column as currency. 
+            //this.table.Columns["OrderTotal"].DefaultCellStyle.Format = "c";
+
+            // Resize the columns to fit their contents.
+            this.table.AutoResizeColumns();
+        }
+
+        // Displays the drop-down list when the user presses 
+        // ALT+DOWN ARROW or ALT+UP ARROW.
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up))
+            {
+                DataGridViewAutoFilterColumnHeaderCell filterCell =
+                    this.table.CurrentCell.OwningColumn.HeaderCell as
+                    DataGridViewAutoFilterColumnHeaderCell;
+                if (filterCell != null)
+                {
+                    filterCell.ShowDropDownList();
+                    e.Handled = true;
+                }
+            }
+        }
+
+        // Clears the filter when the user clicks the "Show All" link
+        // or presses ALT+A. 
+        private void showAllLabel_Click(object sender, EventArgs e)
+        {
+            DataGridViewAutoFilterColumnHeaderCell.RemoveFilter(this.table);
+        }
+
+        // Updates the filter status label. 
+        private void dataGridView1_DataBindingComplete(object sender,
+            DataGridViewBindingCompleteEventArgs e)
+        {
+            String filterStatus = DataGridViewAutoFilterColumnHeaderCell
+                .GetFilterStatus(this.table);
+            if (String.IsNullOrEmpty(filterStatus))
+            {
+                showAllLabel.Visible = false;
+                filterStatusLabel.Visible = false;
+            }
+            else
+            {
+                showAllLabel.Visible = true;
+                filterStatusLabel.Visible = true;
+                filterStatusLabel.Text = filterStatus;
+            }
+        }
+
+        */
 
         private void updateTable()
         {
             this.fillTable(currentTableDataType);
         }
 
-        private void filter()
+        private void sortAll()
         {
+            this.analysisData           = this.analysisData.OrderByDescending(x => x.id).ToList();
+            this.formImplantData        = this.formImplantData.OrderByDescending(x => x.id).ToList();
+            this.formVariousData        = this.formVariousData.OrderByDescending(x => x.id).ToList();
+            this.firmData               = this.firmData.OrderBy(x => x.name).ToList();
+            this.siteData               = this.siteData.OrderBy(x => x.location).ToList();
+        }
+
+
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-------------------------------------FILTERS SECTION-------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+
+        private void setupFilterBoxes()
+        {
+            /*
+            // Adding firm names to comboBox
+            List<string> firmNames = new List<string>();
+            foreach(var el in this.firmData)
+                firmNames.Add(el.name);
+
+            this.filterProducer.Items.AddRange(firmNames.ToArray());
+
+            */
+
+
+            // Clearing list of filter controls
+            foreach(var el in this.filterControls)
+                this.Controls.Remove((Control)el);
+
+            int offsetX = 40;
+            int span = 16;
+            int zeroX = this.filterClearButton.Location.X + this.filterClearButton.Width + span;
+            int zeroY = this.filterClearButton.Location.Y + this.filterClearButton.Height / 3;
+            int currentX = zeroX;
+
+            // Adding filter controls
+            if(this.currentTableDataType == "Situazione" || this.currentTableDataType == "Analisi") {
+                
+                // Start Date
+                var e = new DateTimePicker();    
+                e.Location = new System.Drawing.Point(currentX, zeroY);
+                e.Name = "Start Date";
+                e.ValueChanged += new EventHandler(this.filterDateTimePickerChanged);
+
+                this.Controls.Add(e);
+                this.filterControls.Add(e);
+                currentX += e.Width + span;
+                // End Date
+                e = new DateTimePicker();
+                e.Location = new System.Drawing.Point(currentX, zeroY);
+                e.Name = "End Date";
+                e.ValueChanged += new EventHandler(this.filterDateTimePickerChanged);
+
+                this.Controls.Add(e);
+                this.filterControls.Add(e);
+
+                currentX += e.Width + span;
+            }
+            else if (this.currentTableDataType == "Registro Impianto" || this.currentTableDataType == "Registro Varie")
+            {
+
+                // Adding firm names to comboBox
+                List<string> firmNames = new List<string>();
+                foreach (var el in this.firmData)
+                    firmNames.Add(el.name);
+
+                // Producer ComboBox
+                var e = new ComboBox();
+                e.Location = new System.Drawing.Point(currentX, zeroY);
+                e.Name = "Produttore";
+                e.Items.AddRange(firmNames.ToArray());
+                e.SelectedIndexChanged += new EventHandler(this.filterComboClicked);
+
+                this.Controls.Add(e);
+                this.filterControls.Add(e);
+                currentX += e.Width + span;
+
+                // Start Date
+                var d = new DateTimePicker();
+                d.Location = new System.Drawing.Point(currentX, zeroY);
+                d.Name = "Start Date";
+                d.ValueChanged += new EventHandler(this.filterDateTimePickerChanged);
+
+                this.Controls.Add(d);
+                this.filterControls.Add(d);
+                currentX += d.Width + span;
+                // End Date
+                d = new DateTimePicker();
+                d.Location = new System.Drawing.Point(currentX, zeroY);
+                d.Name = "End Date";
+                d.ValueChanged += new EventHandler(this.filterDateTimePickerChanged);
+
+                this.Controls.Add(d);
+                this.filterControls.Add(d);
+
+                currentX += d.Width + span;
+
+            }
+        }
+
+        private void filterComboClicked(object sender, EventArgs e)
+        {
+            this.filterM.addModifiedFilter(((ComboBox)sender).Name);
+            this.filterM.addFilter(((ComboBox)sender).Name, ((ComboBox)sender).SelectedItem);
+            this.updateTable();
+        }
+
+        private void filterDateTimePickerChanged(object sender, EventArgs e)
+        {
+            this.filterM.addModifiedFilter(((DateTimePicker)sender).Name);
+            this.filterM.addFilter(((DateTimePicker)sender).Name, ((DateTimePicker)sender).Value);
+            this.updateTable();
+        }
+
+        private void filterClearButton_Click(object sender, EventArgs e)
+        {
+            this.filterM.ClearFilters();
+            this.updateTable();
         }
     }
 }

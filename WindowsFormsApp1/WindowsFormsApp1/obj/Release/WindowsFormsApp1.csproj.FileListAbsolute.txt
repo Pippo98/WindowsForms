@@ -53,3 +53,4 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Windo
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewModule.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.WarningMessage.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\DataGridViewAutoFilter.dll

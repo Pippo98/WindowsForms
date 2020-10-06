@@ -55,7 +55,10 @@
             this.KgBox = new System.Windows.Forms.TextBox();
             this.noteBox = new System.Windows.Forms.TextBox();
             this.readOnlyTextBox11 = new System.Web.Management.ReadOnlyTextBox();
-            this.toBreakCheck = new System.Windows.Forms.CheckBox();
+            this.toBreakCheckBox = new System.Windows.Forms.CheckBox();
+            this.asphaltCheckBox = new System.Windows.Forms.CheckBox();
+            this.readOnlyTextBox12 = new System.Web.Management.ReadOnlyTextBox();
+            this.readOnlyTextBox13 = new System.Web.Management.ReadOnlyTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -287,7 +290,7 @@
             this.readOnlyTextBox10.Size = new System.Drawing.Size(76, 20);
             this.readOnlyTextBox10.TabIndex = 20;
             this.readOnlyTextBox10.TabStop = false;
-            this.readOnlyTextBox10.Text = "Da Pinzare";
+            this.readOnlyTextBox10.Text = "Altro";
             // 
             // readonyKg
             // 
@@ -297,7 +300,7 @@
             this.readonyKg.Multiline = true;
             this.readonyKg.Name = "readonyKg";
             this.readonyKg.ReadOnly = true;
-            this.readonyKg.Size = new System.Drawing.Size(76, 16);
+            this.readonyKg.Size = new System.Drawing.Size(76, 21);
             this.readonyKg.TabIndex = 22;
             this.readonyKg.TabStop = false;
             this.readonyKg.Text = "Kg";
@@ -323,30 +326,70 @@
             // 
             this.readOnlyTextBox11.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox11.Location = new System.Drawing.Point(614, 340);
+            this.readOnlyTextBox11.Location = new System.Drawing.Point(537, 350);
             this.readOnlyTextBox11.Multiline = true;
             this.readOnlyTextBox11.Name = "readOnlyTextBox11";
             this.readOnlyTextBox11.ReadOnly = true;
-            this.readOnlyTextBox11.Size = new System.Drawing.Size(100, 20);
+            this.readOnlyTextBox11.Size = new System.Drawing.Size(48, 21);
             this.readOnlyTextBox11.TabIndex = 25;
             this.readOnlyTextBox11.TabStop = false;
-            this.readOnlyTextBox11.Text = "Note";
+            this.readOnlyTextBox11.Text = "Note:";
             // 
-            // toBreakCheck
+            // toBreakCheckBox
             // 
-            this.toBreakCheck.AutoSize = true;
-            this.toBreakCheck.Location = new System.Drawing.Point(480, 473);
-            this.toBreakCheck.Name = "toBreakCheck";
-            this.toBreakCheck.Size = new System.Drawing.Size(15, 14);
-            this.toBreakCheck.TabIndex = 26;
-            this.toBreakCheck.UseVisualStyleBackColor = true;
+            this.toBreakCheckBox.AutoSize = true;
+            this.toBreakCheckBox.Location = new System.Drawing.Point(480, 475);
+            this.toBreakCheckBox.Name = "toBreakCheckBox";
+            this.toBreakCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.toBreakCheckBox.TabIndex = 26;
+            this.toBreakCheckBox.UseVisualStyleBackColor = true;
+            this.toBreakCheckBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.toBreakCheckBox_MouseClick);
+            // 
+            // asphaltCheckBox
+            // 
+            this.asphaltCheckBox.AutoSize = true;
+            this.asphaltCheckBox.Location = new System.Drawing.Point(393, 477);
+            this.asphaltCheckBox.Name = "asphaltCheckBox";
+            this.asphaltCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.asphaltCheckBox.TabIndex = 27;
+            this.asphaltCheckBox.UseVisualStyleBackColor = true;
+            this.asphaltCheckBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.asphaltCheckBox_MouseClick);
+            // 
+            // readOnlyTextBox12
+            // 
+            this.readOnlyTextBox12.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox12.Location = new System.Drawing.Point(343, 474);
+            this.readOnlyTextBox12.Multiline = true;
+            this.readOnlyTextBox12.Name = "readOnlyTextBox12";
+            this.readOnlyTextBox12.ReadOnly = true;
+            this.readOnlyTextBox12.Size = new System.Drawing.Size(44, 15);
+            this.readOnlyTextBox12.TabIndex = 28;
+            this.readOnlyTextBox12.TabStop = false;
+            this.readOnlyTextBox12.Text = "Asfalto";
+            // 
+            // readOnlyTextBox13
+            // 
+            this.readOnlyTextBox13.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox13.Location = new System.Drawing.Point(421, 474);
+            this.readOnlyTextBox13.Multiline = true;
+            this.readOnlyTextBox13.Name = "readOnlyTextBox13";
+            this.readOnlyTextBox13.ReadOnly = true;
+            this.readOnlyTextBox13.Size = new System.Drawing.Size(53, 16);
+            this.readOnlyTextBox13.TabIndex = 29;
+            this.readOnlyTextBox13.TabStop = false;
+            this.readOnlyTextBox13.Text = "Pinzare";
             // 
             // DnewModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 560);
-            this.Controls.Add(this.toBreakCheck);
+            this.Controls.Add(this.readOnlyTextBox13);
+            this.Controls.Add(this.readOnlyTextBox12);
+            this.Controls.Add(this.asphaltCheckBox);
+            this.Controls.Add(this.toBreakCheckBox);
             this.Controls.Add(this.readOnlyTextBox11);
             this.Controls.Add(this.noteBox);
             this.Controls.Add(this.KgBox);
@@ -408,6 +451,9 @@
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox10;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox11;
         private System.Windows.Forms.TextBox noteBox;
-        private System.Windows.Forms.CheckBox toBreakCheck;
+        private System.Windows.Forms.CheckBox toBreakCheckBox;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox12;
+        private System.Windows.Forms.CheckBox asphaltCheckBox;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox13;
     }
 }
