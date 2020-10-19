@@ -58,32 +58,6 @@ namespace WindowsFormsApp1.dataClasses
         public string ParseFilters()
         {
             List<string> filter = new List<string>();
-            /*
-            if (this.filterContext != "Cantieri"
-                && this.filterContext != "Imprese"
-                && this.filterContext != "Mese"
-                )
-            {
-                if (this.checkFilterPresence("Start Date"))
-                {
-                    DateTime date = (DateTime)this.filters.Find(x => x.type == "Start Date").value;
-                    filter.Add($"Data >= #{date.ToString("s")}#");
-                }
-                if (this.checkFilterPresence("End Date"))
-                {
-                    DateTime date = (DateTime)this.filters.Find(x => x.type == "End Date").value;
-                    filter.Add($"Data <= #{date.ToString("s")}#");
-                }
-            }
-            if (this.checkFilterPresence("Producer")
-                && filterContext != "Situazione" 
-                && filterContext != "Cantieri" 
-                && filterContext != "Imprese"
-                && filterContext != "Mese")
-            {
-                var name = this.filters.Find(x => x.type == "Producer").value;
-                filter.Add($"Produttore LIKE '{name}'");
-            }*/
 
             if (this.checkFilterPresence("Start Date"))
             {
@@ -98,6 +72,11 @@ namespace WindowsFormsApp1.dataClasses
             if (this.checkFilterPresence("Produttore")){
                 var name = this.filters.Find(x => x.type == "Produttore").value;
                 filter.Add($"Produttore LIKE '{name}'");
+            }
+            if (this.checkFilterPresence("Validità"))
+            {
+                var name = this.filters.Find(x => x.type == "Validità").value;
+                filter.Add($"Validità LIKE '{name}'");
             }
 
             return String.Join(" and ", filter);

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1.NewFolder1
+namespace WindowsFormsApp1.AddForms
 {
     public partial class aggiungiImpresa : Form
     {

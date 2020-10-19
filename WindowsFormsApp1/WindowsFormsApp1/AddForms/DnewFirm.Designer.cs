@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.NewFolder1
+﻿namespace WindowsFormsApp1.AddForms
 {
     partial class aggiungiImpresa
     {

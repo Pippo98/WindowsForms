@@ -40,6 +40,7 @@
             this.readOnlyTextBox4 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox3 = new System.Web.Management.ReadOnlyTextBox();
             this.DeleteButton = new System.Windows.Forms.Button();
+            this.readOnlyDimension = new System.Web.Management.ReadOnlyTextBox();
             this.SuspendLayout();
             // 
             // readOnlyTextBox1
@@ -62,6 +63,7 @@
             this.NameComboBox.Name = "NameComboBox";
             this.NameComboBox.Size = new System.Drawing.Size(166, 21);
             this.NameComboBox.TabIndex = 1;
+            this.NameComboBox.SelectedIndexChanged += new System.EventHandler(this.NameComboBox_SelectedIndexChanged);
             // 
             // NameTextBox
             // 
@@ -77,6 +79,7 @@
             this.PlateComboBox.Name = "PlateComboBox";
             this.PlateComboBox.Size = new System.Drawing.Size(121, 21);
             this.PlateComboBox.TabIndex = 3;
+            this.PlateComboBox.SelectedIndexChanged += new System.EventHandler(this.PlateComboBox_SelectedIndexChanged);
             // 
             // PlateTextBox
             // 
@@ -168,11 +171,25 @@
             this.DeleteButton.UseVisualStyleBackColor = false;
             this.DeleteButton.Click += new System.EventHandler(this.ButtonClicked);
             // 
+            // readOnlyDimension
+            // 
+            this.readOnlyDimension.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyDimension.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyDimension.Location = new System.Drawing.Point(101, 181);
+            this.readOnlyDimension.Multiline = true;
+            this.readOnlyDimension.Name = "readOnlyDimension";
+            this.readOnlyDimension.ReadOnly = true;
+            this.readOnlyDimension.Size = new System.Drawing.Size(100, 20);
+            this.readOnlyDimension.TabIndex = 13;
+            this.readOnlyDimension.TabStop = false;
+            this.readOnlyDimension.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // DEditFirm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 364);
+            this.Controls.Add(this.readOnlyDimension);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.readOnlyTextBox3);
             this.Controls.Add(this.readOnlyTextBox4);
@@ -206,5 +223,6 @@
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox4;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox3;
         private System.Windows.Forms.Button DeleteButton;
+        private System.Web.Management.ReadOnlyTextBox readOnlyDimension;
     }
 }

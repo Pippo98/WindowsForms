@@ -76,7 +76,9 @@ namespace WindowsFormsApp1.AddForms
                     "Imprese",
                     "Cantieri",
                     "Analisi",
-                    "Registro",
+                    "Registro Impianto",
+                    "Registro Varie",
+                    "Lavorazioni Extra"
                 };
                 for (int i = 0; i < Filenames.Length; i++)
                 {

@@ -23,8 +23,10 @@ using iText.Signatures;
 using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Cmp;
 using WindowsFormsApp1.AddForms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 using WindowsFormsApp1.Print;
+using WindowsFormsApp1.dataClasses;
+using Rifiuti.EditForms;
 using DataGridViewAutoFilter;
 using Rifiuti.dataClasses;
 
@@ -40,25 +42,25 @@ namespace WindowsFormsApp1
 
         private int[] CER;
 
-        private List<Firm> firmData;
-        private List<Site> siteData;
-        private List<Analysis> analysisData;
-        private List<dataClasses.Module> formImplantData;
-        private List<dataClasses.Module> formVariousData;
-        private List<ExtraProcessing> extraProcessingData;
-        private List<InitialStatus> CERInitialStatusData;
+        private List<Firm> firmData = new List<Firm>();
+        private List<Site> siteData = new List<Site>();
+        private List<Analysis> analysisData = new List<Analysis>();
+        private List<dataClasses.Module> formImplantData = new List<dataClasses.Module>();
+        private List<dataClasses.Module> formVariousData = new List<dataClasses.Module>();
+        private List<ExtraProcessing> extraProcessingData = new List<ExtraProcessing>();
+        private List<InitialStatus> CERInitialStatusData = new List<InitialStatus>();
 
-        private List<dataClasses.Module> missingAnalysis;
-        private List<Analysis> expiredAnalysis;
+        private List<dataClasses.Module> missingAnalysis = new List<dataClasses.Module>();
+        private List<Analysis> expiredAnalysis = new List<Analysis>();
 
         private int analysisLastId = 0;
         private int formImplantLastId = 0;
         private int formVariousLastId = 0;
 
-        private List<List<MonthElement>> months;
+        private List<List<MonthElement>> months = new List<List<MonthElement>>();
         private string[] monthNames;
 
-        private List<StatusElement> status;
+        private List<StatusElement> status = new List<StatusElement>();
 
         private string[] dimensions;
         private string[] firmNames;
@@ -92,9 +94,19 @@ namespace WindowsFormsApp1
             string prjPath = "";
             if((prjPath = manager.getMostUsedPrj()) != "")
             {
-                openProject(prjPath, false);
+                if (checkPath(prjPath))
+                    openProject(prjPath, false);
+                else
+                    manager.removeProject(prjPath);
             }
         }
+
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            checkIfOpen();
+        }
+
 
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -109,7 +121,7 @@ namespace WindowsFormsApp1
             this.basePath += "\\TerraGroup";
 
             this.isProjectOpen = false;
-            CER = new int[]
+            this.CER = new int[]
             {
                 170904,
                 170302,
@@ -154,6 +166,8 @@ namespace WindowsFormsApp1
             this.monthComboBox.Items.AddRange(this.monthNames);
             this.monthComboBox.SelectedIndex = 0;
 
+            Console.WriteLine(this.CER);
+
             /*
             // Initialize AutoFilter for table
             this.table.BindingContextChanged += new EventHandler(dataGridView1_BindingContextChanged);
@@ -190,6 +204,15 @@ namespace WindowsFormsApp1
                 manager.updateProjectCount(prjPath);
 
             OnProjectOpened();
+        }
+
+        private bool checkPath(string path)
+        {
+            bool ret = false;
+            if (Directory.Exists(path))
+                ret = true;
+
+            return ret;
         }
 
         private int checkAndCreatePath(string path)
@@ -322,13 +345,11 @@ namespace WindowsFormsApp1
         
         private void addImpresa_MouseClick(object sender, MouseEventArgs e)
         {
-
-        /*
             if (!checkIfOpen())
                 return;
 
             // Show dialog to add firm
-            DnewFirm dialog = new DnewFirm();
+            aggiungiImpresa dialog = new aggiungiImpresa();
             // Show dialog as a modal dialog and determine if DialogResult = OK.
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
@@ -342,7 +363,6 @@ namespace WindowsFormsApp1
                 this.sortAll();
                 this.updateTable();
             }
-        */
         }
         private void addPlate_Click(object sender, EventArgs e)
         {
@@ -536,30 +556,20 @@ namespace WindowsFormsApp1
             Button btn = (Button) sender;
             if(btn.Name == "EditFirm")
             {
+                DEditFirm dialog = new DEditFirm(this.firmData, this.dimensions);
 
-                //DEditFirm dia = DEditiFirm();
-
-                /*
-                // This isn't new site so edit the corresponding line
-                StreamReader fil = new StreamReader(this.projectPath + "\\Imprese.tg");
-                string line;
-
-                int index = 0;
-                while ((line = fil.ReadLine()) != null)
+                if(dialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (line.Contains(dialog.siteLocation))
-                    {
-                        break;
-                    }
-                    index++;
+                    var idx = this.firmData.IndexOf(dialog.oldFirm);
+                    this.firmData[idx] = dialog.newFirm;
+
+                    List<string> lines = new List<string>();
+                    foreach (var element in this.firmData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
+                    this.updateTable();
                 }
-                fil.Close();
-
-                string[] lines = File.ReadAllLines(this.projectPath + "\\Imprese.tg");
-                lines[index] += dialog.siteName + ";";
-
-                File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
-                */
             }
             if(btn.Name == "EditFormImplant")
             {
@@ -1027,7 +1037,6 @@ namespace WindowsFormsApp1
                 forms = this.formImplantData.FindAll(x => (x.date.Month == i));
                 if (forms.Count > 0)
                 {
-
                     List<MonthElement> month = new List<MonthElement>();
 
                     // form in same Month
@@ -1098,6 +1107,7 @@ namespace WindowsFormsApp1
                         MonthElement monthElement = new MonthElement(form.carrier, veichleList);
                         month.Add(monthElement);
                     }
+                    month = month.OrderBy(x => x.firm).ToList();
                     months.Add(month);
                 }
             }
@@ -1131,6 +1141,8 @@ namespace WindowsFormsApp1
             int currentYear = 0;
             if (this.formImplantData.Count > 0)
                 currentYear = this.formImplantData[0].date.Year;
+            else
+                return;
 
             // Creating list with all dates in this current year
             List<DateTime> dates = new List<DateTime>();
@@ -1259,10 +1271,16 @@ namespace WindowsFormsApp1
             List<(int index, Color color)> hilightRows = new List<(int index, Color color)>();
             List<object> rows = new List<object>();
 
-            this.table.ColumnHeadersVisible = false;
+            var dv = new DataView(ds.Tables[dataIndex]);
+            this.table.DataSource = dv;
 
+
+            this.table.ColumnHeadersVisible = false;
             if (type == "Registro Impianto")
             {
+
+                if (this.formImplantData.Count == 0)
+                    return;
 
                 var fields = this.formImplantData[0].getFields("Implant");
 
@@ -1454,10 +1472,11 @@ namespace WindowsFormsApp1
 
             if (type == "Situazione")
             {
-                var reqCERs = this.CER;
 
                 if (this.status.Count == 0)
                     return;
+
+                var reqCERs = this.CER;
 
                 var fields = this.status[0].getFields(reqCERs);
 
@@ -1519,7 +1538,7 @@ namespace WindowsFormsApp1
                 }
             }
 
-            var dv = new DataView(ds.Tables[dataIndex]);
+            dv = new DataView(ds.Tables[dataIndex]);
 
             // Enabing filter on rows
             this.filter = this.filterM.ParseFilters();
@@ -1684,6 +1703,24 @@ namespace WindowsFormsApp1
 
                 currentX += d.Width + span;
 
+            }
+            
+            
+            
+            if (this.currentTableDataType == "Analisi")
+            {
+                // Validity ComboBox
+                var e = new ComboBox();
+                e.Location = new System.Drawing.Point(currentX, zeroY);
+                e.Name = "Validità";
+                e.Items.Add("True");
+                e.Items.Add("False");
+                e.SelectedIndexChanged += new EventHandler(this.filterComboClicked);
+
+                this.Controls.Add(e);
+                this.filterControls.Add(e);
+
+                currentX += e.Width + span;
             }
         }
 

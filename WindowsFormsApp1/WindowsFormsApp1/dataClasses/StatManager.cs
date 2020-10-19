@@ -100,5 +100,18 @@ namespace WindowsFormsApp1.dataClasses
             File.WriteAllText(this.path + "\\stat.log", text);
         }
 
+        public void removeProject(string name)
+        {
+            string fileName = "\\stat.log";
+
+            this.stats.RemoveAll(x => x.projectName == name);
+
+            List<string> lines = new List<string>();
+            foreach(var e in this.stats)
+                lines.Add(e.getString(";"));
+
+            File.WriteAllLines(this.path + fileName, lines);
+        }
+
     }
 }

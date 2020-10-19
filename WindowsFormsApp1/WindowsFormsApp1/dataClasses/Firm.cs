@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
-
-    public class Firm
+    [Serializable]
+    public class Firm : ICloneable
     {
-        public string name;
-        public List<Tuple<string, string>> targhe;
+        public string name { set; get; }
+        public List<Tuple<string, string>> targhe { set; get; }
 
         public Firm(string name_, List<Tuple<string, string>> targhe_)
         {
@@ -23,8 +23,14 @@ namespace WindowsFormsApp1.dataClasses
 
             text += this.name;
 
-            for (int i = 0; i < this.targhe.Count; i++)
-                text += separator + this.targhe[i].Item1 + " - " + this.targhe[i].Item2;
+            foreach (var el in this.targhe)
+            {
+                if (el.Item1 == null || el.Item2 == null)
+                    continue;
+                if (el.Item1 == "" && el.Item2 == "")
+                    continue;
+                text += separator + el.Item1 + "-" + el.Item2;
+            }
 
             return text;
         }
@@ -33,6 +39,15 @@ namespace WindowsFormsApp1.dataClasses
         {
             string[] ret = { "Nome", "Mezzo" };
             return ret;
+        }
+
+        public object Clone()
+        {
+            return new Firm(this.name, this.targhe)
+            {
+                name = this.name,
+                targhe = this.targhe,
+            };
         }
     }
 }
