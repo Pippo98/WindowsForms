@@ -24,9 +24,9 @@ using Org.BouncyCastle.Asn1.Cms;
 using Org.BouncyCastle.Cmp;
 using WindowsFormsApp1.AddForms;
 using WindowsFormsApp1.dataClasses;
-using WindowsFormsApp1.NewFolder1;
 using WindowsFormsApp1.Print;
 using DataGridViewAutoFilter;
+using Rifiuti.dataClasses;
 
 namespace WindowsFormsApp1
 {
@@ -42,10 +42,11 @@ namespace WindowsFormsApp1
 
         private List<Firm> firmData;
         private List<Site> siteData;
+        private List<Analysis> analysisData;
         private List<dataClasses.Module> formImplantData;
         private List<dataClasses.Module> formVariousData;
-        private List<string> extraProcessingData;
-        private List<Analysis> analysisData;
+        private List<ExtraProcessing> extraProcessingData;
+        private List<InitialStatus> CERInitialStatusData;
 
         private List<dataClasses.Module> missingAnalysis;
         private List<Analysis> expiredAnalysis;
@@ -318,15 +319,16 @@ namespace WindowsFormsApp1
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
-
+        
         private void addImpresa_MouseClick(object sender, MouseEventArgs e)
         {
 
+        /*
             if (!checkIfOpen())
                 return;
 
             // Show dialog to add firm
-            aggiungiImpresa dialog = new aggiungiImpresa();
+            DnewFirm dialog = new DnewFirm();
             // Show dialog as a modal dialog and determine if DialogResult = OK.
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
@@ -340,8 +342,8 @@ namespace WindowsFormsApp1
                 this.sortAll();
                 this.updateTable();
             }
+        */
         }
-
         private void addPlate_Click(object sender, EventArgs e)
         {
             if (!checkIfOpen())
@@ -527,6 +529,47 @@ namespace WindowsFormsApp1
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // Same callback for every button used to modify data
+        private void editButtonsClicked(object sender, EventArgs e)
+        {
+            Button btn = (Button) sender;
+            if(btn.Name == "EditFirm")
+            {
+
+                //DEditFirm dia = DEditiFirm();
+
+                /*
+                // This isn't new site so edit the corresponding line
+                StreamReader fil = new StreamReader(this.projectPath + "\\Imprese.tg");
+                string line;
+
+                int index = 0;
+                while ((line = fil.ReadLine()) != null)
+                {
+                    if (line.Contains(dialog.siteLocation))
+                    {
+                        break;
+                    }
+                    index++;
+                }
+                fil.Close();
+
+                string[] lines = File.ReadAllLines(this.projectPath + "\\Imprese.tg");
+                lines[index] += dialog.siteName + ";";
+
+                File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
+                */
+            }
+            if(btn.Name == "EditFormImplant")
+            {
+
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void firmButton_Click(object sender, EventArgs e)
         {
@@ -615,12 +658,14 @@ namespace WindowsFormsApp1
             Task formImplant    = this.LoadRegisterImplantData();
             Task formVarious    = this.LoadRegisterVariousData();
             Task analysis       = this.LoadAnalysisData();
+            Task extra          = this.LoadExtraData();
 
             await firm;
             await site;
             await formImplant;
             await formVarious;
             await analysis;
+            await extra;
 
             this.sortAll();
 
@@ -851,7 +896,30 @@ namespace WindowsFormsApp1
 
         private async Task LoadExtraData()
         {
+            string[] lines = File.ReadAllLines(projectPath + "\\" + "Lavorazioni Extra.tg");
 
+            this.extraProcessingData = new List<ExtraProcessing>();
+            this.CERInitialStatusData = new List<InitialStatus>();
+
+            foreach (var e in lines)
+            {
+                if (e.Contains("Riporto"))
+                {
+                    var line = e.Split(';');
+                    for (int i = 1; i < line.Length; i += 2)
+                    {
+                        InitialStatus stat = new InitialStatus(int.Parse(line[i]), int.Parse(line[i+1]));
+                        this.CERInitialStatusData.Add(stat);
+                    }
+                    continue;
+                }
+
+                var date = DateTime.Parse(e.Split(';')[0]);
+                var type = e.Split(';')[1];
+
+                ExtraProcessing ext = new ExtraProcessing(date, type);
+                this.extraProcessingData.Add(ext);
+            }
         }
 
         private async Task LoadAnalysisData()
@@ -1036,12 +1104,11 @@ namespace WindowsFormsApp1
             this.months = months;
         }
 
+
+
+        // Table with situation and movements each day for every year.
         private void CreateStatusTable()
         {
-
-            var bff = File.AppendText(this.projectPath + "bff.txt");
-
-            // Table with situation and movements each day for every year.
             List<StatusElement> statusElements = new List<StatusElement>();
             List<CERElement> CERs = new List<CERElement>();
             List<(int cer, int total)> status = new List<(int, int)>();
@@ -1050,11 +1117,17 @@ namespace WindowsFormsApp1
             foreach (var cer in this.CER)
                 status.Add((cer, 0));
 
-            // Initializing list with empty ements
-            foreach (var el in this.CER)
-                CERs.Add(new CERElement(el, 0, 0, 0));
+            // Initializing list with empty elements
+            foreach (var el in this.CER) {
+                // If there is a initial status, add it to the total of the corresponding CER
+                var existingStatus = this.CERInitialStatusData.Find(x => x.status.CER == el);
+                if (existingStatus != null)
+                    CERs.Add(new CERElement(el, 0, 0, existingStatus.status.quantity));
+                else
+                    CERs.Add(new CERElement(el, 0, 0, 0));
+            }
 
-
+            // Finding the right year by looking at the first form
             int currentYear = 0;
             if (this.formImplantData.Count > 0)
                 currentYear = this.formImplantData[0].date.Year;
@@ -1065,34 +1138,37 @@ namespace WindowsFormsApp1
                 for (int day = 1; day < DateTime.DaysInMonth(currentYear, month); day++)
                     dates.Add(DateTime.Parse(day.ToString() + "/" + month.ToString() + "/" + currentYear.ToString()));
 
-
+            // Cycling in each date
             foreach(var date in dates)
             {
-
+                // Set to zero load and unload that are values valid for only one day
                 for (int i = 0; i < CERs.Count; i++)
                 {
                     CERs[i].load = 0;
                     CERs[i].unload = 0;
                 }
 
+                // Looking at only the forms in the current day
                 var elements = this.formImplantData.FindAll(x => x.date.Date == date.Date);
 
                 bool hasLoaded = false;
                 bool hasUnloaded = false;
 
                 int total = 0;
-
+                // Cycling between each element, all are of the same day
                 foreach(var element in elements)
                 {
+                    // Looking for the correct index
                     var cer = CERs.Find(x => x.CER == element.CER);
                     int idx = CERs.IndexOf(cer);
 
+                    // If is a load operation add the kg to the total, else subtract
                     if (element.loadUnload == "Carico")
                     {
                         cer.load += element.kg;
                         cer.CERTotal += element.kg;
                         hasLoaded = true;
-                        total += element.kg;
+                        total += element.kg;        // Daily total, is only positive count
                     }
                     else
                     {
@@ -1104,11 +1180,56 @@ namespace WindowsFormsApp1
                     CERs[idx] = cer;
                 }
 
+                // Creating the list containing all the operations for each cer
                 var newCERs = new List<CERElement>();
                 foreach(var el in CERs)
                     newCERs.Add(new CERElement(el.CER, el.load, el.unload, el.CERTotal));
 
-                statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded));
+                var extraData = this.extraProcessingData.Find(x => x.date.Date == date.Date);
+                if (extraData != null) {
+
+                    int q1 = 0;
+                    int q2 = 0;
+                    int q3 = 0;
+                    int processed = 0;
+
+                    List<int> cers = new List<int>
+                    {
+                        170904,
+                        170302,
+                        170101,
+                        170107,
+                        170508,
+                        170504
+                    };
+
+                    foreach (var cer in cers)
+                    {
+                        var cerElement = newCERs.Find(x => x.CER == cer);
+                        processed += cerElement.unload;
+                    }
+
+                    processed = (int)(processed / 1600);
+
+                    if(extraData.type == "v")
+                    {
+                        q1 = (int) (processed * 0.6);
+                        q3 = (int)(processed * 0.4);
+                    }
+                    else
+                    {
+                        q2 = processed;
+                    }
+                    Console.WriteLine(extraData.date.ToString() +"\t" + processed.ToString() + "\t" + q1.ToString() + "\t" + q2.ToString() + "\t" + q3.ToString());
+                    var extraEl = new ExtraProcessingElement(extraData.type, processed, q1, q2, q3);
+                    // Creating element with all operation for each cer and also daily informations
+                    statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded, extraEl));
+                }
+                else
+                {
+                    // Creating element with all operation for each cer and also daily informations
+                    statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded));
+                }
             }
 
 
@@ -1456,77 +1577,6 @@ namespace WindowsFormsApp1
                 this.table.GridColor = Color.FromArgb(20, 20, 20);
             }
         }
-
-        /*
-
-        // Configures the autogenerated columns, replacing their header
-        // cells with AutoFilter header cells. 
-        private void dataGridView1_BindingContextChanged(object sender, EventArgs e)
-        {
-            // Continue only if the data source has been set.
-            if (this.table.DataSource == null)
-            {
-                return;
-            }
-
-            // Add the AutoFilter header cell to each column.
-            foreach (DataGridViewColumn col in this.table.Columns)
-            {
-                col.HeaderCell = new
-                    DataGridViewAutoFilterColumnHeaderCell(col.HeaderCell);
-            }
-
-            // Format the OrderTotal column as currency. 
-            //this.table.Columns["OrderTotal"].DefaultCellStyle.Format = "c";
-
-            // Resize the columns to fit their contents.
-            this.table.AutoResizeColumns();
-        }
-
-        // Displays the drop-down list when the user presses 
-        // ALT+DOWN ARROW or ALT+UP ARROW.
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Alt && (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up))
-            {
-                DataGridViewAutoFilterColumnHeaderCell filterCell =
-                    this.table.CurrentCell.OwningColumn.HeaderCell as
-                    DataGridViewAutoFilterColumnHeaderCell;
-                if (filterCell != null)
-                {
-                    filterCell.ShowDropDownList();
-                    e.Handled = true;
-                }
-            }
-        }
-
-        // Clears the filter when the user clicks the "Show All" link
-        // or presses ALT+A. 
-        private void showAllLabel_Click(object sender, EventArgs e)
-        {
-            DataGridViewAutoFilterColumnHeaderCell.RemoveFilter(this.table);
-        }
-
-        // Updates the filter status label. 
-        private void dataGridView1_DataBindingComplete(object sender,
-            DataGridViewBindingCompleteEventArgs e)
-        {
-            String filterStatus = DataGridViewAutoFilterColumnHeaderCell
-                .GetFilterStatus(this.table);
-            if (String.IsNullOrEmpty(filterStatus))
-            {
-                showAllLabel.Visible = false;
-                filterStatusLabel.Visible = false;
-            }
-            else
-            {
-                showAllLabel.Visible = true;
-                filterStatusLabel.Visible = true;
-                filterStatusLabel.Text = filterStatus;
-            }
-        }
-
-        */
 
         private void updateTable()
         {

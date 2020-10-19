@@ -57,6 +57,8 @@
             this.dataView = new System.Data.DataView();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.filterClearButton = new System.Windows.Forms.Button();
+            this.EditFormImplant = new System.Windows.Forms.Button();
+            this.EditFirm = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -409,6 +411,42 @@
             this.filterClearButton.UseVisualStyleBackColor = false;
             this.filterClearButton.Click += new System.EventHandler(this.filterClearButton_Click);
             // 
+            // EditFormImplant
+            // 
+            this.EditFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.EditFormImplant.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.EditFormImplant.FlatAppearance.BorderSize = 0;
+            this.EditFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EditFormImplant.ForeColor = System.Drawing.Color.Black;
+            this.EditFormImplant.Location = new System.Drawing.Point(1080, 490);
+            this.EditFormImplant.Margin = new System.Windows.Forms.Padding(0);
+            this.EditFormImplant.Name = "EditFormImplant";
+            this.EditFormImplant.Size = new System.Drawing.Size(131, 48);
+            this.EditFormImplant.TabIndex = 37;
+            this.EditFormImplant.Text = "Modifica Formulario Impianto";
+            this.EditFormImplant.UseVisualStyleBackColor = false;
+            this.EditFormImplant.Click += new System.EventHandler(this.editButtonsClicked);
+            // 
+            // EditFirm
+            // 
+            this.EditFirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditFirm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.EditFirm.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.EditFirm.FlatAppearance.BorderSize = 0;
+            this.EditFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EditFirm.ForeColor = System.Drawing.Color.Black;
+            this.EditFirm.Location = new System.Drawing.Point(1082, 544);
+            this.EditFirm.Margin = new System.Windows.Forms.Padding(0);
+            this.EditFirm.Name = "EditFirm";
+            this.EditFirm.Size = new System.Drawing.Size(131, 48);
+            this.EditFirm.TabIndex = 38;
+            this.EditFirm.Text = "Modifica\r\nImpresa";
+            this.EditFirm.UseVisualStyleBackColor = false;
+            this.EditFirm.Click += new System.EventHandler(this.editButtonsClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,6 +455,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.Controls.Add(this.EditFirm);
+            this.Controls.Add(this.EditFormImplant);
             this.Controls.Add(this.filterClearButton);
             this.Controls.Add(this.situationButton);
             this.Controls.Add(this.monthComboBox);
@@ -479,6 +519,8 @@
         private System.Data.DataView dataView;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button filterClearButton;
+        private System.Windows.Forms.Button EditFirm;
+        private System.Windows.Forms.Button EditFormImplant;
     }
 }
 

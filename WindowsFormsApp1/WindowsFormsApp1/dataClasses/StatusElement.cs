@@ -14,15 +14,17 @@ namespace WindowsFormsApp1.dataClasses
         public List<CERElement> CERElements;
         public bool hasLoaded;
         public bool hasUnloaded;
+        public ExtraProcessingElement extra;
 
-        public StatusElement(DateTime date, int total, List<CERElement> CERElements, bool hasLoaded, bool hasUnloaded)
+        public StatusElement(DateTime date, int total, List<CERElement> CERElements, bool hasLoaded, bool hasUnloaded, ExtraProcessingElement extra = null)
         {
-            this.CERElements = new List<CERElement>();
             this.date = date;
             this.total = total;
             this.CERElements = CERElements;
             this.hasLoaded = hasLoaded;
             this.hasUnloaded = hasUnloaded;
+            if (extra != null)
+                this.extra = extra;
         }
 
         public string[] getFields(int[] cers)
@@ -32,7 +34,7 @@ namespace WindowsFormsApp1.dataClasses
             ret.Add("Data");
             ret.Add("Totale");
             foreach (var element in CERElements)
-                foreach(var el in element.getFields())
+                foreach (var el in element.getFields())
                     ret.Add(element.CER.ToString() + "\n" + el);
 
             return ret.ToArray();
@@ -45,8 +47,8 @@ namespace WindowsFormsApp1.dataClasses
             obj.Add(date.ToString("d"));
             obj.Add(total);
 
-            foreach(var element in CERElements)
-                foreach(var el in element.getObj())
+            foreach (var element in CERElements)
+                foreach (var el in element.getObj())
                     obj.Add(el);
 
             return obj.ToArray();
@@ -55,7 +57,7 @@ namespace WindowsFormsApp1.dataClasses
         public int getTotal()
         {
             int total = 0;
-            foreach(var element in this.CERElements)
+            foreach (var element in this.CERElements)
             {
                 total += element.CERTotal;
             }
@@ -70,7 +72,7 @@ namespace WindowsFormsApp1.dataClasses
             ret += total.ToString() + separator;
 
             foreach (var el in this.CERElements)
-                ret += "{" + el.getString(" ") +  "}" +separator;
+                ret += "{" + el.getString(" ") + "}" + separator;
 
             return ret;
         }
@@ -122,6 +124,24 @@ namespace WindowsFormsApp1.dataClasses
             ret += CERTotal + separator;
 
             return ret;
+        }
+    }
+
+    class ExtraProcessingElement
+    {
+        public int processed;
+        public string processedType;
+        public int q1;
+        public int q2;
+        public int q3;
+
+        public ExtraProcessingElement(string processedType, int processed, int q1, int q2, int q3)
+        {
+            this.processedType = processedType;
+            this.processed = processed;
+            this.q1 = q1;
+            this.q2 = q2;
+            this.q3 = q3;
         }
     }
 }

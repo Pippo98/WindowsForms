@@ -10,10 +10,13 @@ namespace Rifiuti.dataClasses
     class ExtraProcessing
     {
         public DateTime date;
-        public string type;
+        public string type;                 // Frantumato o vagliato
 
-
-
+        public ExtraProcessing(DateTime date, string type)
+        {
+            this.date = date;
+            this.type = type;
+        }
 
     }
     class InitialStatus

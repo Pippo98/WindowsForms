@@ -1,6 +1,3 @@
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\WindowsFormsApp1.exe.config
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\WindowsFormsApp1.exe
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\aspnet_regsql.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\BouncyCastle.Crypto.dll
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\Common.Logging.Core.dll
@@ -45,12 +42,16 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Windo
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.MainForm.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.NewFolder1.aggiungiImpresa.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.Print.DselectPrint.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.Properties.Resources.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.GenerateResource.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.CopyComplete
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.exe
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.DnewModule.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.WarningMessage.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\DataGridViewAutoFilter.dll
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\Rifiuti.exe.config
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\Rifiuti.exe
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\bin\Release\Rifiuti.pdb
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.EditForms.DEditFirm.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.Properties.Resources.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.exe
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.pdb

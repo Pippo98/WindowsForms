@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Asset 3.ico</ApplicationIcon>
+    <ApplicationIcon>logo_tg.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="aspnet_regsql">
@@ -161,6 +161,12 @@
     <Compile Include="dataClasses\Stat.cs" />
     <Compile Include="dataClasses\StatManager.cs" />
     <Compile Include="dataClasses\StatusElement.cs" />
+    <Compile Include="EditForms\DEditFirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditFirm.Designer.cs">
+      <DependentUpon>DEditFirm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddForms\WarningMessage.resx">
       <DependentUpon>WarningMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditFirm.resx">
+      <DependentUpon>DEditFirm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -259,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asset 3.ico" />
+    <Content Include="logo-terra_group.ico" />
+    <Content Include="logo_tg.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
