@@ -39,7 +39,6 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Windows
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DnewProject.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.DopenProject.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.MainForm.resources
-D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.NewFolder1.aggiungiImpresa.resources
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
@@ -81,3 +80,4 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Rifiuti.EditForms.DEditFirm.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.AddForms.aggiungiImpresa.resources

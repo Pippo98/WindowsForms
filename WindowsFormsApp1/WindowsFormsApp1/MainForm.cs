@@ -1,42 +1,26 @@
-﻿using System;
+﻿using Rifiuti.dataClasses;
+using Rifiuti.EditForms;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using iText.IO.Font;
-using iText.IO.Font.Otf;
-using iText.Kernel.Counter.Data;
-using iText.Kernel.Geom;
-using iText.Layout.Element;
-using iText.Signatures;
-using Org.BouncyCastle.Asn1.Cms;
-using Org.BouncyCastle.Cmp;
 using WindowsFormsApp1.AddForms;
-using Rifiuti.dataClasses;
-using WindowsFormsApp1.Print;
 using WindowsFormsApp1.dataClasses;
-using Rifiuti.EditForms;
-using DataGridViewAutoFilter;
-using Rifiuti.dataClasses;
+using WindowsFormsApp1.Print;
 
 namespace WindowsFormsApp1
 {
     public partial class MainForm : System.Windows.Forms.Form
     {
-        private string      basePath;
-        private string      projectPath;
-        private string      currentTableDataType;
+        private string basePath;
+        private string projectPath;
+        private string currentTableDataType;
 
         private bool isProjectOpen;
 
@@ -92,7 +76,7 @@ namespace WindowsFormsApp1
             manager.loadStats();
 
             string prjPath = "";
-            if((prjPath = manager.getMostUsedPrj()) != "")
+            if ((prjPath = manager.getMostUsedPrj()) != "")
             {
                 if (checkPath(prjPath))
                     openProject(prjPath, false);
@@ -200,7 +184,7 @@ namespace WindowsFormsApp1
 
             this.isProjectOpen = true;
 
-            if(updateStat)
+            if (updateStat)
                 manager.updateProjectCount(prjPath);
 
             OnProjectOpened();
@@ -243,7 +227,7 @@ namespace WindowsFormsApp1
         private void newProject_Click(object sender, EventArgs e)
         {
             DnewProject dialog = new DnewProject();
-            
+
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 this.projectPath = this.basePath + "\\" + dialog.name;
@@ -262,7 +246,7 @@ namespace WindowsFormsApp1
                     Debug.Print(path);
 
                     this.checkAndCreatePath(this.projectPath);
-                    
+
                     FileStream fil1 = File.Open(path, FileMode.CreateNew);
                     fil1.Close();
                 }
@@ -306,7 +290,7 @@ namespace WindowsFormsApp1
                 this.projectUsable.BackColor = Color.Orange;
                 Refresh();
 
-                if (Array.IndexOf(dialog.selected, "Imprese")>=0)
+                if (Array.IndexOf(dialog.selected, "Imprese") >= 0)
                 {
                     // If the return value is -1 (file is already open) show warning dialog
                     while (this.printer.printFirms(folder, this.firmData) == -1)
@@ -327,10 +311,10 @@ namespace WindowsFormsApp1
                     while (this.printer.printRegister(folder, this.formImplantData) == -1)
                         new WarningMessage("Il file Registro risulta aperto,\n chiudilo prima di continuare").ShowDialog();
                 }
-                if(Array.IndexOf(dialog.selected, "Mesi") >= 0)
+                if (Array.IndexOf(dialog.selected, "Mesi") >= 0)
                 {
                     this.checkAndCreatePath(folder + "\\Mesi");
-                    while(this.printer.printMonths(folder + "\\Mesi", this.months) == -1)
+                    while (this.printer.printMonths(folder + "\\Mesi", this.months) == -1)
                         new WarningMessage("Uno dei file dei mesi risulta aperto,\n chiudilo prima di continuare").ShowDialog();
                 }
 
@@ -342,7 +326,7 @@ namespace WindowsFormsApp1
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
-        
+
         private void addImpresa_MouseClick(object sender, MouseEventArgs e)
         {
             if (!checkIfOpen())
@@ -353,7 +337,7 @@ namespace WindowsFormsApp1
             // Show dialog as a modal dialog and determine if DialogResult = OK.
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                string firm = dialog.name + ";" + dialog.dimension  + "-" + dialog.targa;
+                string firm = dialog.name + ";" + dialog.dimension + "-" + dialog.targa;
 
                 StreamWriter file = File.AppendText(this.projectPath + "\\Imprese.tg");
                 file.WriteLine(firm);
@@ -364,6 +348,7 @@ namespace WindowsFormsApp1
                 this.updateTable();
             }
         }
+
         private void addPlate_Click(object sender, EventArgs e)
         {
             if (!checkIfOpen())
@@ -549,16 +534,16 @@ namespace WindowsFormsApp1
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         // Same callback for every button used to modify data
         private void editButtonsClicked(object sender, EventArgs e)
         {
-            Button btn = (Button) sender;
-            if(btn.Name == "EditFirm")
+            Button btn = (Button)sender;
+            if (btn.Name == "EditFirm")
             {
                 DEditFirm dialog = new DEditFirm(this.firmData, this.dimensions);
-
-                if(dialog.ShowDialog() == DialogResult.OK)
+                var res = dialog.ShowDialog();
+                if (res == DialogResult.OK)
                 {
                     var idx = this.firmData.IndexOf(dialog.oldFirm);
                     this.firmData[idx] = dialog.newFirm;
@@ -570,10 +555,67 @@ namespace WindowsFormsApp1
                     File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
                     this.updateTable();
                 }
+                else if (res == DialogResult.No)
+                {
+                    if (dialog.selectedSecondaryItem)
+                    {
+                        var idx1 = this.firmData.IndexOf(dialog.oldFirm);
+
+                        this.firmData[idx1].targhe.Remove(dialog.secondaryElement);
+                    }
+                    else
+                    {
+                        this.firmData.Remove(dialog.oldFirm);
+                    }
+
+
+                    List<string> lines = new List<string>();
+                    foreach (var element in this.firmData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
+                    this.updateTable();
+                }
             }
-            if(btn.Name == "EditFormImplant")
+            else if (btn.Name == "EditFormImplant")
             {
 
+            }
+            else if (btn.Name == "EditSite")
+            {
+                DEditSite dialog = new DEditSite(this.siteData);
+                var res = dialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    var idx = this.siteData.IndexOf(dialog.oldSite);
+                    this.siteData[idx] = dialog.newSite;
+
+                    List<string> lines = new List<string>();
+                    foreach (var element in this.siteData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
+                    this.updateTable();
+                }
+                else if (res == DialogResult.No)
+                {
+                    List<string> lines = new List<string>();
+                    if(dialog.selectedSecondaryElement)
+                    {
+                        var idx1 = this.siteData.IndexOf(dialog.oldSite);
+                        this.siteData[idx1].names.Remove(dialog.secondaryElement);
+                    }
+                    else
+                    {
+                        this.siteData.Remove(dialog.oldSite);
+                    }
+
+                    foreach (var element in this.siteData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
+                    this.updateTable();
+                }
             }
         }
 
@@ -618,7 +660,7 @@ namespace WindowsFormsApp1
 
         private void monthComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(this.currentTableDataType == "Mese")
+            if (this.currentTableDataType == "Mese")
                 this.fillTable("Mese");
         }
 
@@ -663,12 +705,12 @@ namespace WindowsFormsApp1
             Refresh();
 
             // Loading data from project files
-            Task firm           = this.LoadFirmData();
-            Task site           =  this.LoadSiteData();
-            Task formImplant    = this.LoadRegisterImplantData();
-            Task formVarious    = this.LoadRegisterVariousData();
-            Task analysis       = this.LoadAnalysisData();
-            Task extra          = this.LoadExtraData();
+            Task firm = this.LoadFirmData();
+            Task site = this.LoadSiteData();
+            Task formImplant = this.LoadRegisterImplantData();
+            Task formVarious = this.LoadRegisterVariousData();
+            Task analysis = this.LoadAnalysisData();
+            Task extra = this.LoadExtraData();
 
             await firm;
             await site;
@@ -679,8 +721,8 @@ namespace WindowsFormsApp1
 
             this.sortAll();
 
-            this.LinkRegisterAnalysis();
-            this.CheckAnalysisValidity();
+            await this.LinkRegisterAnalysis();
+            await this.CheckAnalysisValidity();
 
             // Creating tables
             await this.CreateMonthTable();
@@ -688,7 +730,9 @@ namespace WindowsFormsApp1
 
             // Displaying tables
             this.fillTable("Situazione");
-            
+
+            await this.CreateFirmTable();
+
             // UI loading indicator
             this.projectUsable.BackColor = Color.Green;
 
@@ -705,7 +749,7 @@ namespace WindowsFormsApp1
 
             this.projectUsable.BackColor = Color.Green;
         }
-        
+
         private async Task LoadFirmData()
         {
             string[] lines = File.ReadAllLines(projectPath + "\\" + "Imprese.tg");
@@ -792,7 +836,7 @@ namespace WindowsFormsApp1
         }
 
         private async Task LoadRegisterImplantData()
-        { 
+        {
             string[] lines = File.ReadAllLines(projectPath + "\\" + "Registro Impianto.tg");
 
             this.formImplantLastId = 0;
@@ -917,10 +961,7 @@ namespace WindowsFormsApp1
                 {
                     var line = e.Split(';');
                     for (int i = 1; i < line.Length; i += 2)
-                    {
-                        InitialStatus stat = new InitialStatus(int.Parse(line[i]), int.Parse(line[i+1]));
-                        this.CERInitialStatusData.Add(stat);
-                    }
+                        this.CERInitialStatusData.Add(new InitialStatus(int.Parse(line[i]), int.Parse(line[i + 1])));
                     continue;
                 }
 
@@ -991,7 +1032,7 @@ namespace WindowsFormsApp1
 
             List<dataClasses.Module> missing = new List<dataClasses.Module>();
 
-            for(int i = 0; i < this.formImplantData.Count; i++)
+            for (int i = 0; i < this.formImplantData.Count; i++)
             {
                 Analysis analysis;
                 analysis = this.analysisData.Find(x => (
@@ -1015,7 +1056,7 @@ namespace WindowsFormsApp1
         private async Task CheckAnalysisValidity()
         {
             List<Analysis> expired = new List<Analysis>();
-            foreach(var analysis in this.analysisData)
+            foreach (var analysis in this.analysisData)
             {
                 var aDate = analysis.date.AddYears(1);
                 if (DateTime.Compare(aDate, DateTime.Now) < 0)      // if elapsed one year is invalid
@@ -1040,7 +1081,7 @@ namespace WindowsFormsApp1
                     List<MonthElement> month = new List<MonthElement>();
 
                     // form in same Month
-                    while(forms.Count > 0)
+                    while (forms.Count > 0)
                     {
                         bool jump = false;
                         var form = forms[0];
@@ -1078,7 +1119,7 @@ namespace WindowsFormsApp1
                                 if (match.Count > 0)
                                 {
                                     var idx = date.IndexOf(match[0]);
-                                    date[idx] = (match[0].date, date[idx].count+1);
+                                    date[idx] = (match[0].date, date[idx].count + 1);
                                     if (el.toBreak == "p")
                                         toBreakCount += 1;
                                     else if (el.toBreak == "a")
@@ -1114,7 +1155,45 @@ namespace WindowsFormsApp1
             this.months = months;
         }
 
+        private async Task CreateFirmTable()
+        {
+            foreach(var firm in this.firmData)
+            {
+                var name = firm.name;
 
+                var forms = this.formImplantData.FindAll(x => x.carrier == name);
+                if (forms == null || forms.Count == 0)
+                    continue;
+
+                List<((string, string), int)> veichles = new List<((string, string), int)>();
+                
+                foreach(var el in firm.targhe)
+                {
+                    var tuple = ((el.Item1, el.Item2), 0);
+                    veichles.Add(tuple);
+                }
+
+                foreach(var form in forms)
+                {
+                    var el = veichles.Find(x => x.Item1.Item1 == form.dimension && x.Item1.Item2 == form.plate);
+                    var idx = veichles.IndexOf(el);
+                    if (idx == -1)
+                        continue;
+                    veichles[idx] = (el.Item1, el.Item2 + 1);
+                }
+
+                veichles = veichles.Where(x => x.Item2 != 0).ToList();
+
+                foreach(var el in veichles)
+                {
+                    Console.WriteLine(name + el.ToString());
+                    if (el.Item2 != 0)
+                    {
+                    }
+                }
+
+            }
+        }
 
         // Table with situation and movements each day for every year.
         private void CreateStatusTable()
@@ -1128,7 +1207,8 @@ namespace WindowsFormsApp1
                 status.Add((cer, 0));
 
             // Initializing list with empty elements
-            foreach (var el in this.CER) {
+            foreach (var el in this.CER)
+            {
                 // If there is a initial status, add it to the total of the corresponding CER
                 var existingStatus = this.CERInitialStatusData.Find(x => x.status.CER == el);
                 if (existingStatus != null)
@@ -1151,7 +1231,7 @@ namespace WindowsFormsApp1
                     dates.Add(DateTime.Parse(day.ToString() + "/" + month.ToString() + "/" + currentYear.ToString()));
 
             // Cycling in each date
-            foreach(var date in dates)
+            foreach (var date in dates)
             {
                 // Set to zero load and unload that are values valid for only one day
                 for (int i = 0; i < CERs.Count; i++)
@@ -1168,7 +1248,7 @@ namespace WindowsFormsApp1
 
                 int total = 0;
                 // Cycling between each element, all are of the same day
-                foreach(var element in elements)
+                foreach (var element in elements)
                 {
                     // Looking for the correct index
                     var cer = CERs.Find(x => x.CER == element.CER);
@@ -1194,11 +1274,12 @@ namespace WindowsFormsApp1
 
                 // Creating the list containing all the operations for each cer
                 var newCERs = new List<CERElement>();
-                foreach(var el in CERs)
+                foreach (var el in CERs)
                     newCERs.Add(new CERElement(el.CER, el.load, el.unload, el.CERTotal));
 
                 var extraData = this.extraProcessingData.Find(x => x.date.Date == date.Date);
-                if (extraData != null) {
+                if (extraData != null)
+                {
 
                     int q1 = 0;
                     int q2 = 0;
@@ -1223,16 +1304,16 @@ namespace WindowsFormsApp1
 
                     processed = (int)(processed / 1600);
 
-                    if(extraData.type == "v")
+                    if (extraData.type == "v")
                     {
-                        q1 = (int) (processed * 0.6);
+                        q1 = (int)(processed * 0.6);
                         q3 = (int)(processed * 0.4);
                     }
                     else
                     {
                         q2 = processed;
                     }
-                    Console.WriteLine(extraData.date.ToString() +"\t" + processed.ToString() + "\t" + q1.ToString() + "\t" + q2.ToString() + "\t" + q3.ToString());
+                    Console.WriteLine(extraData.date.ToString() + "\t" + processed.ToString() + "\t" + q1.ToString() + "\t" + q2.ToString() + "\t" + q3.ToString());
                     var extraEl = new ExtraProcessingElement(extraData.type, processed, q1, q2, q3);
                     // Creating element with all operation for each cer and also daily informations
                     statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded, extraEl));
@@ -1251,19 +1332,21 @@ namespace WindowsFormsApp1
 
         private void fillTable(string type)
         {
-            if(type != this.currentTableDataType)
+            // Initialize Dataset
+            int dataIndex = 0;
+            DataSet ds = new DataSet();
+            ds.Tables.Add();
+            var dv = new DataView(ds.Tables[dataIndex]);
+            if (type != this.currentTableDataType)
             {
                 this.filterM.ClearFilters();
                 this.currentTableDataType = type;
                 this.setupFilterBoxes();
             }
-            
+
             this.currentTableDataType = type;
 
-            // Initialize Dataset
-            int dataIndex = 0;
-            DataSet ds = new DataSet();
-            ds.Tables.Add();
+            this.table.ColumnHeadersVisible = false;
 
             // Set Filter Context
             this.filterM.SetFilterContext(type);
@@ -1271,11 +1354,6 @@ namespace WindowsFormsApp1
             List<(int index, Color color)> hilightRows = new List<(int index, Color color)>();
             List<object> rows = new List<object>();
 
-            var dv = new DataView(ds.Tables[dataIndex]);
-            this.table.DataSource = dv;
-
-
-            this.table.ColumnHeadersVisible = false;
             if (type == "Registro Impianto")
             {
 
@@ -1406,7 +1484,7 @@ namespace WindowsFormsApp1
                 foreach (var el in this.firmData)
                 {
 
-                    foreach(var plate in el.targhe)
+                    foreach (var plate in el.targhe)
                     {
                         List<object> line = new List<object>();
                         if (el.targhe.IndexOf(plate) == 0)
@@ -1446,7 +1524,7 @@ namespace WindowsFormsApp1
 
                     if (el.validity == "False")
                         hilightRows.Add((this.analysisData.IndexOf(el), Color.IndianRed));
-                    
+
                 }
             }
 
@@ -1492,14 +1570,14 @@ namespace WindowsFormsApp1
                     ds.Tables[dataIndex].Rows.Add(el.getObj());
 
 
-                    rows.Add(el.getObj());
-                    
+                    // rows.Add(el.getObj());
+
                     // Changing row style to hilight activity
-                    if(el.hasLoaded && el.hasUnloaded)
+                    if (el.hasLoaded && el.hasUnloaded)
                         hilightRows.Add((this.status.IndexOf(el), Color.MediumPurple));
-                    else if(el.hasLoaded)
+                    else if (el.hasLoaded)
                         hilightRows.Add((this.status.IndexOf(el), Color.LightGreen));
-                    else if(el.hasUnloaded)
+                    else if (el.hasUnloaded)
                         hilightRows.Add((this.status.IndexOf(el), Color.IndianRed));
                 }
             }
@@ -1571,9 +1649,9 @@ namespace WindowsFormsApp1
 
         private void stylizeTable()
         {
-            if(this.currentTableDataType == "Situazione")
+            if (this.currentTableDataType == "Situazione")
             {
-                for(int i = 0; i <this.table.RowCount; i++)
+                for (int i = 0; i < this.table.RowCount; i++)
                 {
 
                     var fields = this.status[0].getFields(this.CER).ToList();
@@ -1595,6 +1673,10 @@ namespace WindowsFormsApp1
                 }
                 this.table.GridColor = Color.FromArgb(20, 20, 20);
             }
+
+            this.table.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0xFB, 0xAE, 0x4E);
+            //this.table.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0xFF, 0xE7, 0xD2);
+            this.table.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
         private void updateTable()
@@ -1604,11 +1686,11 @@ namespace WindowsFormsApp1
 
         private void sortAll()
         {
-            this.analysisData           = this.analysisData.OrderByDescending(x => x.id).ToList();
-            this.formImplantData        = this.formImplantData.OrderByDescending(x => x.id).ToList();
-            this.formVariousData        = this.formVariousData.OrderByDescending(x => x.id).ToList();
-            this.firmData               = this.firmData.OrderBy(x => x.name).ToList();
-            this.siteData               = this.siteData.OrderBy(x => x.location).ToList();
+            this.analysisData = this.analysisData.OrderByDescending(x => x.id).ToList();
+            this.formImplantData = this.formImplantData.OrderByDescending(x => x.id).ToList();
+            this.formVariousData = this.formVariousData.OrderByDescending(x => x.id).ToList();
+            this.firmData = this.firmData.OrderBy(x => x.name).ToList();
+            this.siteData = this.siteData.OrderBy(x => x.location).ToList();
         }
 
 
@@ -1632,7 +1714,7 @@ namespace WindowsFormsApp1
 
 
             // Clearing list of filter controls
-            foreach(var el in this.filterControls)
+            foreach (var el in this.filterControls)
                 this.Controls.Remove((Control)el);
 
             int offsetX = 40;
@@ -1642,10 +1724,11 @@ namespace WindowsFormsApp1
             int currentX = zeroX;
 
             // Adding filter controls
-            if(this.currentTableDataType == "Situazione" || this.currentTableDataType == "Analisi") {
-                
+            if (this.currentTableDataType == "Situazione" || this.currentTableDataType == "Analisi")
+            {
+
                 // Start Date
-                var e = new DateTimePicker();    
+                var e = new DateTimePicker();
                 e.Location = new System.Drawing.Point(currentX, zeroY);
                 e.Name = "Start Date";
                 e.ValueChanged += new EventHandler(this.filterDateTimePickerChanged);
@@ -1704,9 +1787,9 @@ namespace WindowsFormsApp1
                 currentX += d.Width + span;
 
             }
-            
-            
-            
+
+
+
             if (this.currentTableDataType == "Analisi")
             {
                 // Validity ComboBox

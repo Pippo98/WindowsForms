@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +60,7 @@
             this.filterClearButton = new System.Windows.Forms.Button();
             this.EditFormImplant = new System.Windows.Forms.Button();
             this.EditFirm = new System.Windows.Forms.Button();
+            this.EditSite = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -67,7 +69,7 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(231)))), ((int)(((byte)(210)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolStripMenuItem1});
@@ -111,7 +113,7 @@
             // 
             this.addSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addSite.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addSite.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addSite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.addSite.FlatAppearance.BorderSize = 0;
             this.addSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -128,7 +130,7 @@
             // 
             this.addFirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFirm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addFirm.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addFirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.addFirm.FlatAppearance.BorderSize = 0;
             this.addFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -145,7 +147,7 @@
             // 
             this.addAnalysis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addAnalysis.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addAnalysis.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addAnalysis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.addAnalysis.FlatAppearance.BorderSize = 0;
             this.addAnalysis.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addAnalysis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -162,7 +164,7 @@
             // 
             this.addFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addFormImplant.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.addFormImplant.FlatAppearance.BorderSize = 0;
             this.addFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -180,7 +182,7 @@
             // 
             this.addPlate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addPlate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addPlate.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addPlate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.addPlate.FlatAppearance.BorderSize = 0;
             this.addPlate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addPlate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -197,10 +199,10 @@
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.printButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.printButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.printButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.printButton.FlatAppearance.BorderSize = 0;
             this.printButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.printButton.ForeColor = System.Drawing.Color.Black;
             this.printButton.Location = new System.Drawing.Point(1080, 666);
             this.printButton.Name = "printButton";
@@ -212,7 +214,7 @@
             // 
             // firmButton
             // 
-            this.firmButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.firmButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.firmButton.FlatAppearance.BorderSize = 0;
             this.firmButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.firmButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -227,7 +229,7 @@
             // 
             // siteButton
             // 
-            this.siteButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.siteButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.siteButton.FlatAppearance.BorderSize = 0;
             this.siteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.siteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -242,7 +244,7 @@
             // 
             // analysisButton
             // 
-            this.analysisButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.analysisButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.analysisButton.FlatAppearance.BorderSize = 0;
             this.analysisButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.analysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -257,7 +259,7 @@
             // 
             // registerButton
             // 
-            this.registerButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.registerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.registerButton.FlatAppearance.BorderSize = 0;
             this.registerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.registerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -272,7 +274,7 @@
             // 
             // missingAnalysisButton
             // 
-            this.missingAnalysisButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.missingAnalysisButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.missingAnalysisButton.FlatAppearance.BorderSize = 0;
             this.missingAnalysisButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.missingAnalysisButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -291,15 +293,16 @@
             this.projectUsable.BackColor = System.Drawing.Color.DarkRed;
             this.projectUsable.Enabled = false;
             this.projectUsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.projectUsable.Location = new System.Drawing.Point(1138, 31);
+            this.projectUsable.Location = new System.Drawing.Point(1189, 31);
             this.projectUsable.Name = "projectUsable";
-            this.projectUsable.Size = new System.Drawing.Size(75, 23);
+            this.projectUsable.Size = new System.Drawing.Size(24, 23);
             this.projectUsable.TabIndex = 22;
             this.projectUsable.UseVisualStyleBackColor = false;
+            this.projectUsable.Visible = false;
             // 
             // RegisterVariousButton
             // 
-            this.RegisterVariousButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.RegisterVariousButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.RegisterVariousButton.FlatAppearance.BorderSize = 0;
             this.RegisterVariousButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegisterVariousButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -316,7 +319,7 @@
             // 
             this.addFormVarious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFormVarious.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addFormVarious.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.addFormVarious.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.addFormVarious.FlatAppearance.BorderSize = 0;
             this.addFormVarious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormVarious.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -350,12 +353,20 @@
             this.table.Location = new System.Drawing.Point(12, 150);
             this.table.Name = "table";
             this.table.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.table.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.table.Size = new System.Drawing.Size(1062, 581);
             this.table.TabIndex = 28;
             // 
             // monthButton
             // 
-            this.monthButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.monthButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.monthButton.FlatAppearance.BorderSize = 0;
             this.monthButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.monthButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -380,7 +391,7 @@
             // 
             // situationButton
             // 
-            this.situationButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.situationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
             this.situationButton.FlatAppearance.BorderSize = 0;
             this.situationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.situationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -399,7 +410,7 @@
             // 
             // filterClearButton
             // 
-            this.filterClearButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.filterClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
             this.filterClearButton.FlatAppearance.BorderSize = 0;
             this.filterClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.filterClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -415,7 +426,7 @@
             // 
             this.EditFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EditFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.EditFormImplant.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.EditFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.EditFormImplant.FlatAppearance.BorderSize = 0;
             this.EditFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -433,7 +444,7 @@
             // 
             this.EditFirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EditFirm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.EditFirm.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.EditFirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
             this.EditFirm.FlatAppearance.BorderSize = 0;
             this.EditFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -447,6 +458,24 @@
             this.EditFirm.UseVisualStyleBackColor = false;
             this.EditFirm.Click += new System.EventHandler(this.editButtonsClicked);
             // 
+            // EditSite
+            // 
+            this.EditSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditSite.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.EditSite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(113)))), ((int)(((byte)(113)))));
+            this.EditSite.FlatAppearance.BorderSize = 0;
+            this.EditSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EditSite.ForeColor = System.Drawing.Color.Black;
+            this.EditSite.Location = new System.Drawing.Point(1082, 602);
+            this.EditSite.Margin = new System.Windows.Forms.Padding(0);
+            this.EditSite.Name = "EditSite";
+            this.EditSite.Size = new System.Drawing.Size(131, 48);
+            this.EditSite.TabIndex = 39;
+            this.EditSite.Text = "Modifica\r\nCantiere";
+            this.EditSite.UseVisualStyleBackColor = false;
+            this.EditSite.Click += new System.EventHandler(this.editButtonsClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,6 +484,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.Controls.Add(this.EditSite);
             this.Controls.Add(this.EditFirm);
             this.Controls.Add(this.EditFormImplant);
             this.Controls.Add(this.filterClearButton);
@@ -477,6 +507,7 @@
             this.Controls.Add(this.addSite);
             this.Controls.Add(this.addFirm);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -522,6 +553,7 @@
         private System.Windows.Forms.Button filterClearButton;
         private System.Windows.Forms.Button EditFirm;
         private System.Windows.Forms.Button EditFormImplant;
+        private System.Windows.Forms.Button EditSite;
     }
 }
 

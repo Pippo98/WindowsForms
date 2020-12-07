@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -52,14 +48,14 @@ namespace WindowsFormsApp1.dataClasses
                 return ret;
 
             int count = 0;
-            foreach(var st in this.stats)
+            foreach (var st in this.stats)
             {
                 // If count is equal clear most used variable
                 if (st.projectCount == count)
                     ret = "";
 
                 // If prjCount is greater save the Name
-                if(st.projectCount > count)
+                if (st.projectCount > count)
                 {
                     count = st.projectCount;
                     ret = st.projectName;
@@ -76,7 +72,7 @@ namespace WindowsFormsApp1.dataClasses
             Stat st = stats.Find(x => (x.projectName == projectName));
 
             // If no equal project name existing in struct create new
-            if(st == null)
+            if (st == null)
             {
                 st = new Stat(projectName, 1);
                 this.stats.Add(st);
@@ -107,7 +103,7 @@ namespace WindowsFormsApp1.dataClasses
             this.stats.RemoveAll(x => x.projectName == name);
 
             List<string> lines = new List<string>();
-            foreach(var e in this.stats)
+            foreach (var e in this.stats)
                 lines.Add(e.getString(";"));
 
             File.WriteAllLines(this.path + fileName, lines);

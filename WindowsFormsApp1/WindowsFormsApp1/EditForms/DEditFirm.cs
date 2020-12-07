@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.OleDb;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.dataClasses;
 
@@ -19,6 +14,8 @@ namespace Rifiuti.EditForms
 
         public Firm oldFirm;
         public Firm newFirm;
+        public bool selectedSecondaryItem;
+        public Tuple<string, string> secondaryElement;
 
         public DEditFirm(List<Firm> firms, string[] dimensions)
         {
@@ -37,24 +34,25 @@ namespace Rifiuti.EditForms
         {
             Button btn = (Button)sender;
 
-            if(btn.Name == "OKButton")
+            if (btn.Name == "OKButton")
             {
-                this.newFirm = new Firm(this.oldFirm.name, new List<Tuple<string,string>>(this.oldFirm.targhe));
+                this.newFirm = new Firm(this.oldFirm.name, new List<Tuple<string, string>>(this.oldFirm.targhe));
                 this.newFirm.name = this.NameTextBox.Text;
-                var plate = this.newFirm.targhe.Find(x => x.Item2 == (string)this.PlateComboBox.SelectedItem);
+                Console.WriteLine(this.PlateComboBox.SelectedItem);
+                var plate = this.newFirm.targhe.Find(x => x.Item2 == this.PlateComboBox.SelectedItem.ToString());
                 var idx = newFirm.targhe.IndexOf(plate);
-                plate = Tuple.Create((string)this.DimensionCombo.SelectedItem, (string)this.PlateTextBox.Text);
+                plate = Tuple.Create((string)this.DimensionCombo.SelectedItem, this.PlateTextBox.Text);
                 newFirm.targhe[idx] = plate;
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-            if(btn.Name == "DeleteButton")
+            if (btn.Name == "DeleteButton")
             {
                 this.DialogResult = DialogResult.No;
                 this.Close();
             }
-            if(btn.Name == "CancelButton")
+            if (btn.Name == "CancelButton")
             {
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
@@ -65,7 +63,7 @@ namespace Rifiuti.EditForms
         {
             ComboBox cmb = (ComboBox)sender;
 
-            if(cmb.SelectedItem != null)
+            if (cmb.SelectedItem != null)
             {
                 var el = this.firmData.Find(x => x.name == (string)cmb.SelectedItem);
                 var plates = el.targhe.Select(x => x.Item2);
@@ -84,10 +82,12 @@ namespace Rifiuti.EditForms
             if (cmb.SelectedItem != null)
             {
                 var el = this.firmData.Find(x => x.name == (string)this.NameComboBox.SelectedItem);
-                var dimension = el.targhe.Find(x => x.Item2 == (string)cmb.SelectedItem);
-                this.DimensionCombo.SelectedItem = dimension.Item1;
-                this.readOnlyDimension.Text = dimension.Item1;
-                this.PlateTextBox.Text = dimension.Item2;
+                var targa = el.targhe.Find(x => x.Item2 == (string)cmb.SelectedItem);
+                this.DimensionCombo.SelectedItem = targa.Item1;
+                this.readOnlyDimension.Text = targa.Item1;
+                this.PlateTextBox.Text = targa.Item2;
+
+                this.secondaryElement = targa;
             }
         }
     }

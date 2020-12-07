@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.dataClasses;
 
@@ -62,7 +55,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocationBox.Items.AddRange(siteLocations);
             }
 
-            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x=>x.ToString()));
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x => x.ToString()));
 
         }
 
@@ -99,7 +92,8 @@ namespace WindowsFormsApp1.AddForms
 
         private void ok_Click(object sender, EventArgs e)
         {
-            if (checkIfValid()) {
+            if (checkIfValid())
+            {
 
                 this.date = this.dateTimePicker.Value;
                 this.CER = this.cerBox.SelectedItem.ToString();

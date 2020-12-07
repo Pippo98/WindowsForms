@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -24,13 +16,13 @@ namespace WindowsFormsApp1.dataClasses
 
         public Analysis(int id, DateTime date, int CER, string siteName, string siteLocation, string producer, string validity)
         {
-            this.id             = id;
-            this.date           = date;
-            this.CER            = CER;
-            this.siteName       = siteName;
-            this.siteLocation   = siteLocation;
-            this.producer       = producer;
-            this.validity       = validity;
+            this.id = id;
+            this.date = date;
+            this.CER = CER;
+            this.siteName = siteName;
+            this.siteLocation = siteLocation;
+            this.producer = producer;
+            this.validity = validity;
         }
 
         public string[] getFields()

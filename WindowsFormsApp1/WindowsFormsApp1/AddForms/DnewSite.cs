@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.dataClasses;
 
@@ -47,24 +40,7 @@ namespace WindowsFormsApp1.AddForms
         private void ok_Click(object sender, EventArgs e)
         {
             bool valid = true;
-
-            if(this.nameText.Text == "")
-            {
-                errorProvider1.SetError(nameText, "Aggiungi un Nome");
-                valid = false;
-            }
-            else
-            {
-                errorProvider1.Dispose();
-            }
-            if(comboChanged == false && siteText.Text == "")
-            {
-                errorProvider2.SetError(siteCombo, "Aggiungi un Comune");
-                valid = false;
-            }
-            else{
-                errorProvider2.Dispose();
-            }
+            this.isNewSite = true;
 
             if (valid)
             {
@@ -76,8 +52,11 @@ namespace WindowsFormsApp1.AddForms
                 }
                 else
                 {
-                    this.siteLocation = this.siteCombo.SelectedItem.ToString();
-                    this.isNewSite = false;
+                    if(this.siteCombo.SelectedIndex != -1)
+                    {
+                        this.siteLocation = this.siteCombo.SelectedItem.ToString();
+                        this.isNewSite = false;
+                    }
                 }
                 this.DialogResult = DialogResult.OK;
                 this.Close();

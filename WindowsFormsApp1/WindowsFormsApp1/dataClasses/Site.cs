@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -14,8 +9,8 @@ namespace WindowsFormsApp1.dataClasses
 
         public Site(string location_, List<string> names_)
         {
-            this.location   = location_;
-            this.names      = names_;
+            this.location = location_;
+            this.names = names_;
         }
 
         public string[] getFields()
@@ -34,7 +29,7 @@ namespace WindowsFormsApp1.dataClasses
 
             text += this.location;
 
-            foreach(var el in this.names)
+            foreach (var el in this.names)
                 text += separator + el;
 
             return text;

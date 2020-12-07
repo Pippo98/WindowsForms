@@ -55,3 +55,4 @@ D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiu
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.exe
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.pdb
 D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\WindowsFormsApp1.AddForms.aggiungiImpresa.resources
+D:\Codes\Github\WindowsForms\WindowsFormsApp1\WindowsFormsApp1\obj\Release\Rifiuti.EditForms.DEditSite.resources

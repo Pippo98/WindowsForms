@@ -1,10 +1,5 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
-using System.CodeDom;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -23,7 +18,7 @@ namespace WindowsFormsApp1.dataClasses
 
         public void addModifiedFilter(string type)
         {
-            if(!this.checkFilterPresence(type))
+            if (!this.checkFilterPresence(type))
                 modifiedFilters.Add(type);
         }
 
@@ -69,7 +64,8 @@ namespace WindowsFormsApp1.dataClasses
                 DateTime date = (DateTime)this.filters.Find(x => x.type == "End Date").value;
                 filter.Add($"Data <= #{date.ToString("s")}#");
             }
-            if (this.checkFilterPresence("Produttore")){
+            if (this.checkFilterPresence("Produttore"))
+            {
                 var name = this.filters.Find(x => x.type == "Produttore").value;
                 filter.Add($"Produttore LIKE '{name}'");
             }

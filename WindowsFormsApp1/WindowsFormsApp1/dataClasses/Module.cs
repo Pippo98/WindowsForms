@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -141,7 +134,7 @@ namespace WindowsFormsApp1.dataClasses
             text += this.loadUnload + separator;
             text += this.producer + separator;
             text += this.carrier + separator;
-            if(destination != "")
+            if (destination != "")
                 text += this.destination + separator;
             text += this.dimension + "-" + this.plate + separator;
             text += this.CER.ToString() + separator;

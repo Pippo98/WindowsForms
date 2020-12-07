@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
-using iText.Layout;
 using iText.Layout.Element;
-using System.Web.UI.HtmlControls;
-using System.Windows.Forms.VisualStyles;
-using iText.StyledXmlParser.Jsoup.Nodes;
-using iText.IO.Util;
-using System.Threading;
-using System.Runtime.InteropServices;
-using iText.Kernel.Geom;
-using System.Web.UI;
-using Microsoft.VisualBasic.Compatibility.VB6;
-using System.IO;
+using System;
+using System.Collections.Generic;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -68,11 +54,11 @@ namespace WindowsFormsApp1.dataClasses
                     for (int i = 0; i < firms.Count; i++)
                     {
                         Firm firm = firms[i];
-                        if(firm == null)
+                        if (firm == null)
                         {
                             continue;
                         }
-                        if(firm.targhe.Count == 0 || firm.targhe == null)
+                        if (firm.targhe.Count == 0 || firm.targhe == null)
                         {
                             cell = new Cell();
                             cell.Add(new Paragraph(firm.name));
@@ -162,7 +148,7 @@ namespace WindowsFormsApp1.dataClasses
                     foreach (var a in analysis)
                     {
                         var elements = a.getString(";").Split(';');
-                        foreach(var el in elements)
+                        foreach (var el in elements)
                         {
                             cell = new Cell();
                             cell.Add(new Paragraph(el).SetFontSize(6));
@@ -281,7 +267,7 @@ namespace WindowsFormsApp1.dataClasses
             return 1;
         }
 
-        public int printSite(string folder, List<Site>  site)
+        public int printSite(string folder, List<Site> site)
         {
             PdfWriter writer;
             try
@@ -296,7 +282,7 @@ namespace WindowsFormsApp1.dataClasses
             {
                 using (var pdfDoc = new PdfDocument(writer))
                 {
-                    
+
                     pdfDoc.SetDefaultPageSize(PageSize.A4.Rotate());
                     var doc = new iText.Layout.Document(pdfDoc);
                     // Doc Title
@@ -324,11 +310,11 @@ namespace WindowsFormsApp1.dataClasses
                         string siteString = site[i].getString(";");
                         string[] fields = siteString.Split(';');
 
-                        cell = new Cell(fields.Length-1, 1);
+                        cell = new Cell(fields.Length - 1, 1);
                         cell.Add(new Paragraph(fields[0]).SetFontSize(9));
                         table.AddCell(cell);
 
-                        for(int j = 1; j < fields.Length ; j++)
+                        for (int j = 1; j < fields.Length; j++)
                         {
                             cell = new Cell();
                             cell.Add(new Paragraph(fields[j]).SetFontSize(8));
@@ -337,7 +323,7 @@ namespace WindowsFormsApp1.dataClasses
                     }
 
                     doc.Add(table);
-                    
+
                 }
             }
             return 1;
@@ -346,7 +332,7 @@ namespace WindowsFormsApp1.dataClasses
         public int printMonths(string folder, List<List<MonthElement>> months)
         {
             // Foreach month in year
-            foreach(var month in months)
+            foreach (var month in months)
             {
                 // Check if there are data in this month
                 if (month == null || month.Count == 0 || month[0].veichles.Count == 0)
@@ -380,7 +366,6 @@ namespace WindowsFormsApp1.dataClasses
                         var hcenter = iText.Layout.Properties.TextAlignment.CENTER;
                         var vcenter = iText.Layout.Properties.VerticalAlignment.MIDDLE;
 
-
                         // Doc Title
                         Paragraph title = new Paragraph(monthName);
                         title.SetFontSize(30);
@@ -388,7 +373,7 @@ namespace WindowsFormsApp1.dataClasses
 
                         // Doc table
                         // Generate a table with colums count equal to the days in the month plus 2 (firm, veichle) plus 2 (normal and to break) plus total
-                        var table = new Table(DateTime.DaysInMonth(month[0].veichles[0].dates[0].date.Year, months.IndexOf(month)+1)+2 +2 +1);
+                        var table = new Table(DateTime.DaysInMonth(month[0].veichles[0].dates[0].date.Year, months.IndexOf(month) + 1) + 2 + 3 + 1);
                         table.UseAllAvailableWidth();
 
                         // First row
@@ -400,19 +385,22 @@ namespace WindowsFormsApp1.dataClasses
                         table.AddCell(cell);
 
                         // Days
-                        for (int day = 1; day <= DateTime.DaysInMonth(currYear, currMonth); day ++)
+                        for (int day = 1; day <= DateTime.DaysInMonth(currYear, currMonth); day++)
                         {
                             var date = day.ToString() + "/" + currMonth.ToString() + "/" + currYear.ToString();
 
                             cell = new Cell();
                             cell.Add(new Paragraph(date).SetFontSize(8).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));
-                            cell.SetRotationAngle(-Math.PI/2);
+                            cell.SetRotationAngle(-Math.PI / 2);
                             table.AddCell(cell);
                         }
 
                         // Total trip counts
                         cell = new Cell();
                         cell.Add(new Paragraph("N").SetBold().SetFontSize(15));
+                        table.AddCell(cell);
+                        cell = new Cell();
+                        cell.Add(new Paragraph("A").SetBold().SetFontSize(15));
                         table.AddCell(cell);
                         cell = new Cell();
                         cell.Add(new Paragraph("P").SetBold().SetFontSize(15));
@@ -430,7 +418,7 @@ namespace WindowsFormsApp1.dataClasses
                             table.AddCell(cell);
 
                             // For every veichle in this current firm
-                            foreach(var veichle in element.veichles)
+                            foreach (var veichle in element.veichles)
                             {
                                 // Create cell with veichle informations
                                 cell = new Cell();
@@ -445,7 +433,7 @@ namespace WindowsFormsApp1.dataClasses
                                     var datestring = day.ToString() + "/" + currMonth.ToString() + "/" + currYear.ToString();
                                     var date = DateTime.Parse(datestring);
 
-                                    if(veichle.dates.FindAll(x=>(x.date.Date == date.Date)).Count > 0)
+                                    if (veichle.dates.FindAll(x => (x.date.Date == date.Date)).Count > 0)
                                     {
                                         var count = veichle.dates.FindAll(x => (x.date.Date == date.Date))[0].count;
                                         cell = new Cell();
@@ -466,6 +454,9 @@ namespace WindowsFormsApp1.dataClasses
                                 table.AddCell(cell);
                                 cell = new Cell();
                                 cell.Add(new Paragraph(veichle.toBreakCount.ToString()).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));
+                                table.AddCell(cell);
+                                cell = new Cell();
+                                cell.Add(new Paragraph(veichle.asphaltCount.ToString()).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));
                                 table.AddCell(cell);
                                 cell = new Cell();
                                 cell.Add(new Paragraph(veichle.totalCount.ToString()).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WindowsFormsApp1.dataClasses
+﻿namespace WindowsFormsApp1.dataClasses
 {
     class Stat
     {
-        public string   projectName;
-        public int      projectCount;
+        public string projectName;
+        public int projectCount;
 
         public Stat(string projectName, int projectCount)
         {

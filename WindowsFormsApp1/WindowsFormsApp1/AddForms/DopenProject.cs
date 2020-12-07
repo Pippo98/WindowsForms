@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1.AddForms
@@ -66,7 +60,7 @@ namespace WindowsFormsApp1.AddForms
             {
                 this.projectPath = this.basePath + "\\" + dialog.name;
 
-                if(this.checkAndCreatePath(this.projectPath) == 0)
+                if (this.checkAndCreatePath(this.projectPath) == 0)
                 {
                     // Project does already exist
                 }
@@ -118,7 +112,7 @@ namespace WindowsFormsApp1.AddForms
             if (prjList.SelectedItems.Count > 0)
             {
                 this.projectName = prjList.SelectedItems[0].Text;
-                this.projectPath = this.basePath + "\\" +  this.projectName;
+                this.projectPath = this.basePath + "\\" + this.projectName;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

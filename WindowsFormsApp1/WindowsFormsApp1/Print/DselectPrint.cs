@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1.Print
@@ -54,7 +47,7 @@ namespace WindowsFormsApp1.Print
 
         private void optionsList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if(e.Index == 0)
+            if (e.Index == 0)
             {
                 if (e.CurrentValue == CheckState.Unchecked)
                 {

@@ -47,7 +47,7 @@
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox1.Location = new System.Drawing.Point(172, 12);
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(176, 12);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
             this.readOnlyTextBox1.ReadOnly = true;
@@ -160,7 +160,7 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.BackColor = System.Drawing.Color.Red;
+            this.DeleteButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.DeleteButton.FlatAppearance.BorderSize = 0;
             this.DeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DeleteButton.Location = new System.Drawing.Point(207, 280);
@@ -188,7 +188,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 364);
+            this.ClientSize = new System.Drawing.Size(539, 364);
             this.Controls.Add(this.readOnlyDimension);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.readOnlyTextBox3);

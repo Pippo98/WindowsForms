@@ -45,7 +45,7 @@
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(374, 198);
+            this.ok.Location = new System.Drawing.Point(359, 157);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(95, 28);
             this.ok.TabIndex = 0;
@@ -55,7 +55,7 @@
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(251, 198);
+            this.cancel.Location = new System.Drawing.Point(236, 157);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(95, 28);
             this.cancel.TabIndex = 1;
@@ -65,7 +65,7 @@
             // 
             // nameText
             // 
-            this.nameText.Location = new System.Drawing.Point(218, 48);
+            this.nameText.Location = new System.Drawing.Point(210, 99);
             this.nameText.Name = "nameText";
             this.nameText.Size = new System.Drawing.Size(121, 20);
             this.nameText.TabIndex = 3;
@@ -73,7 +73,7 @@
             // readOnlyTextBox1
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox1.Location = new System.Drawing.Point(86, 51);
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(78, 102);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
             this.readOnlyTextBox1.ReadOnly = true;
@@ -85,7 +85,7 @@
             // readOnlyTextBox2
             // 
             this.readOnlyTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox2.Location = new System.Drawing.Point(86, 96);
+            this.readOnlyTextBox2.Location = new System.Drawing.Point(78, 52);
             this.readOnlyTextBox2.Multiline = true;
             this.readOnlyTextBox2.Name = "readOnlyTextBox2";
             this.readOnlyTextBox2.ReadOnly = true;
@@ -97,7 +97,7 @@
             // siteCombo
             // 
             this.siteCombo.FormattingEnabled = true;
-            this.siteCombo.Location = new System.Drawing.Point(218, 91);
+            this.siteCombo.Location = new System.Drawing.Point(210, 47);
             this.siteCombo.Name = "siteCombo";
             this.siteCombo.Size = new System.Drawing.Size(121, 21);
             this.siteCombo.TabIndex = 6;
@@ -106,7 +106,7 @@
             // readOnlyTextBox3
             // 
             this.readOnlyTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.readOnlyTextBox3.Location = new System.Drawing.Point(374, 96);
+            this.readOnlyTextBox3.Location = new System.Drawing.Point(366, 52);
             this.readOnlyTextBox3.Multiline = true;
             this.readOnlyTextBox3.Name = "readOnlyTextBox3";
             this.readOnlyTextBox3.ReadOnly = true;
@@ -117,7 +117,7 @@
             // 
             // siteText
             // 
-            this.siteText.Location = new System.Drawing.Point(480, 93);
+            this.siteText.Location = new System.Drawing.Point(472, 49);
             this.siteText.Name = "siteText";
             this.siteText.Size = new System.Drawing.Size(121, 20);
             this.siteText.TabIndex = 8;

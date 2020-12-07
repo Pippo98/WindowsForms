@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1.AddForms
@@ -28,12 +19,11 @@ namespace WindowsFormsApp1.AddForms
                 "2 assi",
                 "3 assi",
                 "4 assi",
-                "Bilico" 
+                "Bilico"
             };
             for (int i = 0; i < dimVeichle.Length; i++)
             {
                 this.comboBox.Items.Add(this.dimVeichle[i]);
-                this.comboBox.SelectedIndex = 0;
             }
         }
 
@@ -46,7 +36,14 @@ namespace WindowsFormsApp1.AddForms
         {
             this.name = nameText.Text;
             this.targa = this.plateText.Text;
-            this.dimension = this.comboBox.SelectedItem.ToString();
+            if(this.comboBox.SelectedIndex != -1)
+            {
+                this.dimension = this.comboBox.SelectedItem.ToString();
+            }
+            else
+            {
+                this.dimension = "";
+            }
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

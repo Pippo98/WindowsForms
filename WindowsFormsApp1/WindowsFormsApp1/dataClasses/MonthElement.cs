@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using iText.StyledXmlParser.Node;
-using Microsoft.VisualBasic.Logging;
 
 namespace WindowsFormsApp1.dataClasses
 {
@@ -27,7 +22,7 @@ namespace WindowsFormsApp1.dataClasses
             foreach (var veichle in this.veichles)
             {
                 text += veichle.veichle.plateType + separator + veichle.veichle.plate + separator;
-                foreach(var date in veichle.dates)
+                foreach (var date in veichle.dates)
                 {
                     text += date.date + separator + date.count + separator;
                 }
@@ -37,7 +32,8 @@ namespace WindowsFormsApp1.dataClasses
         }
     }
 
-    public class VeichleElement{
+    public class VeichleElement
+    {
         public (string plateType, string plate) veichle;
         public List<(DateTime date, int count)> dates;
         public int normalCount;
@@ -61,7 +57,7 @@ namespace WindowsFormsApp1.dataClasses
 
             text += this.veichle.plate + separator;
             text += this.veichle.plateType += separator;
-            foreach(var element in this.dates)
+            foreach (var element in this.dates)
                 text += element.ToString() + separator;
             text += totalCount.ToString();
 

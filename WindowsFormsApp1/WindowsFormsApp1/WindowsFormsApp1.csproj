@@ -167,6 +167,12 @@
     <Compile Include="EditForms\DEditFirm.Designer.cs">
       <DependentUpon>DEditFirm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditForms\DEditSite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditSite.Designer.cs">
+      <DependentUpon>DEditSite.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditForms\DEditFirm.resx">
       <DependentUpon>DEditFirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditSite.resx">
+      <DependentUpon>DEditSite.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -270,6 +279,7 @@
     <Content Include="Asset 3.ico" />
     <Content Include="logo-terra_group.ico" />
     <Content Include="logo_tg.ico" />
+    <None Include="Resources\download.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

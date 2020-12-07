@@ -1,14 +1,5 @@
-﻿using Org.BouncyCastle.Asn1.Esf;
-using Org.BouncyCastle.Crypto.Engines;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.dataClasses;
 
@@ -16,18 +7,18 @@ namespace WindowsFormsApp1.AddForms
 {
     public partial class DnewModule : Form
     {
-        private List<Firm>      firmData;
-        private List<string>    firmNames;
+        private List<Firm> firmData;
+        private List<string> firmNames;
         private Tuple<string, string>[] platesTuple;
-        private string[]    plates;
-        private string[]    platesDimension;
+        private string[] plates;
+        private string[] platesDimension;
 
-        private int[]    CERs;
+        private int[] CERs;
 
-        private List<Site>      siteData;
-        private List<string>        siteLocations;
-        private string[]        siteNames;
-        private string          moduleType;
+        private List<Site> siteData;
+        private List<string> siteLocations;
+        private string[] siteNames;
+        private string moduleType;
 
         public string note;
         public string date;
@@ -57,9 +48,9 @@ namespace WindowsFormsApp1.AddForms
             if (firmData.Count > 0)
             {
                 firmNames = new List<string>();
-                
 
-                foreach(var el in this.firmData)
+
+                foreach (var el in this.firmData)
                 {
                     if (el != null)
                         firmNames.Add(el.name);
@@ -73,14 +64,14 @@ namespace WindowsFormsApp1.AddForms
             {
                 siteLocations = new List<string>();
 
-                foreach(var el in this.siteData)
+                foreach (var el in this.siteData)
                 {
                     siteLocations.Add(el.location);
                 }
                 this.siteLocationBox.Items.AddRange(siteLocations.ToArray());
             }
 
-            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x=>x.ToString()));
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x => x.ToString()));
             this.loadUnloadBox.Items.Add("Carico");
             this.loadUnloadBox.Items.Add("Scarico");
             this.loadUnloadBox.SelectedIndex = 0;
@@ -90,14 +81,14 @@ namespace WindowsFormsApp1.AddForms
         {
             for (int i = 0; i < this.firmData.Count; i++)
             {
-                if(this.firmData[i].name == firm)
+                if (this.firmData[i].name == firm)
                 {
                     this.platesTuple = new Tuple<string, string>[this.firmData[i].targhe.Count];
                     for (int j = 0; j < this.platesTuple.Length; j++)
                     {
                         this.platesTuple[j] = this.firmData[i].targhe[j];
                     }
-                    
+
                     this.plates = new string[this.platesTuple.Length];
                     this.platesDimension = new string[this.platesTuple.Length];
                     for (int j = 0; j < this.firmData[i].targhe.Count; j++)
@@ -114,9 +105,9 @@ namespace WindowsFormsApp1.AddForms
 
         private void updateCurrentSites(string location)
         {
-            for (int i =0; i < this.siteData.Count; i++)
+            for (int i = 0; i < this.siteData.Count; i++)
             {
-                if(this.siteData[i].location == location)
+                if (this.siteData[i].location == location)
                 {
                     this.siteNames = this.siteData[i].names.ToArray();
                 }
@@ -137,7 +128,7 @@ namespace WindowsFormsApp1.AddForms
                 this.date = this.dateTimePicker.Value.ToString();
                 this.producer = this.producerBox.SelectedItem.ToString();
                 this.carrier = this.carrierBox.SelectedItem.ToString();
-                if(this.moduleType == "Implant")
+                if (this.moduleType == "Implant")
                     this.carrierPlate = this.plates[this.plateBox.SelectedIndex];
                 this.loadUnload = this.loadUnloadBox.SelectedItem.ToString();
                 this.CER = this.cerBox.SelectedItem.ToString();
@@ -151,7 +142,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.siteName = this.siteNameBox.SelectedItem.ToString();
 
-                if(loadUnloadBox.SelectedItem.ToString() == "Scarico")
+                if (loadUnloadBox.SelectedItem.ToString() == "Scarico")
                 {
                     this.destination = this.destinationBox.SelectedItem.ToString();
                 }
@@ -198,11 +189,11 @@ namespace WindowsFormsApp1.AddForms
         {
             bool valid = true;
 
-            if(this.dateTimePicker.Value == null)
+            if (this.dateTimePicker.Value == null)
                 valid = false;
-            if(this.producerBox.SelectedItem == null)
+            if (this.producerBox.SelectedItem == null)
                 valid = false;
-            if(this.carrierBox.SelectedItem == null)
+            if (this.carrierBox.SelectedItem == null)
                 valid = false;
             if (this.plateBox.SelectedItem == null && this.moduleType == "Implant")
                 valid = false;
@@ -225,9 +216,9 @@ namespace WindowsFormsApp1.AddForms
 
         private void loadUnloadBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(loadUnloadBox.SelectedItem != null)
+            if (loadUnloadBox.SelectedItem != null)
             {
-                if(loadUnloadBox.SelectedItem.ToString() == "Scarico")
+                if (loadUnloadBox.SelectedItem.ToString() == "Scarico")
                     this.destinationBox.Enabled = true;
                 else
                     this.destinationBox.Enabled = false;
