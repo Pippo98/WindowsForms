@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1.Print
+namespace Rifiuti.Print
 {
     public partial class DselectPrint : Form
     {

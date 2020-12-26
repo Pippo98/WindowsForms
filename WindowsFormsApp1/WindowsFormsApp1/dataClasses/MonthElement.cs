@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     public class MonthElement
     {

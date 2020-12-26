@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.dataClasses
+﻿namespace Rifiuti.dataClasses
 {
     class Stat
     {

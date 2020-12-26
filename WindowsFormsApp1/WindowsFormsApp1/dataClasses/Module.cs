@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     public class Module
     {
@@ -20,7 +20,7 @@ namespace WindowsFormsApp1.dataClasses
         public string siteName;
         public string note;
 
-        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, string toBreak, int kg, string note, string destination = "")
+        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, string toBreak, int kg, string note, string destination = "none")
         {
             this.id = id;
             this.date = date;
@@ -46,7 +46,7 @@ namespace WindowsFormsApp1.dataClasses
                 obj = new object[]
                 {
                     id,
-                    date.ToShortDateString(),
+                    date.ToString("d"),
                     loadUnload,
                     producer,
                     carrier,
@@ -64,7 +64,7 @@ namespace WindowsFormsApp1.dataClasses
                 obj = new object[]
                 {
                     id,
-                    date.ToShortDateString(),
+                    date.ToString("d"),
                     loadUnload,
                     producer,
                     carrier,
@@ -134,14 +134,15 @@ namespace WindowsFormsApp1.dataClasses
             text += this.loadUnload + separator;
             text += this.producer + separator;
             text += this.carrier + separator;
-            if (destination != "")
+            if (destination != "none")
                 text += this.destination + separator;
             text += this.dimension + "-" + this.plate + separator;
             text += this.CER.ToString() + separator;
-            text += this.toBreak + separator;
             text += this.kg.ToString() + separator;
             text += this.siteLocation + separator;
-            text += this.siteName;
+            text += this.siteName + separator;
+            text += this.toBreak + separator;
+            text += this.note;
 
             return text;
         }

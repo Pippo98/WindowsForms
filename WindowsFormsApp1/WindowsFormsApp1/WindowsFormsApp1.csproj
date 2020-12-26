@@ -161,17 +161,41 @@
     <Compile Include="dataClasses\Stat.cs" />
     <Compile Include="dataClasses\StatManager.cs" />
     <Compile Include="dataClasses\StatusElement.cs" />
+    <Compile Include="EditForms\DEditCERs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditCERs.Designer.cs">
+      <DependentUpon>DEditCERs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditForms\DEditExtraProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditExtraProcess.Designer.cs">
+      <DependentUpon>DEditExtraProcess.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditForms\DEditFirm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditForms\DEditFirm.Designer.cs">
       <DependentUpon>DEditFirm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditForms\DEditModule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditModule.Designer.cs">
+      <DependentUpon>DEditModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditForms\DEditSite.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditForms\DEditSite.Designer.cs">
       <DependentUpon>DEditSite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditForms\DEditStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForms\DEditStatus.Designer.cs">
+      <DependentUpon>DEditStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -217,11 +241,23 @@
     <EmbeddedResource Include="AddForms\WarningMessage.resx">
       <DependentUpon>WarningMessage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditCERs.resx">
+      <DependentUpon>DEditCERs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditExtraProcess.resx">
+      <DependentUpon>DEditExtraProcess.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditForms\DEditFirm.resx">
       <DependentUpon>DEditFirm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditModule.resx">
+      <DependentUpon>DEditModule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditForms\DEditSite.resx">
       <DependentUpon>DEditSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditForms\DEditStatus.resx">
+      <DependentUpon>DEditStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

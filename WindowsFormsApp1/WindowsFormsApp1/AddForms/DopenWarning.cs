@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1.AddForms
+namespace Rifiuti.AddForms
 {
     public partial class DopenWarning : Form
     {

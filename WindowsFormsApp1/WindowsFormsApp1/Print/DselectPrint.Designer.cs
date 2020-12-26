@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.Print
+﻿namespace Rifiuti.Print
 {
     partial class DselectPrint
     {

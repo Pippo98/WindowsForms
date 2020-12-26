@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 
-namespace WindowsFormsApp1.AddForms
+namespace Rifiuti.AddForms
 {
     public partial class DnewSite : Form
     {

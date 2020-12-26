@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     public class Analysis
     {

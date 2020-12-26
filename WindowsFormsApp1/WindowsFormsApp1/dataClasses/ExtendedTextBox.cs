@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     class ExtendedTextBox : RichTextBox
     {

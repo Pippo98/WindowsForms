@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 
-namespace WindowsFormsApp1.AddForms
+namespace Rifiuti.AddForms
 {
     public partial class DnewAnalysis : Form
     {
         private List<Firm> firmData;
         private string[] firmNames;
 
-        private int[] CERs;
+        private List<int> CERs;
 
         private List<Site> siteData;
         private string[] siteLocations;
@@ -24,7 +24,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteName;
         public string validity;
 
-        public DnewAnalysis(List<Firm> firms, List<Site> sites, int[] cer)
+        public DnewAnalysis(List<Firm> firms, List<Site> sites, List<int> cer)
         {
             InitializeComponent();
 
@@ -55,7 +55,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocationBox.Items.AddRange(siteLocations);
             }
 
-            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x => x.ToString()));
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs.ToArray(), x => x.ToString()));
 
         }
 

@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.AddForms
+﻿namespace Rifiuti.AddForms
 {
     partial class DnewSite
     {

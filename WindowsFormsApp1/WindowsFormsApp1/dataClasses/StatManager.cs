@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     class StatManager
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 
 namespace Rifiuti.EditForms
 {

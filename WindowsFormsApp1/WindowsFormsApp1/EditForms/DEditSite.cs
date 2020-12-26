@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 
 namespace Rifiuti.EditForms
 {

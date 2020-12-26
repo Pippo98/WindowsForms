@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1.AddForms
+namespace Rifiuti.AddForms
 {
     public partial class DopenProject : Form
     {

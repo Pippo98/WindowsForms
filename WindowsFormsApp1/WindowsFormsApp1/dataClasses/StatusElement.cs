@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     class StatusElement
     {
@@ -23,15 +23,34 @@ namespace WindowsFormsApp1.dataClasses
                 this.extra = extra;
         }
 
-        public string[] getFields(int[] cers)
+        public string[] getFields(List<int> cers)
         {
             List<string> ret = new List<string>();
 
             ret.Add("Data");
             ret.Add("Totale");
+            int cnt1 = 0;
             foreach (var element in CERElements)
+            {
+                int cnt2 = 0;
                 foreach (var el in element.getFields())
-                    ret.Add(element.CER.ToString() + "\n" + el);
+                {
+                    if(cnt2 == 1)
+                    {
+                        ret.Add(element.CER.ToString() + "\n" + el);
+                    }
+                    else
+                    {
+                        string space = "";
+                        for (int _ = 0; _ < cnt1; _++)
+                            space += " ";
+                        ret.Add(el + space);
+                    }
+                    cnt2 ++;
+                }
+                cnt1 ++;
+            }
+
 
             return ret.ToArray();
         }

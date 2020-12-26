@@ -4,7 +4,7 @@ using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
 
-namespace WindowsFormsApp1.dataClasses
+namespace Rifiuti.dataClasses
 {
     class PdfPrinter
     {

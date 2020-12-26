@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WindowsFormsApp1.dataClasses;
+using Rifiuti.dataClasses;
 
-namespace WindowsFormsApp1.AddForms
+namespace Rifiuti.AddForms
 {
     public partial class DnewModule : Form
     {
@@ -13,8 +13,8 @@ namespace WindowsFormsApp1.AddForms
         private string[] plates;
         private string[] platesDimension;
 
-        private int[] CERs;
 
+        private List<int> CERs;
         private List<Site> siteData;
         private List<string> siteLocations;
         private string[] siteNames;
@@ -35,7 +35,7 @@ namespace WindowsFormsApp1.AddForms
         public string siteName;
 
 
-        public DnewModule(List<Firm> firms, List<Site> sites, int[] cer, string moduleType)
+        public DnewModule(List<Firm> firms, List<Site> sites, List<int> cer, string moduleType)
         {
             InitializeComponent();
 
@@ -71,7 +71,7 @@ namespace WindowsFormsApp1.AddForms
                 this.siteLocationBox.Items.AddRange(siteLocations.ToArray());
             }
 
-            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs, x => x.ToString()));
+            this.cerBox.Items.AddRange(Array.ConvertAll(this.CERs.ToArray(), x => x.ToString()));
             this.loadUnloadBox.Items.Add("Carico");
             this.loadUnloadBox.Items.Add("Scarico");
             this.loadUnloadBox.SelectedIndex = 0;

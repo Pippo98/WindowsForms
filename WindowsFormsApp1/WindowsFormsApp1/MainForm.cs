@@ -10,11 +10,23 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.AddForms;
-using WindowsFormsApp1.dataClasses;
-using WindowsFormsApp1.Print;
+using Rifiuti.AddForms;
+using Rifiuti.Print;
 
-namespace WindowsFormsApp1
+
+/*
+ * 
+ *OK Sezione Cantieri: devo aver la possibilità di cancellare un cantiere dall'elenco
+ *   MODIFICA FORMULARIO IMPIANTO: non funziona (o mi devi spiegare come funziona ... perchè non riesco)
+ *   Devo poter fare uno "scarico" che venga computato in SITUAZIONE senza dover aggiungere una riga con AGGIUNGI FORMULARIO IMPIANTO. Questo perchè quando lavoriamo il materiale che ci portano di fatto lo "scarichiamo" dall'impianto, ma non è associato un trasporto quindi non c'è un fomrulario.
+ *OK devo poter aggiungere (e magari anche togliere) un CER, quindi una colonna in SITUAZIONE  (che è sempre un numero a 6 cifre)
+ *OK Tutti i CER, quindi nella schermata SITUAZIONE, devono partire con un residuo iniziale, che è uguale (ovviamente) alla rimanenza dell'anno precedente
+ *OK Devo poter aggiungere anche una IMPRESA anche senza mezzi di trasporto.
+ * 
+ * 
+*/
+
+namespace Rifiuti
 {
     public partial class MainForm : System.Windows.Forms.Form
     {
@@ -24,8 +36,8 @@ namespace WindowsFormsApp1
 
         private bool isProjectOpen;
 
-        private int[] CER;
 
+        private List<int> CER = new List<int>();
         private List<Firm> firmData = new List<Firm>();
         private List<Site> siteData = new List<Site>();
         private List<Analysis> analysisData = new List<Analysis>();
@@ -105,24 +117,6 @@ namespace WindowsFormsApp1
             this.basePath += "\\TerraGroup";
 
             this.isProjectOpen = false;
-            this.CER = new int[]
-            {
-                170904,
-                170302,
-                170508,
-                170504,
-                120301,
-                130205,
-                150102,
-                150106,
-                150107,
-                170405,
-                160601,
-                170101,
-                170107,
-                170604,
-                200201,
-            };
 
             this.dimensions = new string[]
             {
@@ -132,6 +126,7 @@ namespace WindowsFormsApp1
                 "4 assi",
                 "bilico"
             };
+
             this.monthNames = new string[]
             {
                 "Gennaio",
@@ -149,8 +144,6 @@ namespace WindowsFormsApp1
             };
             this.monthComboBox.Items.AddRange(this.monthNames);
             this.monthComboBox.SelectedIndex = 0;
-
-            Console.WriteLine(this.CER);
 
             /*
             // Initialize AutoFilter for table
@@ -238,7 +231,7 @@ namespace WindowsFormsApp1
                     "Analisi",
                     "Registro Impianto",
                     "Registro Varie",
-                    "Lavorazioni Extra"
+                    "Dati Extra"
                 };
                 for (int i = 0; i < Filenames.Length; i++)
                 {
@@ -327,7 +320,7 @@ namespace WindowsFormsApp1
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
 
-        private void addImpresa_MouseClick(object sender, MouseEventArgs e)
+        private void addFirm_Click(object sender, EventArgs e)
         {
             if (!checkIfOpen())
                 return;
@@ -577,10 +570,32 @@ namespace WindowsFormsApp1
                     this.updateTable();
                 }
             }
+            
             else if (btn.Name == "EditFormImplant")
             {
+                DEditModule dialog = new DEditModule(this.formImplantData, this.formVariousData, this.firmData, this.siteData, this.CER, this.dimensions);
+                var res = dialog.ShowDialog();
+                if(res == DialogResult.OK)
+                {
+                    this.formImplantData = dialog.implant;
+                    this.formVariousData = dialog.various;
 
+                    List<string> lines = new List<string>();
+                    foreach (var element in this.formImplantData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Registro Impianto.tg", lines);
+
+                    lines = new List<string>();
+                    foreach (var element in this.formVariousData)
+                        lines.Add(element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Registro Varie.tg", lines);
+
+                    this.updateTable();
+                }
             }
+            
             else if (btn.Name == "EditSite")
             {
                 DEditSite dialog = new DEditSite(this.siteData);
@@ -600,7 +615,7 @@ namespace WindowsFormsApp1
                 else if (res == DialogResult.No)
                 {
                     List<string> lines = new List<string>();
-                    if(dialog.selectedSecondaryElement)
+                    if (dialog.selectedSecondaryElement)
                     {
                         var idx1 = this.siteData.IndexOf(dialog.oldSite);
                         this.siteData[idx1].names.Remove(dialog.secondaryElement);
@@ -616,6 +631,55 @@ namespace WindowsFormsApp1
                     File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
                     this.updateTable();
                 }
+            }
+            
+            else if (btn.Name == "EditStatus")
+            {
+                DEditStatus dialog = new DEditStatus(this.CERInitialStatusData);
+                var res = dialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    this.CERInitialStatusData = dialog.InitialStatuses;
+                }
+
+
+                List<string> lines = new List<string>();
+                string text = "Riporto";
+                foreach (var element in this.CERInitialStatusData)
+                    text += ";" + element.getString(";");
+                lines.Add(text);
+
+
+                foreach (var element in this.extraProcessingData)
+                    lines.Add("Lavorazione;" + element.getString(";"));
+
+                File.WriteAllLines(this.projectPath + "\\Dati Extra.tg", lines);
+
+                this.CreateStatusTable();
+                this.updateTable();
+            }
+            
+            else if (btn.Name == "EditCERButton")
+            {
+                DEditCERs dialog = new DEditCERs(this.CER);
+                var res = dialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    this.CER = dialog.CERs;
+
+                    List<string> lines = new List<string>();
+                    foreach (var el in this.CER)
+                        lines.Add(el.ToString());
+
+                    File.WriteAllLines(this.projectPath + "\\CER.tg", lines);
+                    this.loadAllData();
+                }
+            }
+            
+            else if(btn.Name == "ExtraProcessingButton")
+            {
+                DEditExtraProcess dialog = new DEditExtraProcess(this.extraProcessingData);
+                var res = dialog.ShowDialog();
             }
         }
 
@@ -704,6 +768,9 @@ namespace WindowsFormsApp1
 
             Refresh();
 
+            Task cer = this.LoadCER();
+            await cer;
+
             // Loading data from project files
             Task firm = this.LoadFirmData();
             Task site = this.LoadSiteData();
@@ -714,6 +781,7 @@ namespace WindowsFormsApp1
 
             await firm;
             await site;
+            Console.WriteLine("wait");
             await formImplant;
             await formVarious;
             await analysis;
@@ -748,6 +816,14 @@ namespace WindowsFormsApp1
             LinkRegisterAnalysis();
 
             this.projectUsable.BackColor = Color.Green;
+        }
+
+        private async Task LoadCER()
+        {
+            this.CER = new List<int>();
+            string[] lines = File.ReadAllLines(projectPath + "\\" + "CER.tg");
+            foreach(var line in lines)
+                this.CER.Add(int.Parse(line));
         }
 
         private async Task LoadFirmData()
@@ -853,31 +929,39 @@ namespace WindowsFormsApp1
                     int id = 0;
                     Int32.TryParse(l[0], out id);
 
-                    int CER = 0;
-                    Int32.TryParse(l[6], out CER);
 
                     DateTime date = DateTime.Parse(l[1]);
                     string loadUnload = l[2];
                     string producer = l[3];
                     string carrier = l[4];
-                    int kg = int.Parse(l[7]);
-                    string siteLocation = l[8];
-                    string siteName = l[9];
-                    string note = l[11];
-                    string toBreak = l[10];
 
                     string plate = "";
                     string dimension = "";
                     if (l[5].Split('-').Length > 1)
                     {
-                        plate = l[5].Split('-')[1];
                         dimension = l[5].Split('-')[0];
+                        plate = l[5].Split('-')[1];
                     }
                     else
                     {
-                        plate = l[6];
+                        plate = "";
                         dimension = "undefined";
                     }
+
+                    int CER = 0;
+                    Int32.TryParse(l[6], out CER);
+
+                    int kg = 0;
+                    try
+                    {
+                        kg = int.Parse(l[7]);
+                    }
+                    catch { }
+                    string siteLocation = l[8];
+                    string siteName = l[9];
+                    string toBreak = l[10];
+                    string note = l[11];
+
 
                     if (id > this.formImplantLastId)
                         this.formImplantLastId = id;
@@ -906,22 +990,21 @@ namespace WindowsFormsApp1
                 dataClasses.Module form;
                 if (l.Length >= 11)
                 {
-                    int id = 0;
-                    Int32.TryParse(l[0], out id);
 
-                    int CER = 0;
-                    Int32.TryParse(l[7], out CER);
+                    Console.WriteLine(i);
+                    int id = 0;
+                    try
+                    {
+                        Int32.TryParse(l[0], out id);
+                    }
+                    catch { }
+
 
                     DateTime date = DateTime.Parse(l[1]);
                     string loadUnload = l[2];
                     string producer = l[3];
                     string carrier = l[4];
                     string destination = l[5];
-                    int kg = int.Parse(l[8]);
-                    string siteLocation = l[9];
-                    string siteName = l[10];
-                    string note = l[12];
-                    string toBreak = l[11];
 
                     string plate = "";
                     string dimension = "";
@@ -935,6 +1018,30 @@ namespace WindowsFormsApp1
                         plate = l[6];
                         dimension = "undefined";
                     }
+
+                    Console.WriteLine(l[7]);
+
+                    int CER = 0;
+                    try
+                    {
+                        CER = int.Parse(l[7]);
+                    }
+                    catch
+                    {
+                        CER = 0;
+                    }
+
+                    int kg = 0;
+                    try
+                    {
+                        kg = int.Parse(l[8]);
+                    }
+                    catch { }
+                    string siteLocation = l[9];
+                    string siteName = l[10];
+                    string toBreak = l[11];
+                    string note = l[12];
+
 
                     if (id > this.formVariousLastId)
                         this.formVariousLastId = id;
@@ -950,7 +1057,7 @@ namespace WindowsFormsApp1
 
         private async Task LoadExtraData()
         {
-            string[] lines = File.ReadAllLines(projectPath + "\\" + "Lavorazioni Extra.tg");
+            string[] lines = File.ReadAllLines(projectPath + "\\" + "Dati Extra.tg");
 
             this.extraProcessingData = new List<ExtraProcessing>();
             this.CERInitialStatusData = new List<InitialStatus>();
@@ -965,12 +1072,20 @@ namespace WindowsFormsApp1
                     continue;
                 }
 
-                var date = DateTime.Parse(e.Split(';')[0]);
-                var type = e.Split(';')[1];
+                if (e.Contains("Lavorazione"))
+                {
+                    var line = e.Split(';');
 
-                ExtraProcessing ext = new ExtraProcessing(date, type);
-                this.extraProcessingData.Add(ext);
+                    for (int i = 1; i < line.Length; i += 2)
+                        this.extraProcessingData.Add(new ExtraProcessing(DateTime.Parse(line[i]), line[i + 1]));
+                    continue;
+                }
             }
+
+            foreach(var c in this.CER)
+                if(this.CERInitialStatusData.Find(x => x.CER == c) == null)
+                    this.CERInitialStatusData.Add(new InitialStatus(c, 0));
+
         }
 
         private async Task LoadAnalysisData()
@@ -1186,7 +1301,7 @@ namespace WindowsFormsApp1
 
                 foreach(var el in veichles)
                 {
-                    Console.WriteLine(name + el.ToString());
+                    // Console.WriteLine(name + el.ToString());
                     if (el.Item2 != 0)
                     {
                     }
@@ -1210,9 +1325,9 @@ namespace WindowsFormsApp1
             foreach (var el in this.CER)
             {
                 // If there is a initial status, add it to the total of the corresponding CER
-                var existingStatus = this.CERInitialStatusData.Find(x => x.status.CER == el);
+                var existingStatus = this.CERInitialStatusData.Find(x => x.CER == el);
                 if (existingStatus != null)
-                    CERs.Add(new CERElement(el, 0, 0, existingStatus.status.quantity));
+                    CERs.Add(new CERElement(el, 0, 0, existingStatus.quantity));
                 else
                     CERs.Add(new CERElement(el, 0, 0, 0));
             }
@@ -1253,6 +1368,9 @@ namespace WindowsFormsApp1
                     // Looking for the correct index
                     var cer = CERs.Find(x => x.CER == element.CER);
                     int idx = CERs.IndexOf(cer);
+
+                    if (idx == -1)
+                        continue;
 
                     // If is a load operation add the kg to the total, else subtract
                     if (element.loadUnload == "Carico")
@@ -1304,12 +1422,12 @@ namespace WindowsFormsApp1
 
                     processed = (int)(processed / 1600);
 
-                    if (extraData.type == "v")
+                    if (extraData.type == "vagliato")
                     {
                         q1 = (int)(processed * 0.6);
                         q3 = (int)(processed * 0.4);
                     }
-                    else
+                    else if(extraData.type == "frantumato")
                     {
                         q2 = processed;
                     }
@@ -1332,6 +1450,8 @@ namespace WindowsFormsApp1
 
         private void fillTable(string type)
         {
+            this.table.DataSource = null;
+
             // Initialize Dataset
             int dataIndex = 0;
             DataSet ds = new DataSet();
@@ -1625,9 +1745,6 @@ namespace WindowsFormsApp1
 
             this.table.DataSource = dv;
 
-            this.stylizeTable();
-
-            this.table.ColumnHeadersDefaultCellStyle.Font = new Font(DataGridView.DefaultFont.FontFamily, 12);
 
             /*
             for (int i = 0; i < this.table.RowCount; i++)
@@ -1644,7 +1761,10 @@ namespace WindowsFormsApp1
             PropertyInfo pi = typ.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.table, true, null);
 
+            //if(type != "Situazione")
             this.table.ColumnHeadersVisible = true;
+
+            this.stylizeTable();
         }
 
         private void stylizeTable()
@@ -1653,7 +1773,6 @@ namespace WindowsFormsApp1
             {
                 for (int i = 0; i < this.table.RowCount; i++)
                 {
-
                     var fields = this.status[0].getFields(this.CER).ToList();
                     /*
                     if (((StatusElement)row).hasLoaded && ((StatusElement)row).hasUnloaded)
@@ -1669,14 +1788,20 @@ namespace WindowsFormsApp1
                     if ((i) % 3 == 1)
                     {
                         this.table.Columns[i].DividerWidth = 1;
+                        this.table.Columns[i].DefaultCellStyle.BackColor = Color.FromArgb(217, 238, 255);
                     }
                 }
-                this.table.GridColor = Color.FromArgb(20, 20, 20);
+                this.table.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.table.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
             }
 
+            this.table.GridColor = Color.FromArgb(20, 20, 20);
             this.table.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0xFB, 0xAE, 0x4E);
             //this.table.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0xFF, 0xE7, 0xD2);
             this.table.DefaultCellStyle.SelectionForeColor = Color.Black;
+            this.table.ColumnHeadersDefaultCellStyle.Font = new Font(DataGridView.DefaultFont.FontFamily, 14);
+            this.table.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(255, 231, 210);
+            this.table.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(255, 231, 210);
         }
 
         private void updateTable()
@@ -1686,6 +1811,9 @@ namespace WindowsFormsApp1
 
         private void sortAll()
         {
+            this.CER.Sort();
+            this.CER.Reverse();
+
             this.analysisData = this.analysisData.OrderByDescending(x => x.id).ToList();
             this.formImplantData = this.formImplantData.OrderByDescending(x => x.id).ToList();
             this.formVariousData = this.formVariousData.OrderByDescending(x => x.id).ToList();
