@@ -155,6 +155,7 @@
     <Compile Include="dataClasses\Firm.cs" />
     <Compile Include="dataClasses\Month.cs" />
     <Compile Include="dataClasses\MonthElement.cs" />
+    <Compile Include="dataClasses\MUD.cs" />
     <Compile Include="dataClasses\PdfPrinter.cs" />
     <Compile Include="dataClasses\Module.cs" />
     <Compile Include="dataClasses\Site.cs" />

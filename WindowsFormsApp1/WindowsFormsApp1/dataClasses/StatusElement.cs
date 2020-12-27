@@ -58,9 +58,10 @@ namespace Rifiuti.dataClasses
         public object[] getObj()
         {
             List<object> obj = new List<object>();
+            string stringSpecifier = "#,#0";
 
             obj.Add(date.ToString("d"));
-            obj.Add(total);
+            obj.Add(total.ToString(stringSpecifier));
 
             foreach (var element in CERElements)
                 foreach (var el in element.getObj())
@@ -121,10 +122,12 @@ namespace Rifiuti.dataClasses
 
         public object[] getObj()
         {
+            string stringSpecifier = "#,#0";
+
             List<object> obj = new List<object>();
-            obj.Add(this.load);
-            obj.Add(this.unload);
-            obj.Add(this.CERTotal);
+            obj.Add(this.load.ToString(stringSpecifier));
+            obj.Add(this.unload.ToString(stringSpecifier));
+            obj.Add(this.CERTotal.ToString(stringSpecifier));
 
             return obj.ToArray();
         }

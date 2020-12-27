@@ -65,6 +65,8 @@
             this.EditStatus = new System.Windows.Forms.Button();
             this.EditCERButton = new System.Windows.Forms.Button();
             this.ExtraProcessingButton = new System.Windows.Forms.Button();
+            this.MudComboBox = new System.Windows.Forms.ComboBox();
+            this.MudButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -383,7 +385,7 @@
             this.monthButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.monthButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.monthButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.monthButton.Location = new System.Drawing.Point(427, 31);
+            this.monthButton.Location = new System.Drawing.Point(565, 31);
             this.monthButton.Name = "monthButton";
             this.monthButton.Size = new System.Drawing.Size(132, 27);
             this.monthButton.TabIndex = 29;
@@ -395,7 +397,7 @@
             // 
             this.monthComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.monthComboBox.FormattingEnabled = true;
-            this.monthComboBox.Location = new System.Drawing.Point(565, 33);
+            this.monthComboBox.Location = new System.Drawing.Point(703, 33);
             this.monthComboBox.Name = "monthComboBox";
             this.monthComboBox.Size = new System.Drawing.Size(121, 24);
             this.monthComboBox.TabIndex = 30;
@@ -408,7 +410,7 @@
             this.situationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.situationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.situationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.situationButton.Location = new System.Drawing.Point(427, 64);
+            this.situationButton.Location = new System.Drawing.Point(427, 31);
             this.situationButton.Name = "situationButton";
             this.situationButton.Size = new System.Drawing.Size(132, 27);
             this.situationButton.TabIndex = 31;
@@ -533,6 +535,31 @@
             this.ExtraProcessingButton.UseVisualStyleBackColor = false;
             this.ExtraProcessingButton.Click += new System.EventHandler(this.editButtonsClicked);
             // 
+            // MudComboBox
+            // 
+            this.MudComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MudComboBox.FormattingEnabled = true;
+            this.MudComboBox.Location = new System.Drawing.Point(703, 66);
+            this.MudComboBox.Name = "MudComboBox";
+            this.MudComboBox.Size = new System.Drawing.Size(121, 24);
+            this.MudComboBox.TabIndex = 44;
+            this.MudComboBox.SelectedValueChanged += new System.EventHandler(this.MudComboBox_SelectedValueChanged);
+            // 
+            // MudButton
+            // 
+            this.MudButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
+            this.MudButton.FlatAppearance.BorderSize = 0;
+            this.MudButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MudButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MudButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MudButton.Location = new System.Drawing.Point(565, 64);
+            this.MudButton.Name = "MudButton";
+            this.MudButton.Size = new System.Drawing.Size(132, 27);
+            this.MudButton.TabIndex = 43;
+            this.MudButton.Text = "MUD";
+            this.MudButton.UseVisualStyleBackColor = false;
+            this.MudButton.Click += new System.EventHandler(this.MudButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -541,6 +568,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.Controls.Add(this.MudComboBox);
+            this.Controls.Add(this.MudButton);
             this.Controls.Add(this.ExtraProcessingButton);
             this.Controls.Add(this.EditCERButton);
             this.Controls.Add(this.EditStatus);
@@ -617,6 +646,8 @@
         private System.Windows.Forms.Button EditStatus;
         private System.Windows.Forms.Button EditCERButton;
         private System.Windows.Forms.Button ExtraProcessingButton;
+        private System.Windows.Forms.ComboBox MudComboBox;
+        private System.Windows.Forms.Button MudButton;
     }
 }
 

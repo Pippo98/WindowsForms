@@ -58,6 +58,8 @@ namespace Rifiuti.EditForms
                     this.datePicker.Value, 
                     this.newTypeComboBox.SelectedItem.ToString()
                     ));
+
+                updateValues();
             }
             else if (btn.Name == "updateButton")
             {

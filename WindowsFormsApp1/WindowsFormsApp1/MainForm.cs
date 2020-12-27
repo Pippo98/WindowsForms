@@ -45,6 +45,7 @@ namespace Rifiuti
         private List<dataClasses.Module> formVariousData = new List<dataClasses.Module>();
         private List<ExtraProcessing> extraProcessingData = new List<ExtraProcessing>();
         private List<InitialStatus> CERInitialStatusData = new List<InitialStatus>();
+        private List<MUD> MUDs = new List<MUD>();
 
         private List<dataClasses.Module> missingAnalysis = new List<dataClasses.Module>();
         private List<Analysis> expiredAnalysis = new List<Analysis>();
@@ -269,7 +270,8 @@ namespace Rifiuti
                 "Cantieri",
                 "Analisi",
                 "Registro",
-                "Mesi"
+                "Mesi",
+                "MUD"
             };
 
             DselectPrint dialog = new DselectPrint(options);
@@ -310,6 +312,12 @@ namespace Rifiuti
                     while (this.printer.printMonths(folder + "\\Mesi", this.months) == -1)
                         new WarningMessage("Uno dei file dei mesi risulta aperto,\n chiudilo prima di continuare").ShowDialog();
                 }
+                if (Array.IndexOf(dialog.selected, "MUD") >= 0)
+                {
+                    this.checkAndCreatePath(folder + "\\MUD");
+                    this.printer.printMUD(folder + "\\MUD", this.MUDs);
+                }
+
 
                 this.projectUsable.BackColor = Color.Green;
             }
@@ -733,6 +741,18 @@ namespace Rifiuti
             this.fillTable("Situazione");
         }
 
+        private void MudButton_Click(object sender, EventArgs e)
+        {
+            this.fillTable("MUD");
+        }
+
+        private void MudComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (this.currentTableDataType == "MUD")
+                this.fillTable("MUD");
+        }
+
+
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -781,13 +801,15 @@ namespace Rifiuti
 
             await firm;
             await site;
-            Console.WriteLine("wait");
             await formImplant;
             await formVarious;
             await analysis;
             await extra;
 
             this.sortAll();
+
+            this.MudComboBox.Items.AddRange(Array.ConvertAll(this.CER.ToArray(), x => (object)x));
+            this.MudComboBox.SelectedIndex = 0;
 
             await this.LinkRegisterAnalysis();
             await this.CheckAnalysisValidity();
@@ -800,6 +822,7 @@ namespace Rifiuti
             this.fillTable("Situazione");
 
             await this.CreateFirmTable();
+            await this.CreateMudTables();
 
             // UI loading indicator
             this.projectUsable.BackColor = Color.Green;
@@ -990,8 +1013,6 @@ namespace Rifiuti
                 dataClasses.Module form;
                 if (l.Length >= 11)
                 {
-
-                    Console.WriteLine(i);
                     int id = 0;
                     try
                     {
@@ -1018,8 +1039,6 @@ namespace Rifiuti
                         plate = l[6];
                         dimension = "undefined";
                     }
-
-                    Console.WriteLine(l[7]);
 
                     int CER = 0;
                     try
@@ -1138,6 +1157,10 @@ namespace Rifiuti
 
             Debug.Print("Analisi -> Found " + this.analysisData.Count + " readable elements");
         }
+
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
 
         private async Task LinkRegisterAnalysis()
         {
@@ -1310,6 +1333,65 @@ namespace Rifiuti
             }
         }
 
+        private async Task CreateMudTables()
+        {
+            List<MUD> muds = new List<MUD>();
+            foreach (var cer in this.CER)
+            {
+                // find only modules with this current cer
+                var modules = this.formImplantData.FindAll(x => x.CER == cer);
+
+                // find only modules with same producer and carrier and
+                // get all the firm and locations contained in those modules
+                modules = modules.FindAll(x => x.producer == x.carrier && x.loadUnload == "Carico");
+                if (modules.Count <= 0)
+                    continue;
+
+                var firms = modules.Select(x => x.producer).Distinct().ToList();
+                var locations = modules.Select(x => x.siteLocation).Distinct().ToList();
+                int year = modules[0].date.Year;
+
+                firms.Sort();
+                locations.Sort();
+
+                List<int> locationsTotal = new List<int>();
+                foreach(var location in locations)
+                    locationsTotal.Add(modules.FindAll(x => x.siteLocation == location).Sum(x => x.kg));
+
+                List<int> firmsTotal = new List<int>();
+                foreach (var firm in firms)
+                    firmsTotal.Add(modules.FindAll(x => x.producer == firm).Sum(x => x.kg));
+
+                List<List<int>> data = new List<List<int>>();
+                foreach( var location in locations)
+                {
+                    var sameloc = modules.FindAll(x => x.siteLocation == location);
+                    List<int> row = new List<int>();
+                    foreach (var firm in firms)
+                    {
+                        var total = sameloc.FindAll(x =>x.producer == firm).Sum(x => x.kg);
+
+                        row.Add(total);
+                    }
+                    data.Add(row);
+                }
+
+                var cerTotal = modules.Sum(x => x.kg);
+                var inital = this.CERInitialStatusData.Find(x => x.CER == cer).quantity;
+                var final = this.status.Last().CERElements.Find(x => x.CER == cer).CERTotal;
+
+                bool verified = false;
+                if (firmsTotal.Sum() == locationsTotal.Sum() && firmsTotal.Sum() == cerTotal)
+                    verified = true;
+                else
+                    Console.WriteLine(cer.ToString() + "-> MUD NOT VERIFIED");
+
+                MUD newMUD = new MUD(cer, verified, inital, final, cerTotal, firms, locations, firmsTotal, locationsTotal, data, year);
+                muds.Add(newMUD);
+            }
+            this.MUDs = muds;
+        }
+
         // Table with situation and movements each day for every year.
         private void CreateStatusTable()
         {
@@ -1447,6 +1529,10 @@ namespace Rifiuti
             this.status = statusElements;
 
         }
+
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
+        //-----------------------------------------------------------------------------------------------//
 
         private void fillTable(string type)
         {
@@ -1736,6 +1822,33 @@ namespace Rifiuti
                 }
             }
 
+            if (type == "MUD")
+            {
+                if (this.MUDs.Count <= 0)
+                    return;
+
+                if (this.MudComboBox.SelectedIndex < 0)
+                    return;
+
+                var currentMUD = this.MUDs.Find(x => x.CER == int.Parse(this.MudComboBox.SelectedItem.ToString()));
+
+                if (currentMUD == null)
+                    return;
+
+                var fields = currentMUD.getFields();
+
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    ds.Tables[dataIndex].Columns.Add();
+                    ds.Tables[dataIndex].Columns[i].ColumnName = fields[i];
+                }
+
+                foreach (var row in currentMUD.getObj())
+                {
+                    ds.Tables[dataIndex].Rows.Add(row);
+                }
+            }
+
             dv = new DataView(ds.Tables[dataIndex]);
 
             // Enabing filter on rows
@@ -1744,17 +1857,6 @@ namespace Rifiuti
                 dv.RowFilter = filter;
 
             this.table.DataSource = dv;
-
-
-            /*
-            for (int i = 0; i < this.table.RowCount; i++)
-            {
-                var el = hilightRows.Find(x => x.index == i);
-                if (el != (null,null))
-                    this.table.Rows[i].DefaultCellStyle.BackColor = el.color;
-                // this.table.Rows[el.index].DefaultCellStyle.ForeColor = el.color;
-            }
-            */
 
             // Using double buffer to speedup UI updates like scrolling
             Type typ = this.table.GetType();

@@ -38,7 +38,6 @@ namespace Rifiuti.EditForms
             {
                 this.newFirm = new Firm(this.oldFirm.name, new List<Tuple<string, string>>(this.oldFirm.targhe));
                 this.newFirm.name = this.NameTextBox.Text;
-                Console.WriteLine(this.PlateComboBox.SelectedItem);
                 var plate = this.newFirm.targhe.Find(x => x.Item2 == this.PlateComboBox.SelectedItem.ToString());
                 var idx = newFirm.targhe.IndexOf(plate);
                 plate = Tuple.Create((string)this.DimensionCombo.SelectedItem, this.PlateTextBox.Text);

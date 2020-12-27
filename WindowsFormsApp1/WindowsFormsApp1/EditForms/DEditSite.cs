@@ -69,8 +69,6 @@ namespace Rifiuti.EditForms
 
         private void ButtonClicked(object sender, EventArgs e)
         {
-            Console.WriteLine(sender);
-            Console.WriteLine(e);
             Button btn = (Button)sender;
 
             if (btn.Name == "OKButton")
