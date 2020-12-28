@@ -37,6 +37,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTool = new System.Windows.Forms.ToolStripMenuItem();
             this.newProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSite = new System.Windows.Forms.Button();
             this.addFirm = new System.Windows.Forms.Button();
@@ -67,6 +68,8 @@
             this.ExtraProcessingButton = new System.Windows.Forms.Button();
             this.MudComboBox = new System.Windows.Forms.ComboBox();
             this.MudButton = new System.Windows.Forms.Button();
+            this.stampaPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -89,7 +92,10 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openTool,
-            this.newProject});
+            this.newProject,
+            this.toolStripSeparator1,
+            this.refreshToolStripMenuItem,
+            this.stampaPDFToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -98,22 +104,31 @@
             // 
             this.openTool.Name = "openTool";
             this.openTool.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openTool.Size = new System.Drawing.Size(159, 22);
+            this.openTool.Size = new System.Drawing.Size(187, 22);
             this.openTool.Text = "Apri";
             this.openTool.Click += new System.EventHandler(this.openTool_Click);
             // 
             // newProject
             // 
             this.newProject.Name = "newProject";
-            this.newProject.Size = new System.Drawing.Size(159, 22);
+            this.newProject.Size = new System.Drawing.Size(187, 22);
             this.newProject.Text = "Nuovo Progetto";
             this.newProject.Click += new System.EventHandler(this.newProject_Click);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
             this.toolStripMenuItem1.Text = "?";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.helpButtonClick);
             // 
             // addSite
             // 
@@ -170,7 +185,7 @@
             // 
             this.addFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.addFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.addFormImplant.FlatAppearance.BorderSize = 0;
             this.addFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -205,7 +220,7 @@
             // 
             this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.printButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.printButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.printButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.printButton.FlatAppearance.BorderSize = 0;
             this.printButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -325,7 +340,7 @@
             // 
             this.addFormVarious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addFormVarious.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addFormVarious.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.addFormVarious.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.addFormVarious.FlatAppearance.BorderSize = 0;
             this.addFormVarious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormVarious.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -424,7 +439,7 @@
             // 
             // filterClearButton
             // 
-            this.filterClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.filterClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.filterClearButton.FlatAppearance.BorderSize = 0;
             this.filterClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.filterClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -440,7 +455,7 @@
             // 
             this.EditFormImplant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EditFormImplant.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.EditFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.EditFormImplant.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.EditFormImplant.FlatAppearance.BorderSize = 0;
             this.EditFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -458,7 +473,7 @@
             // 
             this.EditFirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EditFirm.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.EditFirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.EditFirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.EditFirm.FlatAppearance.BorderSize = 0;
             this.EditFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -476,7 +491,7 @@
             // 
             this.EditSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EditSite.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.EditSite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.EditSite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.EditSite.FlatAppearance.BorderSize = 0;
             this.EditSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -493,7 +508,7 @@
             // EditStatus
             // 
             this.EditStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EditStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.EditStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.EditStatus.FlatAppearance.BorderSize = 0;
             this.EditStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -508,7 +523,7 @@
             // EditCERButton
             // 
             this.EditCERButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EditCERButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.EditCERButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.EditCERButton.FlatAppearance.BorderSize = 0;
             this.EditCERButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditCERButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -523,7 +538,7 @@
             // ExtraProcessingButton
             // 
             this.ExtraProcessingButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExtraProcessingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(92)))), ((int)(((byte)(0)))));
+            this.ExtraProcessingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(102)))), ((int)(((byte)(10)))));
             this.ExtraProcessingButton.FlatAppearance.BorderSize = 0;
             this.ExtraProcessingButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExtraProcessingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -559,6 +574,19 @@
             this.MudButton.Text = "MUD";
             this.MudButton.UseVisualStyleBackColor = false;
             this.MudButton.Click += new System.EventHandler(this.MudButton_Click);
+            // 
+            // stampaPDFToolStripMenuItem
+            // 
+            this.stampaPDFToolStripMenuItem.Name = "stampaPDFToolStripMenuItem";
+            this.stampaPDFToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.stampaPDFToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.stampaPDFToolStripMenuItem.Text = "Stampa PDF";
+            this.stampaPDFToolStripMenuItem.Click += new System.EventHandler(this.printButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
             // 
             // MainForm
             // 
@@ -648,6 +676,9 @@
         private System.Windows.Forms.Button ExtraProcessingButton;
         private System.Windows.Forms.ComboBox MudComboBox;
         private System.Windows.Forms.Button MudButton;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem stampaPDFToolStripMenuItem;
     }
 }
 

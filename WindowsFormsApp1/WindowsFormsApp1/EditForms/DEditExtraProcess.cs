@@ -35,14 +35,23 @@ namespace Rifiuti.EditForms
         private void updateValues()
         {
             this.ProcessList.Items.Clear();
+            this.editComboBox.Items.Clear();
             this.newTypeComboBox.Items.Clear();
+            this.editTypeComboBox.Items.Clear();
 
             List<string> items = new List<string>();
             foreach (var e in this.processes)
                 items.Add(e.getString(" "));
 
             this.newTypeComboBox.Items.AddRange(this.options);
+            this.editTypeComboBox.Items.AddRange(this.options);
+
             this.ProcessList.Items.AddRange(items.ToArray());
+            this.editComboBox.Items.AddRange(items.ToArray());
+
+            this.newTypeComboBox.Text = "";
+            this.editTypeComboBox.Text = "";
+            this.editComboBox.Text = "";
         }
 
         private void buttonClicked(object sender, EventArgs e)
@@ -63,6 +72,15 @@ namespace Rifiuti.EditForms
             }
             else if (btn.Name == "updateButton")
             {
+                if (this.editComboBox.SelectedIndex == -1)
+                    return;
+                if (this.editTypeComboBox.SelectedIndex == -1)
+                    return;
+
+                this.processes[this.editComboBox.SelectedIndex].type = this.editDatePicker.Value.ToString("d");
+                this.processes[this.editComboBox.SelectedIndex].type = this.editTypeComboBox.SelectedItem.ToString();
+
+                updateValues();
             }
             else if (btn.Name == "OKButton")
             {
@@ -82,6 +100,17 @@ namespace Rifiuti.EditForms
 
             if(cmb.Name == "newTypeComboBox")
             {
+
+            }
+            else if(cmb.Name == "editComboBox")
+            {
+                if (cmb.SelectedIndex == -1)
+                    return;
+
+                var currentProc = this.processes[cmb.SelectedIndex];
+
+                this.editDatePicker.Value = currentProc.date;
+                this.editTypeComboBox.SelectedItem = currentProc.type;
 
             }
         }

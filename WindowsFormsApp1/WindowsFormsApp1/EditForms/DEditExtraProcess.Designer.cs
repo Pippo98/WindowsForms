@@ -35,11 +35,12 @@
             this.ProcessList = new System.Windows.Forms.ListBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.CERTextBox = new System.Windows.Forms.TextBox();
-            this.CERComboBox = new System.Windows.Forms.ComboBox();
+            this.editComboBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox1 = new System.Web.Management.ReadOnlyTextBox();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.newTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.editDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.editTypeComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // addButton
@@ -80,7 +81,7 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(689, 245);
+            this.updateButton.Location = new System.Drawing.Point(689, 271);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(75, 23);
             this.updateButton.TabIndex = 39;
@@ -119,20 +120,14 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.buttonClicked);
             // 
-            // CERTextBox
+            // editComboBox
             // 
-            this.CERTextBox.Location = new System.Drawing.Point(517, 246);
-            this.CERTextBox.Name = "CERTextBox";
-            this.CERTextBox.Size = new System.Drawing.Size(166, 20);
-            this.CERTextBox.TabIndex = 34;
-            // 
-            // CERComboBox
-            // 
-            this.CERComboBox.FormattingEnabled = true;
-            this.CERComboBox.Location = new System.Drawing.Point(271, 245);
-            this.CERComboBox.Name = "CERComboBox";
-            this.CERComboBox.Size = new System.Drawing.Size(166, 21);
-            this.CERComboBox.TabIndex = 33;
+            this.editComboBox.FormattingEnabled = true;
+            this.editComboBox.Location = new System.Drawing.Point(271, 245);
+            this.editComboBox.Name = "editComboBox";
+            this.editComboBox.Size = new System.Drawing.Size(166, 21);
+            this.editComboBox.TabIndex = 33;
+            this.editComboBox.SelectedIndexChanged += new System.EventHandler(this.comboChanged);
             // 
             // readOnlyTextBox1
             // 
@@ -163,11 +158,28 @@
             this.newTypeComboBox.TabIndex = 45;
             this.newTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.comboChanged);
             // 
+            // editDatePicker
+            // 
+            this.editDatePicker.Location = new System.Drawing.Point(517, 246);
+            this.editDatePicker.Name = "editDatePicker";
+            this.editDatePicker.Size = new System.Drawing.Size(166, 20);
+            this.editDatePicker.TabIndex = 46;
+            // 
+            // editTypeComboBox
+            // 
+            this.editTypeComboBox.FormattingEnabled = true;
+            this.editTypeComboBox.Location = new System.Drawing.Point(517, 273);
+            this.editTypeComboBox.Name = "editTypeComboBox";
+            this.editTypeComboBox.Size = new System.Drawing.Size(166, 21);
+            this.editTypeComboBox.TabIndex = 47;
+            // 
             // DEditExtraProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.editTypeComboBox);
+            this.Controls.Add(this.editDatePicker);
             this.Controls.Add(this.newTypeComboBox);
             this.Controls.Add(this.datePicker);
             this.Controls.Add(this.addButton);
@@ -177,8 +189,7 @@
             this.Controls.Add(this.ProcessList);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.CERTextBox);
-            this.Controls.Add(this.CERComboBox);
+            this.Controls.Add(this.editComboBox);
             this.Controls.Add(this.readOnlyTextBox1);
             this.Name = "DEditExtraProcess";
             this.Text = "DEditExtraProcess";
@@ -196,10 +207,11 @@
         private System.Windows.Forms.ListBox ProcessList;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.TextBox CERTextBox;
-        private System.Windows.Forms.ComboBox CERComboBox;
+        private System.Windows.Forms.ComboBox editComboBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox1;
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.ComboBox newTypeComboBox;
+        private System.Windows.Forms.DateTimePicker editDatePicker;
+        private System.Windows.Forms.ComboBox editTypeComboBox;
     }
 }

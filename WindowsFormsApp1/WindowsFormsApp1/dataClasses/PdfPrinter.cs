@@ -1,8 +1,10 @@
 ﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout.Element;
+using iText.Kernel.Colors;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Rifiuti.dataClasses
 {
@@ -514,12 +516,13 @@ namespace Rifiuti.dataClasses
                         title.SetFontSize(24);
                         doc.Add(title);
 
+
                         string verified = MUD.verified == true ? "ok" : "no";
                         doc.Add(new Paragraph("Verifica: " + verified)
                             .SetFontSize(14));
-                        
-                        doc.Add(new Paragraph("Giacenza al 31/12/" + (MUD.year-1).ToString() + ": " + MUD.initialValue.ToString(stringSpecifier))
-                            .SetFontSize(14));
+
+                        var rect = new Table(1).AddCell(new Cell().Add(new Paragraph("Giacenza al 31/12/" + (MUD.year - 1).ToString() + ": " + MUD.initialValue.ToString(stringSpecifier) + " Kg").SetFontSize(14))).UseAllAvailableWidth();
+                        doc.Add(rect);
 
                         doc.Add(new Paragraph("\nPRODOTTO E TRASPORTATO DA")
                             .SetFontSize(10));
@@ -527,7 +530,7 @@ namespace Rifiuti.dataClasses
                         // Doc table
                         // Generate a table with colums count equal to the firms in this MUD plus one (first column) plus one (total)
                         var table = new Table(MUD.firms.Count + 1 + 1);
-                        // table.UseAllAvailableWidth();
+                        table.UseAllAvailableWidth();
 
                         int fontsize = 4;
 
@@ -541,6 +544,7 @@ namespace Rifiuti.dataClasses
                         {
                             cell = new Cell();
                             cell.Add(new Paragraph(firm).SetFontSize(fontsize).SetTextAlignment(hcenter).SetVerticalAlignment(vcenter));
+                            cell.SetBackgroundColor(new DeviceRgb(175,175,175));
                             table.AddHeaderCell(cell);
                         }
 
@@ -552,6 +556,7 @@ namespace Rifiuti.dataClasses
 
                         for(int i = 0; i < MUD.locations.Count; i++)
                         {
+                            // first row with locations names
                             cell = new Cell();
                             cell.Add(new Paragraph(MUD.locations[i])
                                 .SetVerticalAlignment(vcenter)
@@ -569,6 +574,7 @@ namespace Rifiuti.dataClasses
                                 table.AddCell(cell);
                             }
 
+                            // last column
                             cell = new Cell();
                             cell.Add(new Paragraph(MUD.locationsTotal[i].ToString(stringSpecifier))
                                 .SetTextAlignment(hright)
@@ -586,6 +592,8 @@ namespace Rifiuti.dataClasses
                         cell.SetBorder(noborder);
                         table.AddCell(cell);
 
+
+                        // last row with firms totals
                         foreach (var element in MUD.firmsTotal)
                         {
                             string txt = element.ToString(stringSpecifier);
@@ -597,9 +605,11 @@ namespace Rifiuti.dataClasses
                             table.AddCell(cell);
                         }
 
+                        // Bottom Right
+                        // Table  Total
                         cell = new Cell();
                         cell.Add(new Paragraph(MUD.cerTotal.ToString(stringSpecifier))
-                            .SetTextAlignment(hcenter)
+                            .SetTextAlignment(hright)
                             .SetVerticalAlignment(vcenter)
                             .SetFontSize(fontsize));
                         cell.SetBorder(noborder);
@@ -609,8 +619,29 @@ namespace Rifiuti.dataClasses
 
                         doc.Add(new Paragraph(" ")
                             .SetFontSize(14));
-                        doc.Add(new Paragraph("Giacenza al 31/12/" + (MUD.year).ToString() + ": " + MUD.finalValue.ToString(stringSpecifier))
+
+                        rect = new Table(1).UseAllAvailableWidth();
+                        foreach (var element in MUD.extraFirms)
+                        {
+                            string text =
+                                "Produttore: "+element.Item1 + 
+                                "\n" +
+                                "Trasportatore: " + element.Item2 + 
+                                "\n" +
+                                "Commune: " + element.Item3 +
+                                "\n" +
+                                "Quantità: " + element.Item4.ToString(stringSpecifier);
+
+                            rect.AddCell(new Cell().Add(new Paragraph(text).SetFontSize(fontsize)));
+                            rect.AddCell(new Cell().Add(new Paragraph("").SetFontSize(fontsize)).SetBorder(noborder));
+                        }
+                        doc.Add(rect);
+
+                        doc.Add(new Paragraph(" ")
                             .SetFontSize(14));
+
+                        rect = new Table(1).AddCell(new Cell().Add(new Paragraph("Giacenza al 31/12/" + (MUD.year).ToString() + ": " + MUD.finalValue.ToString(stringSpecifier) + " Kg").SetFontSize(14))).UseAllAvailableWidth();
+                        doc.Add(rect);
                     }
                 }
             }

@@ -32,6 +32,7 @@ namespace Rifiuti
     {
         private string basePath;
         private string projectPath;
+        private string pdfPath;
         private string currentTableDataType;
 
         private bool isProjectOpen;
@@ -45,6 +46,7 @@ namespace Rifiuti
         private List<dataClasses.Module> formVariousData = new List<dataClasses.Module>();
         private List<ExtraProcessing> extraProcessingData = new List<ExtraProcessing>();
         private List<InitialStatus> CERInitialStatusData = new List<InitialStatus>();
+        private List<StatusElement> status = new List<StatusElement>();
         private List<MUD> MUDs = new List<MUD>();
 
         private List<dataClasses.Module> missingAnalysis = new List<dataClasses.Module>();
@@ -57,16 +59,12 @@ namespace Rifiuti
         private List<List<MonthElement>> months = new List<List<MonthElement>>();
         private string[] monthNames;
 
-        private List<StatusElement> status = new List<StatusElement>();
 
         private string[] dimensions;
         private string[] firmNames;
 
         private string filter;
         private List<object> filterControls = new List<object>();
-        StatusStrip statusStrip1 = new StatusStrip();
-        ToolStripStatusLabel filterStatusLabel = new ToolStripStatusLabel();
-        ToolStripStatusLabel showAllLabel = new ToolStripStatusLabel("Show &All");
 
         FilterManager filterM;
         StatManager manager;
@@ -115,6 +113,7 @@ namespace Rifiuti
             // this.basePath= Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             Console.WriteLine(this.basePath);
 
+            this.pdfPath = this.basePath + "\\Registro Rifiuti Stampe";
             this.basePath += "\\TerraGroup";
 
             this.isProjectOpen = false;
@@ -125,7 +124,7 @@ namespace Rifiuti
                 "2 assi",
                 "3 assi",
                 "4 assi",
-                "bilico"
+                "Bilico"
             };
 
             this.monthNames = new string[]
@@ -146,26 +145,7 @@ namespace Rifiuti
             this.monthComboBox.Items.AddRange(this.monthNames);
             this.monthComboBox.SelectedIndex = 0;
 
-            /*
-            // Initialize AutoFilter for table
-            this.table.BindingContextChanged += new EventHandler(dataGridView1_BindingContextChanged);
-            this.table.KeyDown += new KeyEventHandler(dataGridView1_KeyDown);
-            this.table.DataBindingComplete +=
-                new DataGridViewBindingCompleteEventHandler(
-                dataGridView1_DataBindingComplete);
-
-            showAllLabel.Visible = false;
-            showAllLabel.IsLink = true;
-            showAllLabel.LinkBehavior = LinkBehavior.HoverUnderline;
-            showAllLabel.Click += new EventHandler(showAllLabel_Click);
-
-            statusStrip1.Cursor = Cursors.Default;
-            statusStrip1.Items.AddRange(new ToolStripItem[] {
-                filterStatusLabel, showAllLabel });
-
-            this.Controls.AddRange(new Control[] {
-                this.table, statusStrip1 });
-            */
+            this.currentTableDataType = "Situazione";
         }
 
         //-----------------------------------------------------------------------------------------------//
@@ -278,12 +258,16 @@ namespace Rifiuti
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                var folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                folder += "\\Registro Rifiuti Stampe";
+                this.projectUsable.BackColor = Color.Orange;
+                this.Cursor = Cursors.WaitCursor;
+
+                this.Invalidate();
+                Refresh();
+
+
+                string folder = this.pdfPath;
                 checkAndCreatePath(folder);
 
-                this.projectUsable.BackColor = Color.Orange;
-                Refresh();
 
                 if (Array.IndexOf(dialog.selected, "Imprese") >= 0)
                 {
@@ -320,6 +304,7 @@ namespace Rifiuti
 
 
                 this.projectUsable.BackColor = Color.Green;
+                this.Cursor = Cursors.Default;
             }
 
         }
@@ -338,13 +323,15 @@ namespace Rifiuti
             // Show dialog as a modal dialog and determine if DialogResult = OK.
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                string firm = dialog.name + ";" + dialog.dimension + "-" + dialog.targa;
 
-                StreamWriter file = File.AppendText(this.projectPath + "\\Imprese.tg");
-                file.WriteLine(firm);
-                file.Close();
+                this.firmData.Add(new Firm(dialog.name, new List<Tuple<string, string>> { Tuple.Create(dialog.dimension, dialog.targa) }));
 
-                this.LoadFirmData();
+                List<string> lines = new List<string>();
+                foreach (var firm in this.firmData)
+                    lines.Add(firm.getString(";"));
+
+                File.WriteAllLines(this.projectPath + "\\Imprese.tg", lines);
+
                 this.sortAll();
                 this.updateTable();
             }
@@ -493,37 +480,31 @@ namespace Rifiuti
             {
                 if (dialog.isNewSite)
                 {
-                    // Is new site so add new line in site file
-                    string site = dialog.siteLocation + ";" + dialog.siteName + ";";
+                    this.siteData.Add(new Site(dialog.siteLocation, new List<string> { dialog.siteName }));
 
-                    StreamWriter file = File.AppendText(this.projectPath + "\\Cantieri.tg");
-                    file.WriteLine(site);
-                    file.Close();
+                    List<string> lines = new List<string>();
+                    foreach (var site in this.siteData)
+                        lines.Add(site.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
                 }
                 else
                 {
-                    // This isn't new site so edit the corresponding line
-                    StreamReader fil = new StreamReader(this.projectPath + "\\Cantieri.tg");
-                    string line;
 
-                    int index = 0;
-                    while ((line = fil.ReadLine()) != null)
-                    {
-                        if (line.Contains(dialog.siteLocation))
-                        {
-                            break;
-                        }
-                        index++;
-                    }
-                    fil.Close();
+                    var el = this.siteData.Find(x => x.location == dialog.siteLocation);
+                    if (el == null)
+                        return;
 
-                    string[] lines = File.ReadAllLines(this.projectPath + "\\Cantieri.tg");
-                    lines[index] += dialog.siteName + ";";
+                    var idx = this.siteData.IndexOf(el);
+                    this.siteData[idx].names.Add(dialog.siteName);
+
+                    List<string> lines = new List<string>();
+                    foreach (var site in this.siteData)
+                        lines.Add(site.getString(";"));
 
                     File.WriteAllLines(this.projectPath + "\\Cantieri.tg", lines);
                 }
 
-                this.LoadSiteData();
                 this.sortAll();
                 this.updateTable();
             }
@@ -648,23 +629,22 @@ namespace Rifiuti
                 if (res == DialogResult.OK)
                 {
                     this.CERInitialStatusData = dialog.InitialStatuses;
+
+                    List<string> lines = new List<string>();
+                    string text = "Riporto";
+                    foreach (var element in this.CERInitialStatusData)
+                        text += ";" + element.getString(";");
+                    lines.Add(text);
+
+
+                    foreach (var element in this.extraProcessingData)
+                        lines.Add("Lavorazione;" + element.getString(";"));
+
+                    File.WriteAllLines(this.projectPath + "\\Dati Extra.tg", lines);
+
+                    this.CreateStatusTable();
+                    this.updateTable();
                 }
-
-
-                List<string> lines = new List<string>();
-                string text = "Riporto";
-                foreach (var element in this.CERInitialStatusData)
-                    text += ";" + element.getString(";");
-                lines.Add(text);
-
-
-                foreach (var element in this.extraProcessingData)
-                    lines.Add("Lavorazione;" + element.getString(";"));
-
-                File.WriteAllLines(this.projectPath + "\\Dati Extra.tg", lines);
-
-                this.CreateStatusTable();
-                this.updateTable();
             }
             
             else if (btn.Name == "EditCERButton")
@@ -688,6 +668,23 @@ namespace Rifiuti
             {
                 DEditExtraProcess dialog = new DEditExtraProcess(this.extraProcessingData);
                 var res = dialog.ShowDialog();
+                if(res == DialogResult.OK)
+                {
+                    this.extraProcessingData = dialog.processes;
+
+                    List<string> lines = new List<string>();
+                    string text = "Riporto";
+                    foreach (var element in this.CERInitialStatusData)
+                        text += ";" + element.getString(";");
+                    lines.Add(text);
+
+                    text = "Lavorazione";
+                    foreach (var element in this.extraProcessingData)
+                        text += (";" + element.getString(";"));
+                    lines.Add(text);
+
+                    File.WriteAllLines(this.projectPath + "\\Dati Extra.tg", lines);
+                }
             }
         }
 
@@ -784,6 +781,7 @@ namespace Rifiuti
         {
 
             // UI loading indicator
+            this.Cursor = Cursors.WaitCursor;
             this.projectUsable.BackColor = Color.Orange;
 
             Refresh();
@@ -819,13 +817,14 @@ namespace Rifiuti
             this.CreateStatusTable();
 
             // Displaying tables
-            this.fillTable("Situazione");
+            this.updateTable();
 
             await this.CreateFirmTable();
             await this.CreateMudTables();
 
             // UI loading indicator
             this.projectUsable.BackColor = Color.Green;
+            this.Cursor = Cursors.Default;
 
             Refresh();
         }
@@ -1339,19 +1338,19 @@ namespace Rifiuti
             foreach (var cer in this.CER)
             {
                 // find only modules with this current cer
-                var modules = this.formImplantData.FindAll(x => x.CER == cer);
+                var cerModules = this.formImplantData.FindAll(x => x.CER == cer);
 
                 // find only modules with same producer and carrier and
                 // get all the firm and locations contained in those modules
-                modules = modules.FindAll(x => x.producer == x.carrier && x.loadUnload == "Carico");
+                var modules = cerModules.FindAll(x => x.producer == x.carrier && x.loadUnload == "Carico");
                 if (modules.Count <= 0)
                     continue;
 
-                var firms = modules.Select(x => x.producer).Distinct().ToList();
+                var producers = modules.Select(x => x.producer).Distinct().ToList();
                 var locations = modules.Select(x => x.siteLocation).Distinct().ToList();
                 int year = modules[0].date.Year;
 
-                firms.Sort();
+                producers.Sort();
                 locations.Sort();
 
                 List<int> locationsTotal = new List<int>();
@@ -1359,17 +1358,17 @@ namespace Rifiuti
                     locationsTotal.Add(modules.FindAll(x => x.siteLocation == location).Sum(x => x.kg));
 
                 List<int> firmsTotal = new List<int>();
-                foreach (var firm in firms)
-                    firmsTotal.Add(modules.FindAll(x => x.producer == firm).Sum(x => x.kg));
+                foreach (var producer in producers)
+                    firmsTotal.Add(modules.FindAll(x => x.producer == producer).Sum(x => x.kg));
 
                 List<List<int>> data = new List<List<int>>();
                 foreach( var location in locations)
                 {
                     var sameloc = modules.FindAll(x => x.siteLocation == location);
                     List<int> row = new List<int>();
-                    foreach (var firm in firms)
+                    foreach (var producer in producers)
                     {
-                        var total = sameloc.FindAll(x =>x.producer == firm).Sum(x => x.kg);
+                        var total = sameloc.FindAll(x =>x.producer == producer).Sum(x => x.kg);
 
                         row.Add(total);
                     }
@@ -1386,7 +1385,42 @@ namespace Rifiuti
                 else
                     Console.WriteLine(cer.ToString() + "-> MUD NOT VERIFIED");
 
-                MUD newMUD = new MUD(cer, verified, inital, final, cerTotal, firms, locations, firmsTotal, locationsTotal, data, year);
+
+                // Computing MUD for all modules with different carrier and producer
+                modules = cerModules.FindAll(x => x.producer != x.carrier && x.loadUnload == "Carico");
+
+                var producers_2 = modules.Select(x => x.producer).Distinct().ToList();
+                var locations_2 = modules.Select(x => x.siteLocation).Distinct().ToList();
+
+                // list containing (producer, carrier, location, quantity)
+                List<Tuple<string, string, string, int>> extraData = new List<Tuple<string, string, string, int>>();
+                foreach(var producer in producers_2)
+                {
+                    var toLookModules = modules.FindAll(x => x.producer == producer);
+
+                    // find list with all carriers that have this current producer (firm)
+                    var carriers = toLookModules.Select(x => x.carrier).Distinct().ToList();
+
+                    foreach(var carrier in carriers)
+                    {
+                        // find all locations with the producer same as current firm, carrier same ad current carrier.
+                        toLookModules = toLookModules.FindAll(x => x.carrier == carrier);
+
+                        locations_2 = toLookModules.Select(x => x.siteLocation).Distinct().ToList();
+
+                        foreach(var location in locations_2)
+                        {
+                            toLookModules = toLookModules.FindAll(x => x.siteLocation == location);
+
+                            var quantity = toLookModules.Sum(x => x.kg);
+
+                            extraData.Add(Tuple.Create(producer, carrier, location, quantity));
+                        }
+                    }
+                }
+
+
+                MUD newMUD = new MUD(cer, verified, inital, final, cerTotal, producers, locations, firmsTotal, locationsTotal, data, extraData, year);
                 muds.Add(newMUD);
             }
             this.MUDs = muds;
@@ -1692,18 +1726,21 @@ namespace Rifiuti
 
                     foreach (var plate in el.targhe)
                     {
-                        List<object> line = new List<object>();
+                        List<object> row = new List<object>();
+                        string plate_ = plate.ToString();
+                        if (plate.Item1 == "" && plate.Item2 == "")
+                            plate_ = "";
                         if (el.targhe.IndexOf(plate) == 0)
                         {
-                            line.Add(el.name);
-                            line.Add(plate);
+                            row.Add(el.name);
+                            row.Add(plate_);
                         }
                         else
                         {
-                            line.Add("");
-                            line.Add(plate);
+                            row.Add("");
+                            row.Add(plate_);
                         }
-                        ds.Tables[dataIndex].Rows.Add(line.ToArray());
+                        ds.Tables[dataIndex].Rows.Add(row.ToArray());
                     }
 
                 }
@@ -2055,6 +2092,17 @@ namespace Rifiuti
         {
             this.filterM.ClearFilters();
             this.updateTable();
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadAllData();
+        }
+
+        private void helpButtonClick(object sender, EventArgs e)
+        {
+            Print.Help dialog = new Print.Help(this.basePath, this.pdfPath);
+            dialog.Show();
         }
     }
 }

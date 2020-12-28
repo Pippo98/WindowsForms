@@ -19,9 +19,10 @@ namespace Rifiuti.dataClasses
         public List<int> firmsTotal;
         public List<int> locationsTotal;
         public List<List<int>> data;
+        public List<Tuple<string, string, string, int>> extraFirms;
         public int year;
 
-        public MUD(int CER, bool verified, int initial, int final, int cerTotal ,List<string> firms, List<string> locations, List<int> firmsTotal, List<int> locationsTotal, List<List<int>> data, int year)
+        public MUD(int CER, bool verified, int initial, int final, int cerTotal ,List<string> firms, List<string> locations, List<int> firmsTotal, List<int> locationsTotal, List<List<int>> data, List<Tuple<string, string, string, int>> extraFirms, int year)
         {
             this.CER = CER;
             this.verified = verified;
@@ -33,6 +34,7 @@ namespace Rifiuti.dataClasses
             this.firmsTotal = firmsTotal;
             this.locationsTotal = locationsTotal;
             this.data = data;
+            this.extraFirms = extraFirms;
             this.year = year;
         }
 
