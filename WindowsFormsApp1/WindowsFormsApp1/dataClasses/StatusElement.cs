@@ -19,7 +19,9 @@ namespace Rifiuti.dataClasses
             this.CERElements = CERElements;
             this.hasLoaded = hasLoaded;
             this.hasUnloaded = hasUnloaded;
-            if (extra != null)
+            if (extra == null)
+                this.extra = new ExtraProcessingElement("", 0, 0, 0, 0);
+            else
                 this.extra = extra;
         }
 
@@ -28,7 +30,11 @@ namespace Rifiuti.dataClasses
             List<string> ret = new List<string>();
 
             ret.Add("Data");
-            ret.Add("Totale");
+            ret.Add("Totale Giorno");
+
+            foreach(var e in this.extra.getFields())
+                ret.Add(e);
+
             int cnt1 = 0;
             foreach (var element in CERElements)
             {
@@ -41,7 +47,7 @@ namespace Rifiuti.dataClasses
                     }
                     else
                     {
-                        string space = "";
+                        string space = " ";
                         for (int _ = 0; _ < cnt1; _++)
                             space += " ";
                         ret.Add(el + space);
@@ -62,6 +68,9 @@ namespace Rifiuti.dataClasses
 
             obj.Add(date.ToString("d"));
             obj.Add(total.ToString(stringSpecifier));
+
+            foreach (var e in this.extra.getObj())
+                obj.Add(e);
 
             foreach (var element in CERElements)
                 foreach (var el in element.getObj())
@@ -113,9 +122,9 @@ namespace Rifiuti.dataClasses
         {
             string[] ret = new string[]
             {
-                "Load",
-                "Unload",
-                "Total"
+                "Carico",
+                "Scarico",
+                "Totale"
             };
             return ret;
         }
@@ -161,5 +170,31 @@ namespace Rifiuti.dataClasses
             this.q2 = q2;
             this.q3 = q3;
         }
+
+        public string[] getFields()
+        {
+            string[] ret = {
+                "Processato",
+                "Sabbia",
+                "Riciclato",
+                "Drenante",
+                "Totale Processato",
+            };
+            return ret;
+        }
+
+        public object[] getObj()
+        {
+            object[] obj =
+            {
+                this.processedType,
+                this.q1,
+                this.q2,
+                this.q3,
+                this.processed,
+            };
+            return obj;
+        }
+
     }
 }

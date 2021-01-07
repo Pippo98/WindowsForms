@@ -33,6 +33,7 @@ namespace Rifiuti.AddForms
         public int Kg;
         public string siteLocation;
         public string siteName;
+        public string toProducer;
 
 
         public DnewModule(List<Firm> firms, List<Site> sites, List<int> cer, string moduleType)
@@ -150,6 +151,8 @@ namespace Rifiuti.AddForms
                 {
                     this.destination = "";
                 }
+
+                this.toProducer = this.toProducerText.Text;
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

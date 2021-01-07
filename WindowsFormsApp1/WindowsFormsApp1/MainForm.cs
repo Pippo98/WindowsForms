@@ -14,18 +14,6 @@ using Rifiuti.AddForms;
 using Rifiuti.Print;
 
 
-/*
- * 
- *OK Sezione Cantieri: devo aver la possibilità di cancellare un cantiere dall'elenco
- *   MODIFICA FORMULARIO IMPIANTO: non funziona (o mi devi spiegare come funziona ... perchè non riesco)
- *   Devo poter fare uno "scarico" che venga computato in SITUAZIONE senza dover aggiungere una riga con AGGIUNGI FORMULARIO IMPIANTO. Questo perchè quando lavoriamo il materiale che ci portano di fatto lo "scarichiamo" dall'impianto, ma non è associato un trasporto quindi non c'è un fomrulario.
- *OK devo poter aggiungere (e magari anche togliere) un CER, quindi una colonna in SITUAZIONE  (che è sempre un numero a 6 cifre)
- *OK Tutti i CER, quindi nella schermata SITUAZIONE, devono partire con un residuo iniziale, che è uguale (ovviamente) alla rimanenza dell'anno precedente
- *OK Devo poter aggiungere anche una IMPRESA anche senza mezzi di trasporto.
- * 
- * 
-*/
-
 namespace Rifiuti
 {
     public partial class MainForm : System.Windows.Forms.Form
@@ -37,7 +25,6 @@ namespace Rifiuti
 
         private bool isProjectOpen;
 
-
         private List<int> CER = new List<int>();
         private List<Firm> firmData = new List<Firm>();
         private List<Site> siteData = new List<Site>();
@@ -48,6 +35,7 @@ namespace Rifiuti
         private List<InitialStatus> CERInitialStatusData = new List<InitialStatus>();
         private List<StatusElement> status = new List<StatusElement>();
         private List<MUD> MUDs = new List<MUD>();
+        private List<Tuple<int, List<MUD>>> allMuds = new List<Tuple<int, List<MUD>>>();
 
         private List<dataClasses.Module> missingAnalysis = new List<dataClasses.Module>();
         private List<Analysis> expiredAnalysis = new List<Analysis>();
@@ -142,6 +130,17 @@ namespace Rifiuti
                 "Novembre",
                 "Dicembre"
             };
+
+            string[] years = new string []
+            {
+                "2020",
+                "2021",
+                "2022"
+            };
+
+            this.situationYearPicker.Items.AddRange(years);
+            this.situationYearPicker.SelectedIndex = 0;
+
             this.monthComboBox.Items.AddRange(this.monthNames);
             this.monthComboBox.SelectedIndex = 0;
 
@@ -258,7 +257,6 @@ namespace Rifiuti
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                this.projectUsable.BackColor = Color.Orange;
                 this.Cursor = Cursors.WaitCursor;
 
                 this.Invalidate();
@@ -299,11 +297,10 @@ namespace Rifiuti
                 if (Array.IndexOf(dialog.selected, "MUD") >= 0)
                 {
                     this.checkAndCreatePath(folder + "\\MUD");
-                    this.printer.printMUD(folder + "\\MUD", this.MUDs);
+                    this.printer.printMUD(folder + "\\MUD", this.allMuds);
                 }
 
 
-                this.projectUsable.BackColor = Color.Green;
                 this.Cursor = Cursors.Default;
             }
 
@@ -414,6 +411,7 @@ namespace Rifiuti
                     dialog.siteName,
                     dialog.Other,
                     dialog.note,
+                    dialog.toProducer
                 };
                 string form = String.Join(";", buffer) + ";";
 
@@ -564,7 +562,7 @@ namespace Rifiuti
             {
                 DEditModule dialog = new DEditModule(this.formImplantData, this.formVariousData, this.firmData, this.siteData, this.CER, this.dimensions);
                 var res = dialog.ShowDialog();
-                if(res == DialogResult.OK)
+                if(res == DialogResult.OK || res == DialogResult.No)
                 {
                     this.formImplantData = dialog.implant;
                     this.formVariousData = dialog.various;
@@ -666,7 +664,7 @@ namespace Rifiuti
             
             else if(btn.Name == "ExtraProcessingButton")
             {
-                DEditExtraProcess dialog = new DEditExtraProcess(this.extraProcessingData);
+                DEditExtraProcess dialog = new DEditExtraProcess(this.extraProcessingData, this.CER);
                 var res = dialog.ShowDialog();
                 if(res == DialogResult.OK)
                 {
@@ -684,6 +682,9 @@ namespace Rifiuti
                     lines.Add(text);
 
                     File.WriteAllLines(this.projectPath + "\\Dati Extra.tg", lines);
+
+                    this.CreateStatusTable();
+                    this.updateTable();
                 }
             }
         }
@@ -749,6 +750,14 @@ namespace Rifiuti
                 this.fillTable("MUD");
         }
 
+        private void situationYearPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.currentTableDataType == "Situazione" || this.currentTableDataType == "MUD")
+            {
+                this.CreateStatusTable();
+                this.updateTable();
+            }
+        }
 
         //-----------------------------------------------------------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -782,7 +791,6 @@ namespace Rifiuti
 
             // UI loading indicator
             this.Cursor = Cursors.WaitCursor;
-            this.projectUsable.BackColor = Color.Orange;
 
             Refresh();
 
@@ -823,7 +831,6 @@ namespace Rifiuti
             await this.CreateMudTables();
 
             // UI loading indicator
-            this.projectUsable.BackColor = Color.Green;
             this.Cursor = Cursors.Default;
 
             Refresh();
@@ -831,13 +838,10 @@ namespace Rifiuti
 
         private async void updateAnalysisData()
         {
-            this.projectUsable.BackColor = Color.Yellow;
             Task t = LoadAnalysisData();
             await t;
             CheckAnalysisValidity();
             LinkRegisterAnalysis();
-
-            this.projectUsable.BackColor = Color.Green;
         }
 
         private async Task LoadCER()
@@ -983,12 +987,13 @@ namespace Rifiuti
                     string siteName = l[9];
                     string toBreak = l[10];
                     string note = l[11];
+                    string toProducer = l[12];
 
 
                     if (id > this.formImplantLastId)
                         this.formImplantLastId = id;
 
-                    form = new dataClasses.Module(id, date, loadUnload, producer, carrier, plate, dimension, CER, siteLocation, siteName, toBreak, kg, note);
+                    form = new dataClasses.Module(id, date, loadUnload, producer, carrier, plate, dimension, CER, siteLocation, siteName, toBreak, kg, note, toProducer);
                     formList.Add(form);
                 }
             }
@@ -1094,8 +1099,13 @@ namespace Rifiuti
                 {
                     var line = e.Split(';');
 
-                    for (int i = 1; i < line.Length; i += 2)
-                        this.extraProcessingData.Add(new ExtraProcessing(DateTime.Parse(line[i]), line[i + 1]));
+                    for (int i = 1; i < line.Length; i += 4)
+                    {
+                        int cer = int.Parse(line[i+1]);
+                        int quantity = int.Parse(line[i+2]);
+                        string type = line[i + 3];
+                        this.extraProcessingData.Add(new ExtraProcessing(DateTime.Parse(line[i]), cer, quantity, type));
+                    }
                     continue;
                 }
             }
@@ -1213,81 +1223,82 @@ namespace Rifiuti
             {
                 List<dataClasses.Module> forms;
                 forms = this.formImplantData.FindAll(x => (x.date.Month == i));
-                if (forms.Count > 0)
+                if (forms.Count == 0)
+                    continue;
+
+
+                List<MonthElement> month = new List<MonthElement>();
+
+                // form in same Month
+                while (forms.Count > 0)
                 {
-                    List<MonthElement> month = new List<MonthElement>();
+                    bool jump = false;
+                    var form = forms[0];
+                    if (form.carrier == "TERRAGROUP")
+                        jump = true;
 
-                    // form in same Month
-                    while (forms.Count > 0)
+                    var formSameFirm = forms.FindAll(x => (x.carrier == form.carrier));
+                    foreach (var el in formSameFirm)
+                        forms.Remove(el);
+
+                    if (jump)
                     {
-                        bool jump = false;
-                        var form = forms[0];
-                        if (form.carrier == "TERRAGROUP")
-                            jump = true;
-
-                        var formSameFirm = forms.FindAll(x => (x.carrier == form.carrier));
-                        foreach (var el in formSameFirm)
-                            forms.Remove(el);
-
-                        if (jump)
-                        {
-                            continue;
-                        }
-
-                        List<VeichleElement> veichleList = new List<VeichleElement>();
-                        // forms with same carrier
-                        while (formSameFirm.Count > 0)
-                        {
-
-                            int normalCount = 0;
-                            int toBreakCount = 0;
-                            int asphaltCount = 0;
-                            int totalCount = 0;
-
-                            // forms with same carrier veichle
-                            var sameVeichle = formSameFirm.FindAll(x => (x.dimension == formSameFirm[0].dimension));
-                            foreach (var el in sameVeichle)
-                                formSameFirm.Remove(el);
-
-                            List<(DateTime date, int count)> date = new List<(DateTime date, int count)>();
-                            foreach (var el in sameVeichle)
-                            {
-                                var match = date.FindAll(x => (x.date.Date == el.date.Date));
-                                if (match.Count > 0)
-                                {
-                                    var idx = date.IndexOf(match[0]);
-                                    date[idx] = (match[0].date, date[idx].count + 1);
-                                    if (el.toBreak == "p")
-                                        toBreakCount += 1;
-                                    else if (el.toBreak == "a")
-                                        asphaltCount += 1;
-                                    else
-                                        normalCount += 1;
-                                    totalCount += 1;
-                                }
-                                else
-                                {
-                                    if (el.toBreak == "p")
-                                        toBreakCount += 1;
-                                    else if (el.toBreak == "a")
-                                        asphaltCount += 1;
-                                    else
-                                        normalCount += 1;
-                                    totalCount += 1;
-                                    date.Add((el.date, 1));
-                                }
-                            }
-
-                            VeichleElement newElement = new VeichleElement((sameVeichle[0].plate, sameVeichle[0].dimension), date, normalCount, toBreakCount, asphaltCount, totalCount);
-                            veichleList.Add(newElement);
-                        }
-
-                        MonthElement monthElement = new MonthElement(form.carrier, veichleList);
-                        month.Add(monthElement);
+                        continue;
                     }
-                    month = month.OrderBy(x => x.firm).ToList();
-                    months.Add(month);
+
+                    List<VeichleElement> veichleList = new List<VeichleElement>();
+                    // forms with same carrier
+                    while (formSameFirm.Count > 0)
+                    {
+
+                        int normalCount = 0;
+                        int toBreakCount = 0;
+                        int asphaltCount = 0;
+                        int totalCount = 0;
+
+                        // forms with same carrier veichle
+                        var sameVeichle = formSameFirm.FindAll(x => (x.dimension == formSameFirm[0].dimension));
+                        foreach (var el in sameVeichle)
+                            formSameFirm.Remove(el);
+
+                        List<(DateTime date, int count)> date = new List<(DateTime date, int count)>();
+                        foreach (var el in sameVeichle)
+                        {
+                            var match = date.FindAll(x => (x.date.Date == el.date.Date));
+                            if (match.Count > 0)
+                            {
+                                var idx = date.IndexOf(match[0]);
+                                date[idx] = (match[0].date, date[idx].count + 1);
+                                if (el.toBreak == "p")
+                                    toBreakCount += 1;
+                                else if (el.toBreak == "a")
+                                    asphaltCount += 1;
+                                else
+                                    normalCount += 1;
+                                totalCount += 1;
+                            }
+                            else
+                            {
+                                if (el.toBreak == "p")
+                                    toBreakCount += 1;
+                                else if (el.toBreak == "a")
+                                    asphaltCount += 1;
+                                else
+                                    normalCount += 1;
+                                totalCount += 1;
+                                date.Add((el.date, 1));
+                            }
+                        }
+
+                        VeichleElement newElement = new VeichleElement((sameVeichle[0].plate, sameVeichle[0].dimension), date, normalCount, toBreakCount, asphaltCount, totalCount);
+                        veichleList.Add(newElement);
+                    }
+
+                    MonthElement monthElement = new MonthElement(form.carrier, veichleList);
+                    month.Add(monthElement);
                 }
+                month = month.OrderBy(x => x.firm).ToList();
+                months.Add(month);
             }
             this.months = months;
         }
@@ -1334,96 +1345,106 @@ namespace Rifiuti
 
         private async Task CreateMudTables()
         {
-            List<MUD> muds = new List<MUD>();
-            foreach (var cer in this.CER)
+            List<Tuple<int, List<MUD>>> mudPerYear = new List<Tuple<int, List<MUD>>>();
+            var yearsInForms = this.formImplantData.Select(x => x.date.Year).Distinct().ToList();
+            foreach(var year in yearsInForms)
             {
-                // find only modules with this current cer
-                var cerModules = this.formImplantData.FindAll(x => x.CER == cer);
+                var formsInYear = this.formImplantData.FindAll(x => x.date.Year == year);
 
-                // find only modules with same producer and carrier and
-                // get all the firm and locations contained in those modules
-                var modules = cerModules.FindAll(x => x.producer == x.carrier && x.loadUnload == "Carico");
-                if (modules.Count <= 0)
-                    continue;
-
-                var producers = modules.Select(x => x.producer).Distinct().ToList();
-                var locations = modules.Select(x => x.siteLocation).Distinct().ToList();
-                int year = modules[0].date.Year;
-
-                producers.Sort();
-                locations.Sort();
-
-                List<int> locationsTotal = new List<int>();
-                foreach(var location in locations)
-                    locationsTotal.Add(modules.FindAll(x => x.siteLocation == location).Sum(x => x.kg));
-
-                List<int> firmsTotal = new List<int>();
-                foreach (var producer in producers)
-                    firmsTotal.Add(modules.FindAll(x => x.producer == producer).Sum(x => x.kg));
-
-                List<List<int>> data = new List<List<int>>();
-                foreach( var location in locations)
+                List<MUD> muds = new List<MUD>();
+                foreach (var cer in this.CER)
                 {
-                    var sameloc = modules.FindAll(x => x.siteLocation == location);
-                    List<int> row = new List<int>();
+                    // find only modules with this current cer
+                    var cerModules = formsInYear.FindAll(x => x.CER == cer);
+
+                    // find only modules with same producer and carrier and
+                    // get all the firm and locations contained in those modules
+                    var modules = cerModules.FindAll(x => x.producer == x.carrier && x.loadUnload == "Carico");
+                    if (modules.Count <= 0)
+                        continue;
+
+                    var producers = modules.Select(x => x.producer).Distinct().ToList();
+                    var locations = modules.Select(x => x.siteLocation).Distinct().ToList();
+
+                    producers.Sort();
+                    locations.Sort();
+
+                    List<int> locationsTotal = new List<int>();
+                    foreach(var location in locations)
+                        locationsTotal.Add(modules.FindAll(x => x.siteLocation == location).Sum(x => x.kg));
+
+                    List<int> firmsTotal = new List<int>();
                     foreach (var producer in producers)
+                        firmsTotal.Add(modules.FindAll(x => x.producer == producer).Sum(x => x.kg));
+
+                    List<List<int>> data = new List<List<int>>();
+                    foreach( var location in locations)
                     {
-                        var total = sameloc.FindAll(x =>x.producer == producer).Sum(x => x.kg);
-
-                        row.Add(total);
-                    }
-                    data.Add(row);
-                }
-
-                var cerTotal = modules.Sum(x => x.kg);
-                var inital = this.CERInitialStatusData.Find(x => x.CER == cer).quantity;
-                var final = this.status.Last().CERElements.Find(x => x.CER == cer).CERTotal;
-
-                bool verified = false;
-                if (firmsTotal.Sum() == locationsTotal.Sum() && firmsTotal.Sum() == cerTotal)
-                    verified = true;
-                else
-                    Console.WriteLine(cer.ToString() + "-> MUD NOT VERIFIED");
-
-
-                // Computing MUD for all modules with different carrier and producer
-                modules = cerModules.FindAll(x => x.producer != x.carrier && x.loadUnload == "Carico");
-
-                var producers_2 = modules.Select(x => x.producer).Distinct().ToList();
-                var locations_2 = modules.Select(x => x.siteLocation).Distinct().ToList();
-
-                // list containing (producer, carrier, location, quantity)
-                List<Tuple<string, string, string, int>> extraData = new List<Tuple<string, string, string, int>>();
-                foreach(var producer in producers_2)
-                {
-                    var toLookModules = modules.FindAll(x => x.producer == producer);
-
-                    // find list with all carriers that have this current producer (firm)
-                    var carriers = toLookModules.Select(x => x.carrier).Distinct().ToList();
-
-                    foreach(var carrier in carriers)
-                    {
-                        // find all locations with the producer same as current firm, carrier same ad current carrier.
-                        toLookModules = toLookModules.FindAll(x => x.carrier == carrier);
-
-                        locations_2 = toLookModules.Select(x => x.siteLocation).Distinct().ToList();
-
-                        foreach(var location in locations_2)
+                        var sameloc = modules.FindAll(x => x.siteLocation == location);
+                        List<int> row = new List<int>();
+                        foreach (var producer in producers)
                         {
-                            toLookModules = toLookModules.FindAll(x => x.siteLocation == location);
+                            var total = sameloc.FindAll(x =>x.producer == producer).Sum(x => x.kg);
 
-                            var quantity = toLookModules.Sum(x => x.kg);
+                            row.Add(total);
+                        }
+                        data.Add(row);
+                    }
 
-                            extraData.Add(Tuple.Create(producer, carrier, location, quantity));
+                    var cerTotal = modules.Sum(x => x.kg);
+                    var inital = this.CERInitialStatusData.Find(x => x.CER == cer).quantity;
+                    var final = this.status.Last().CERElements.Find(x => x.CER == cer).CERTotal;
+
+                    bool verified = false;
+                    if (firmsTotal.Sum() == locationsTotal.Sum() && firmsTotal.Sum() == cerTotal)
+                        verified = true;
+                    else
+                        Console.WriteLine(cer.ToString() + "-> MUD NOT VERIFIED");
+
+
+                    // Computing MUD for all modules with different carrier and producer
+                    modules = cerModules.FindAll(x => x.producer != x.carrier && x.loadUnload == "Carico");
+
+                    var producers_2 = modules.Select(x => x.producer).Distinct().ToList();
+                    var locations_2 = modules.Select(x => x.siteLocation).Distinct().ToList();
+
+                    // list containing (producer, carrier, location, quantity)
+                    List<Tuple<string, string, string, int>> extraData = new List<Tuple<string, string, string, int>>();
+                    foreach(var producer in producers_2)
+                    {
+                        var toLookModules = modules.FindAll(x => x.producer == producer);
+
+                        // find list with all carriers that have this current producer (firm)
+                        var carriers = toLookModules.Select(x => x.carrier).Distinct().ToList();
+
+                        foreach(var carrier in carriers)
+                        {
+                            // find all locations with the producer same as current firm, carrier same ad current carrier.
+                            toLookModules = toLookModules.FindAll(x => x.carrier == carrier);
+
+                            locations_2 = toLookModules.Select(x => x.siteLocation).Distinct().ToList();
+
+                            foreach(var location in locations_2)
+                            {
+                                toLookModules = toLookModules.FindAll(x => x.siteLocation == location);
+
+                                var quantity = toLookModules.Sum(x => x.kg);
+
+                                extraData.Add(Tuple.Create(producer, carrier, location, quantity));
+                            }
                         }
                     }
+
+
+                    MUD newMUD = new MUD(cer, verified, inital, final, cerTotal, producers, locations, firmsTotal, locationsTotal, data, extraData, year);
+                    muds.Add(newMUD);
                 }
 
+                mudPerYear.Add(Tuple.Create(year, muds));
 
-                MUD newMUD = new MUD(cer, verified, inital, final, cerTotal, producers, locations, firmsTotal, locationsTotal, data, extraData, year);
-                muds.Add(newMUD);
+                this.MUDs = muds;
             }
-            this.MUDs = muds;
+            this.allMuds = mudPerYear;
         }
 
         // Table with situation and movements each day for every year.
@@ -1451,7 +1472,7 @@ namespace Rifiuti
             // Finding the right year by looking at the first form
             int currentYear = 0;
             if (this.formImplantData.Count > 0)
-                currentYear = this.formImplantData[0].date.Year;
+                currentYear = int.Parse(this.situationYearPicker.SelectedItem.ToString());
             else
                 return;
 
@@ -1511,44 +1532,51 @@ namespace Rifiuti
                 foreach (var el in CERs)
                     newCERs.Add(new CERElement(el.CER, el.load, el.unload, el.CERTotal));
 
-                var extraData = this.extraProcessingData.Find(x => x.date.Date == date.Date);
+                var extraData = this.extraProcessingData.FindAll(x => x.date.Date == date.Date);
                 if (extraData != null)
                 {
+                    var processes = "";
+                    int totQ1 = 0;
+                    int totQ2 = 0;
+                    int totQ3 = 0;
+                    int totProcessed = 0;
 
-                    int q1 = 0;
-                    int q2 = 0;
-                    int q3 = 0;
-                    int processed = 0;
-
-                    List<int> cers = new List<int>
+                    foreach (var currentProcessing in extraData)
                     {
-                        170904,
-                        170302,
-                        170101,
-                        170107,
-                        170508,
-                        170504
-                    };
 
-                    foreach (var cer in cers)
-                    {
-                        var cerElement = newCERs.Find(x => x.CER == cer);
-                        processed += cerElement.unload;
+                        int q1 = 0;
+                        int q2 = 0;
+                        int q3 = 0;
+                        int processed = 0;
+
+                        processed = currentProcessing.quantity;
+                        var currentCER = currentProcessing.CER;
+
+                        processed = (int)(processed / 1600);
+
+                        if (currentProcessing.type == "vagliato")
+                        {
+                            q1 = (int)(processed * 0.6);
+                            q3 = (int)(processed - q1);
+                        }
+                        else if (currentProcessing.type == "frantumato")
+                        {
+                            q2 = processed;
+                        }
+
+                        newCERs.Find(x => x.CER == currentCER).unload += currentProcessing.quantity;
+                        newCERs.Find(x => x.CER == currentCER).CERTotal -= currentProcessing.quantity;
+
+
+                        processes += currentProcessing.type + " ";
+                        totProcessed += processed;
+                        totQ1 += q1;
+                        totQ2 += q2;
+                        totQ3 += q3;
                     }
 
-                    processed = (int)(processed / 1600);
+                    var extraEl = new ExtraProcessingElement(processes, totProcessed, totQ1, totQ2, totQ3);
 
-                    if (extraData.type == "vagliato")
-                    {
-                        q1 = (int)(processed * 0.6);
-                        q3 = (int)(processed * 0.4);
-                    }
-                    else if(extraData.type == "frantumato")
-                    {
-                        q2 = processed;
-                    }
-                    Console.WriteLine(extraData.date.ToString() + "\t" + processed.ToString() + "\t" + q1.ToString() + "\t" + q2.ToString() + "\t" + q3.ToString());
-                    var extraEl = new ExtraProcessingElement(extraData.type, processed, q1, q2, q3);
                     // Creating element with all operation for each cer and also daily informations
                     statusElements.Add(new StatusElement(date, total, newCERs, hasLoaded, hasUnloaded, extraEl));
                 }
@@ -1861,6 +1889,12 @@ namespace Rifiuti
 
             if (type == "MUD")
             {
+                var requestedYear = int.Parse(this.situationYearPicker.SelectedItem.ToString());
+                var mud = this.allMuds.Find(x => x.Item1 == requestedYear);
+                if (mud == null)
+                    return;
+                this.MUDs = mud.Item2;
+
                 if (this.MUDs.Count <= 0)
                     return;
 
@@ -1910,26 +1944,49 @@ namespace Rifiuti
         {
             if (this.currentTableDataType == "Situazione")
             {
-                for (int i = 0; i < this.table.RowCount; i++)
+
+                for(int i = 0; i < this.table.Columns.Count; i++)
                 {
-                    var fields = this.status[0].getFields(this.CER).ToList();
-                    /*
-                    if (((StatusElement)row).hasLoaded && ((StatusElement)row).hasUnloaded)
-                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.MediumPurple;
-                    else if (((StatusElement)row).hasLoaded)
-                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.LightGreen;
-                    else if (((StatusElement)row).hasUnloaded)
-                        ((DataGridViewRow)row).DefaultCellStyle.BackColor = Color.IndianRed;
-                    */
-                }
-                for (int i = 0; i < this.table.ColumnCount; i++)
-                {
-                    if ((i) % 3 == 1)
+
+                    var col = this.table.Columns[i];
+
+                    if (col.Name.Contains("Totale") && 
+                        !col.Name.Contains("Totale Processato") &&
+                        !col.Name.Contains("Totale Giorno"))
                     {
                         this.table.Columns[i].DividerWidth = 1;
                         this.table.Columns[i].DefaultCellStyle.BackColor = Color.FromArgb(217, 238, 255);
                     }
+                    if(col.Name.Contains("Totale Processato"))
+                    {
+                        this.table.Columns[i].DividerWidth = 2;
+                        this.table.Columns[i].DefaultCellStyle.BackColor = Color.FromArgb(207, 228, 255);
+                    }
                 }
+
+                for (int i = 0; i < this.table.Rows.Count; i++)
+                {
+                    var row = this.table.Rows[i];
+
+                    if (row.Cells.Count < 1)
+                        continue;
+
+
+                    int maxValue = 90000;
+
+                    float quantity = int.Parse(row.Cells[1].Value.ToString().Replace(".", ""));
+
+                    if (quantity > maxValue)
+                        quantity = maxValue;
+                    
+                    if (quantity > 0)
+                    {
+                        int scaledVal = (int)((1-(quantity / maxValue))*255);
+                        var color = Color.FromArgb(255, scaledVal, scaledVal);
+                        this.table[1, i].Style.BackColor = color;
+                    }
+                }
+
                 this.table.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 this.table.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
             }
@@ -1939,8 +1996,8 @@ namespace Rifiuti
             //this.table.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0xFF, 0xE7, 0xD2);
             this.table.DefaultCellStyle.SelectionForeColor = Color.Black;
             this.table.ColumnHeadersDefaultCellStyle.Font = new Font(DataGridView.DefaultFont.FontFamily, 14);
-            this.table.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(255, 231, 210);
-            this.table.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(255, 231, 210);
+            //this.table.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(255, 231, 210);
+            //this.table.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(255, 231, 210);
         }
 
         private void updateTable()

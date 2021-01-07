@@ -78,6 +78,10 @@
             this.dimensionBox = new System.Windows.Forms.ComboBox();
             this.readOnlyTextBox2 = new System.Web.Management.ReadOnlyTextBox();
             this.dimensionText = new System.Web.Management.ReadOnlyTextBox();
+            this.toProducerText = new System.Web.Management.ReadOnlyTextBox();
+            this.toProducerBox = new System.Windows.Forms.TextBox();
+            this.readOnlyTextBox6 = new System.Web.Management.ReadOnlyTextBox();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // readOnlyTextBox1
@@ -143,7 +147,7 @@
             // 
             this.readOnlyTextBox11.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox11.Location = new System.Drawing.Point(650, 723);
+            this.readOnlyTextBox11.Location = new System.Drawing.Point(650, 774);
             this.readOnlyTextBox11.Multiline = true;
             this.readOnlyTextBox11.Name = "readOnlyTextBox11";
             this.readOnlyTextBox11.ReadOnly = true;
@@ -154,7 +158,7 @@
             // 
             // noteBox
             // 
-            this.noteBox.Location = new System.Drawing.Point(444, 723);
+            this.noteBox.Location = new System.Drawing.Point(444, 774);
             this.noteBox.Multiline = true;
             this.noteBox.Name = "noteBox";
             this.noteBox.Size = new System.Drawing.Size(200, 135);
@@ -219,7 +223,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(294, 869);
+            this.cancelButton.Location = new System.Drawing.Point(294, 920);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 64;
@@ -229,7 +233,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(419, 869);
+            this.OKButton.Location = new System.Drawing.Point(419, 920);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 63;
@@ -564,7 +568,7 @@
             // 
             this.noteText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.noteText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noteText.Location = new System.Drawing.Point(129, 723);
+            this.noteText.Location = new System.Drawing.Point(129, 774);
             this.noteText.Multiline = true;
             this.noteText.Name = "noteText";
             this.noteText.ReadOnly = true;
@@ -655,11 +659,59 @@
             this.dimensionText.TabStop = false;
             this.dimensionText.Text = "Dimensione";
             // 
+            // toProducerText
+            // 
+            this.toProducerText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.toProducerText.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toProducerText.Location = new System.Drawing.Point(129, 726);
+            this.toProducerText.Multiline = true;
+            this.toProducerText.Name = "toProducerText";
+            this.toProducerText.ReadOnly = true;
+            this.toProducerText.Size = new System.Drawing.Size(76, 20);
+            this.toProducerText.TabIndex = 97;
+            this.toProducerText.TabStop = false;
+            this.toProducerText.Text = "P/T";
+            // 
+            // toProducerBox
+            // 
+            this.toProducerBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toProducerBox.Location = new System.Drawing.Point(446, 724);
+            this.toProducerBox.Name = "toProducerBox";
+            this.toProducerBox.Size = new System.Drawing.Size(199, 21);
+            this.toProducerBox.TabIndex = 98;
+            // 
+            // readOnlyTextBox6
+            // 
+            this.readOnlyTextBox6.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox6.Location = new System.Drawing.Point(651, 726);
+            this.readOnlyTextBox6.Multiline = true;
+            this.readOnlyTextBox6.Name = "readOnlyTextBox6";
+            this.readOnlyTextBox6.ReadOnly = true;
+            this.readOnlyTextBox6.Size = new System.Drawing.Size(23, 20);
+            this.readOnlyTextBox6.TabIndex = 99;
+            this.readOnlyTextBox6.TabStop = false;
+            this.readOnlyTextBox6.Text = "P/T";
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(360, 949);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 100;
+            this.deleteButton.Text = "ELIMINA";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.buttonClicked);
+            // 
             // DEditModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(788, 961);
+            this.ClientSize = new System.Drawing.Size(788, 984);
+            this.Controls.Add(this.deleteButton);
+            this.Controls.Add(this.readOnlyTextBox6);
+            this.Controls.Add(this.toProducerBox);
+            this.Controls.Add(this.toProducerText);
             this.Controls.Add(this.dimensionText);
             this.Controls.Add(this.readOnlyTextBox2);
             this.Controls.Add(this.dimensionBox);
@@ -768,5 +820,9 @@
         private System.Windows.Forms.ComboBox dimensionBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox2;
         private System.Web.Management.ReadOnlyTextBox dimensionText;
+        private System.Web.Management.ReadOnlyTextBox toProducerText;
+        private System.Windows.Forms.TextBox toProducerBox;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox6;
+        private System.Windows.Forms.Button deleteButton;
     }
 }

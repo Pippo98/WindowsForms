@@ -14,14 +14,16 @@ namespace Rifiuti.EditForms
     public partial class DEditExtraProcess : Form
     {
         public List<ExtraProcessing> processes;
+        private List<int> CER;
 
         string[] options;
 
-        public DEditExtraProcess(List<ExtraProcessing> processes)
+        public DEditExtraProcess(List<ExtraProcessing> processes, List<int> CERs)
         {
             InitializeComponent();
 
             this.processes = processes;
+            this.CER = CERs;
 
             this.options = new string[]
             {
@@ -38,6 +40,8 @@ namespace Rifiuti.EditForms
             this.editComboBox.Items.Clear();
             this.newTypeComboBox.Items.Clear();
             this.editTypeComboBox.Items.Clear();
+            this.cerCombo.Items.Clear();
+            this.editCERCombo.Items.Clear();
 
             List<string> items = new List<string>();
             foreach (var e in this.processes)
@@ -49,9 +53,14 @@ namespace Rifiuti.EditForms
             this.ProcessList.Items.AddRange(items.ToArray());
             this.editComboBox.Items.AddRange(items.ToArray());
 
+            this.cerCombo.Items.AddRange(Array.ConvertAll(this.CER.ToArray(), x => x.ToString()));
+            this.editCERCombo.Items.AddRange(Array.ConvertAll(this.CER.ToArray(), x => x.ToString()));
+
             this.newTypeComboBox.Text = "";
             this.editTypeComboBox.Text = "";
             this.editComboBox.Text = "";
+            this.kgBox.Text = "";
+            this.editCERCombo.Text = "";
         }
 
         private void buttonClicked(object sender, EventArgs e)
@@ -65,6 +74,8 @@ namespace Rifiuti.EditForms
                 this.processes.Add(new 
                     ExtraProcessing(
                     this.datePicker.Value, 
+                    int.Parse(this.cerCombo.SelectedItem.ToString()),
+                    int.Parse(this.kgBox.Text),
                     this.newTypeComboBox.SelectedItem.ToString()
                     ));
 
@@ -78,7 +89,20 @@ namespace Rifiuti.EditForms
                     return;
 
                 this.processes[this.editComboBox.SelectedIndex].type = this.editDatePicker.Value.ToString("d");
+                this.processes[this.editComboBox.SelectedIndex].CER = int.Parse(this.editCERCombo.SelectedItem.ToString());
+                this.processes[this.editComboBox.SelectedIndex].quantity = int.Parse(this.editKgBox.Text);
                 this.processes[this.editComboBox.SelectedIndex].type = this.editTypeComboBox.SelectedItem.ToString();
+
+                updateValues();
+            }
+            else if (btn.Name == "deleteButton")
+            {
+                if (this.editComboBox.SelectedIndex == -1)
+                    return;
+                if (this.editTypeComboBox.SelectedIndex == -1)
+                    return;
+
+                this.processes.RemoveAt(this.editComboBox.SelectedIndex);
 
                 updateValues();
             }
@@ -113,6 +137,12 @@ namespace Rifiuti.EditForms
                 this.editTypeComboBox.SelectedItem = currentProc.type;
 
             }
+        }
+
+
+        private void kgBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }

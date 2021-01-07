@@ -93,6 +93,7 @@ namespace Rifiuti.EditForms
             this.KgText.Text = this.currentForm.kg.ToString();
             this.otherText.Text = this.currentForm.toBreak.ToString();
             this.noteText.Text = this.currentForm.note.ToString();
+            this.toProducerText.Text = this.currentForm.assignToProducer.ToString();
 
             this.dateTimePicker.Value = this.currentForm.date;
             this.producerBox.SelectedItem = this.currentForm.producer;
@@ -106,6 +107,7 @@ namespace Rifiuti.EditForms
             this.siteNameBox.SelectedItem = this.currentForm.siteName;
             this.KgBox.Text = this.currentForm.kg.ToString();
             this.noteBox.Text = this.currentForm.note;
+            this.toProducerBox.Text = this.currentForm.assignToProducer;
 
             this.toBreakCheckBox.Checked = false;
             this.asphaltCheckBox.Checked = false;
@@ -185,6 +187,7 @@ namespace Rifiuti.EditForms
                 this.currentForm.kg = int.Parse(this.KgBox.Text);
                 this.currentForm.siteLocation = this.siteLocationBox.SelectedItem.ToString();
                 this.currentForm.siteName = this.siteNameBox.SelectedItem.ToString();
+                this.currentForm.assignToProducer = this.toProducerBox.Text;
 
                 if (loadUnloadBox.SelectedItem.ToString() == "Scarico")
                 {
@@ -200,7 +203,14 @@ namespace Rifiuti.EditForms
                 else
                     this.various[idx] = this.currentForm;
 
+
                 this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else if (btn.Name == "deleteButton")
+            {
+                this.implant.Remove(this.currentForm);
+                this.DialogResult = DialogResult.No;
                 this.Close();
             }
             else if(btn.Name == "cancelButton")

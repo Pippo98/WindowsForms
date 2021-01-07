@@ -19,8 +19,9 @@ namespace Rifiuti.dataClasses
         public string siteLocation;
         public string siteName;
         public string note;
+        public string assignToProducer;
 
-        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, string toBreak, int kg, string note, string destination = "none")
+        public Module(int id, DateTime date, string loadUnload, string producer, string carrier, string plate, string dimension, int CER, string siteLocation, string siteName, string toBreak, int kg, string note, string assignToProducer=" ", string destination = "none")
         {
             this.id = id;
             this.date = date;
@@ -36,6 +37,7 @@ namespace Rifiuti.dataClasses
             this.siteLocation = siteLocation;
             this.siteName = siteName;
             this.note = note;
+            this.assignToProducer = assignToProducer;
         }
 
         public object[] getObj(string type)
@@ -57,6 +59,7 @@ namespace Rifiuti.dataClasses
                     siteLocation,
                     siteName,
                     note,
+                    assignToProducer,
                 };
             }
             else
@@ -99,7 +102,8 @@ namespace Rifiuti.dataClasses
                     "Kg",
                     "Comune",
                     "Cantiere",
-                    "Note"
+                    "Note",
+                    "P/T"
                 };
             }
             else
@@ -142,7 +146,8 @@ namespace Rifiuti.dataClasses
             text += this.siteLocation + separator;
             text += this.siteName + separator;
             text += this.toBreak + separator;
-            text += this.note;
+            text += this.note + separator;
+            text += this.assignToProducer;
 
             return text;
         }

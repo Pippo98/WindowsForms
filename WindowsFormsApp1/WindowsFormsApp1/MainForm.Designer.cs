@@ -37,7 +37,9 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openTool = new System.Windows.Forms.ToolStripMenuItem();
             this.newProject = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stampaPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSite = new System.Windows.Forms.Button();
             this.addFirm = new System.Windows.Forms.Button();
@@ -50,7 +52,6 @@
             this.analysisButton = new System.Windows.Forms.Button();
             this.registerButton = new System.Windows.Forms.Button();
             this.missingAnalysisButton = new System.Windows.Forms.Button();
-            this.projectUsable = new System.Windows.Forms.Button();
             this.RegisterVariousButton = new System.Windows.Forms.Button();
             this.addFormVarious = new System.Windows.Forms.Button();
             this.table = new System.Windows.Forms.DataGridView();
@@ -68,8 +69,7 @@
             this.ExtraProcessingButton = new System.Windows.Forms.Button();
             this.MudComboBox = new System.Windows.Forms.ComboBox();
             this.MudButton = new System.Windows.Forms.Button();
-            this.stampaPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.situationYearPicker = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
@@ -84,7 +84,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1225, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1262, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -115,6 +115,11 @@
             this.newProject.Text = "Nuovo Progetto";
             this.newProject.Click += new System.EventHandler(this.newProject_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
+            // 
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
@@ -122,6 +127,14 @@
             this.refreshToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
+            // stampaPDFToolStripMenuItem
+            // 
+            this.stampaPDFToolStripMenuItem.Name = "stampaPDFToolStripMenuItem";
+            this.stampaPDFToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.stampaPDFToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.stampaPDFToolStripMenuItem.Text = "Stampa PDF";
+            this.stampaPDFToolStripMenuItem.Click += new System.EventHandler(this.printButton_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -139,7 +152,7 @@
             this.addSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addSite.ForeColor = System.Drawing.Color.Black;
-            this.addSite.Location = new System.Drawing.Point(1079, 356);
+            this.addSite.Location = new System.Drawing.Point(1116, 356);
             this.addSite.Name = "addSite";
             this.addSite.Size = new System.Drawing.Size(134, 39);
             this.addSite.TabIndex = 4;
@@ -156,7 +169,7 @@
             this.addFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addFirm.ForeColor = System.Drawing.Color.Black;
-            this.addFirm.Location = new System.Drawing.Point(1079, 310);
+            this.addFirm.Location = new System.Drawing.Point(1116, 310);
             this.addFirm.Name = "addFirm";
             this.addFirm.Size = new System.Drawing.Size(134, 39);
             this.addFirm.TabIndex = 2;
@@ -173,7 +186,7 @@
             this.addAnalysis.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addAnalysis.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addAnalysis.ForeColor = System.Drawing.Color.Black;
-            this.addAnalysis.Location = new System.Drawing.Point(1079, 402);
+            this.addAnalysis.Location = new System.Drawing.Point(1116, 402);
             this.addAnalysis.Name = "addAnalysis";
             this.addAnalysis.Size = new System.Drawing.Size(134, 39);
             this.addAnalysis.TabIndex = 7;
@@ -190,7 +203,7 @@
             this.addFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addFormImplant.ForeColor = System.Drawing.Color.Black;
-            this.addFormImplant.Location = new System.Drawing.Point(1079, 150);
+            this.addFormImplant.Location = new System.Drawing.Point(1116, 150);
             this.addFormImplant.Margin = new System.Windows.Forms.Padding(0);
             this.addFormImplant.Name = "addFormImplant";
             this.addFormImplant.Size = new System.Drawing.Size(134, 75);
@@ -208,7 +221,7 @@
             this.addPlate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addPlate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addPlate.ForeColor = System.Drawing.Color.Black;
-            this.addPlate.Location = new System.Drawing.Point(1079, 448);
+            this.addPlate.Location = new System.Drawing.Point(1116, 448);
             this.addPlate.Name = "addPlate";
             this.addPlate.Size = new System.Drawing.Size(134, 39);
             this.addPlate.TabIndex = 9;
@@ -225,7 +238,7 @@
             this.printButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.printButton.ForeColor = System.Drawing.Color.Black;
-            this.printButton.Location = new System.Drawing.Point(1080, 666);
+            this.printButton.Location = new System.Drawing.Point(1117, 666);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(134, 65);
             this.printButton.TabIndex = 10;
@@ -308,19 +321,6 @@
             this.missingAnalysisButton.UseVisualStyleBackColor = false;
             this.missingAnalysisButton.Click += new System.EventHandler(this.missingAnalysisButton_Click);
             // 
-            // projectUsable
-            // 
-            this.projectUsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectUsable.BackColor = System.Drawing.Color.DarkRed;
-            this.projectUsable.Enabled = false;
-            this.projectUsable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.projectUsable.Location = new System.Drawing.Point(914, 34);
-            this.projectUsable.Name = "projectUsable";
-            this.projectUsable.Size = new System.Drawing.Size(24, 23);
-            this.projectUsable.TabIndex = 22;
-            this.projectUsable.UseVisualStyleBackColor = false;
-            this.projectUsable.Visible = false;
-            // 
             // RegisterVariousButton
             // 
             this.RegisterVariousButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(174)))), ((int)(((byte)(78)))));
@@ -345,7 +345,7 @@
             this.addFormVarious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addFormVarious.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addFormVarious.ForeColor = System.Drawing.Color.Black;
-            this.addFormVarious.Location = new System.Drawing.Point(1080, 231);
+            this.addFormVarious.Location = new System.Drawing.Point(1117, 231);
             this.addFormVarious.Name = "addFormVarious";
             this.addFormVarious.Size = new System.Drawing.Size(134, 73);
             this.addFormVarious.TabIndex = 25;
@@ -390,7 +390,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.table.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.table.Size = new System.Drawing.Size(1062, 581);
+            this.table.Size = new System.Drawing.Size(1099, 581);
             this.table.TabIndex = 28;
             // 
             // monthButton
@@ -425,7 +425,7 @@
             this.situationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.situationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.situationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.situationButton.Location = new System.Drawing.Point(427, 31);
+            this.situationButton.Location = new System.Drawing.Point(427, 64);
             this.situationButton.Name = "situationButton";
             this.situationButton.Size = new System.Drawing.Size(132, 27);
             this.situationButton.TabIndex = 31;
@@ -460,7 +460,7 @@
             this.EditFormImplant.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFormImplant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EditFormImplant.ForeColor = System.Drawing.Color.Black;
-            this.EditFormImplant.Location = new System.Drawing.Point(1079, 494);
+            this.EditFormImplant.Location = new System.Drawing.Point(1116, 494);
             this.EditFormImplant.Margin = new System.Windows.Forms.Padding(0);
             this.EditFormImplant.Name = "EditFormImplant";
             this.EditFormImplant.Size = new System.Drawing.Size(134, 48);
@@ -478,7 +478,7 @@
             this.EditFirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditFirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EditFirm.ForeColor = System.Drawing.Color.Black;
-            this.EditFirm.Location = new System.Drawing.Point(1079, 549);
+            this.EditFirm.Location = new System.Drawing.Point(1116, 549);
             this.EditFirm.Margin = new System.Windows.Forms.Padding(0);
             this.EditFirm.Name = "EditFirm";
             this.EditFirm.Size = new System.Drawing.Size(134, 48);
@@ -496,7 +496,7 @@
             this.EditSite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EditSite.ForeColor = System.Drawing.Color.Black;
-            this.EditSite.Location = new System.Drawing.Point(1080, 604);
+            this.EditSite.Location = new System.Drawing.Point(1117, 604);
             this.EditSite.Margin = new System.Windows.Forms.Padding(0);
             this.EditSite.Name = "EditSite";
             this.EditSite.Size = new System.Drawing.Size(134, 48);
@@ -512,7 +512,7 @@
             this.EditStatus.FlatAppearance.BorderSize = 0;
             this.EditStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EditStatus.Location = new System.Drawing.Point(940, 31);
+            this.EditStatus.Location = new System.Drawing.Point(977, 31);
             this.EditStatus.Name = "EditStatus";
             this.EditStatus.Size = new System.Drawing.Size(134, 47);
             this.EditStatus.TabIndex = 40;
@@ -527,7 +527,7 @@
             this.EditCERButton.FlatAppearance.BorderSize = 0;
             this.EditCERButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditCERButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EditCERButton.Location = new System.Drawing.Point(1079, 84);
+            this.EditCERButton.Location = new System.Drawing.Point(1116, 84);
             this.EditCERButton.Name = "EditCERButton";
             this.EditCERButton.Size = new System.Drawing.Size(134, 47);
             this.EditCERButton.TabIndex = 41;
@@ -542,7 +542,7 @@
             this.ExtraProcessingButton.FlatAppearance.BorderSize = 0;
             this.ExtraProcessingButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExtraProcessingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExtraProcessingButton.Location = new System.Drawing.Point(1080, 31);
+            this.ExtraProcessingButton.Location = new System.Drawing.Point(1117, 31);
             this.ExtraProcessingButton.Name = "ExtraProcessingButton";
             this.ExtraProcessingButton.Size = new System.Drawing.Size(134, 47);
             this.ExtraProcessingButton.TabIndex = 42;
@@ -575,18 +575,15 @@
             this.MudButton.UseVisualStyleBackColor = false;
             this.MudButton.Click += new System.EventHandler(this.MudButton_Click);
             // 
-            // stampaPDFToolStripMenuItem
+            // situationYearPicker
             // 
-            this.stampaPDFToolStripMenuItem.Name = "stampaPDFToolStripMenuItem";
-            this.stampaPDFToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.stampaPDFToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.stampaPDFToolStripMenuItem.Text = "Stampa PDF";
-            this.stampaPDFToolStripMenuItem.Click += new System.EventHandler(this.printButton_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
+            this.situationYearPicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.situationYearPicker.FormattingEnabled = true;
+            this.situationYearPicker.Location = new System.Drawing.Point(427, 31);
+            this.situationYearPicker.Name = "situationYearPicker";
+            this.situationYearPicker.Size = new System.Drawing.Size(132, 24);
+            this.situationYearPicker.TabIndex = 45;
+            this.situationYearPicker.SelectedIndexChanged += new System.EventHandler(this.situationYearPicker_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -595,7 +592,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1225, 740);
+            this.ClientSize = new System.Drawing.Size(1262, 740);
+            this.Controls.Add(this.situationYearPicker);
             this.Controls.Add(this.MudComboBox);
             this.Controls.Add(this.MudButton);
             this.Controls.Add(this.ExtraProcessingButton);
@@ -611,7 +609,6 @@
             this.Controls.Add(this.table);
             this.Controls.Add(this.addFormVarious);
             this.Controls.Add(this.RegisterVariousButton);
-            this.Controls.Add(this.projectUsable);
             this.Controls.Add(this.missingAnalysisButton);
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.analysisButton);
@@ -658,7 +655,6 @@
         private System.Windows.Forms.Button analysisButton;
         private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.Button missingAnalysisButton;
-        private System.Windows.Forms.Button projectUsable;
         private System.Windows.Forms.Button RegisterVariousButton;
         private System.Windows.Forms.Button addFormVarious;
         private System.Windows.Forms.DataGridView table;
@@ -679,6 +675,7 @@
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem stampaPDFToolStripMenuItem;
+        private System.Windows.Forms.ComboBox situationYearPicker;
     }
 }
 

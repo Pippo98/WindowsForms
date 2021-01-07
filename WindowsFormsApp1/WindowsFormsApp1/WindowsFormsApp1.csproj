@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>tg_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Asset 9.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="aspnet_regsql">
@@ -147,9 +147,6 @@
       <DependentUpon>WarningMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="dataClasses\Analysis.cs" />
-    <Compile Include="dataClasses\ExtendedTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="dataClasses\ExtraProcessing.cs" />
     <Compile Include="dataClasses\FilterManager.cs" />
     <Compile Include="dataClasses\Firm.cs" />
@@ -323,6 +320,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asset 3.ico" />
+    <Content Include="Asset 9.ico" />
     <Content Include="logo-terra_group.ico" />
     <Content Include="logo_tg.ico" />
     <Content Include="tg_icon.ico" />

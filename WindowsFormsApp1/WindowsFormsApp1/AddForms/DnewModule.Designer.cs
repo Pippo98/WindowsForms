@@ -59,6 +59,8 @@
             this.asphaltCheckBox = new System.Windows.Forms.CheckBox();
             this.readOnlyTextBox12 = new System.Web.Management.ReadOnlyTextBox();
             this.readOnlyTextBox13 = new System.Web.Management.ReadOnlyTextBox();
+            this.readOnlyTextBox14 = new System.Web.Management.ReadOnlyTextBox();
+            this.toProducerText = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -213,7 +215,7 @@
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(421, 509);
+            this.ok.Location = new System.Drawing.Point(420, 552);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(75, 23);
             this.ok.TabIndex = 16;
@@ -223,7 +225,7 @@
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(296, 509);
+            this.cancel.Location = new System.Drawing.Point(295, 552);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 17;
@@ -381,11 +383,34 @@
             this.readOnlyTextBox13.TabStop = false;
             this.readOnlyTextBox13.Text = "Pinzare";
             // 
+            // readOnlyTextBox14
+            // 
+            this.readOnlyTextBox14.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.readOnlyTextBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readOnlyTextBox14.Location = new System.Drawing.Point(137, 512);
+            this.readOnlyTextBox14.Multiline = true;
+            this.readOnlyTextBox14.Name = "readOnlyTextBox14";
+            this.readOnlyTextBox14.ReadOnly = true;
+            this.readOnlyTextBox14.Size = new System.Drawing.Size(76, 20);
+            this.readOnlyTextBox14.TabIndex = 30;
+            this.readOnlyTextBox14.TabStop = false;
+            this.readOnlyTextBox14.Text = "P/T";
+            // 
+            // toProducerText
+            // 
+            this.toProducerText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toProducerText.Location = new System.Drawing.Point(297, 510);
+            this.toProducerText.Name = "toProducerText";
+            this.toProducerText.Size = new System.Drawing.Size(199, 21);
+            this.toProducerText.TabIndex = 31;
+            // 
             // DnewModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 560);
+            this.ClientSize = new System.Drawing.Size(799, 597);
+            this.Controls.Add(this.toProducerText);
+            this.Controls.Add(this.readOnlyTextBox14);
             this.Controls.Add(this.readOnlyTextBox13);
             this.Controls.Add(this.readOnlyTextBox12);
             this.Controls.Add(this.asphaltCheckBox);
@@ -455,5 +480,7 @@
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox12;
         private System.Windows.Forms.CheckBox asphaltCheckBox;
         private System.Web.Management.ReadOnlyTextBox readOnlyTextBox13;
+        private System.Windows.Forms.TextBox toProducerText;
+        private System.Web.Management.ReadOnlyTextBox readOnlyTextBox14;
     }
 }

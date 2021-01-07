@@ -46,7 +46,7 @@
             // 
             this.readOnlyTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox2.Location = new System.Drawing.Point(387, 233);
+            this.readOnlyTextBox2.Location = new System.Drawing.Point(428, 168);
             this.readOnlyTextBox2.Multiline = true;
             this.readOnlyTextBox2.Name = "readOnlyTextBox2";
             this.readOnlyTextBox2.ReadOnly = true;
@@ -58,7 +58,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(485, 355);
+            this.OKButton.Location = new System.Drawing.Point(427, 290);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 21;
@@ -68,7 +68,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(375, 355);
+            this.cancelButton.Location = new System.Drawing.Point(317, 290);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 20;
@@ -78,7 +78,7 @@
             // 
             // CERTextBox
             // 
-            this.CERTextBox.Location = new System.Drawing.Point(461, 234);
+            this.CERTextBox.Location = new System.Drawing.Point(502, 169);
             this.CERTextBox.Name = "CERTextBox";
             this.CERTextBox.Size = new System.Drawing.Size(166, 20);
             this.CERTextBox.TabIndex = 16;
@@ -87,7 +87,7 @@
             // CERComboBox
             // 
             this.CERComboBox.FormattingEnabled = true;
-            this.CERComboBox.Location = new System.Drawing.Point(215, 233);
+            this.CERComboBox.Location = new System.Drawing.Point(256, 168);
             this.CERComboBox.Name = "CERComboBox";
             this.CERComboBox.Size = new System.Drawing.Size(166, 21);
             this.CERComboBox.TabIndex = 15;
@@ -97,7 +97,7 @@
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox1.Location = new System.Drawing.Point(381, 12);
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(323, 23);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
             this.readOnlyTextBox1.ReadOnly = true;
@@ -111,14 +111,14 @@
             this.CERList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CERList.FormattingEnabled = true;
             this.CERList.ItemHeight = 24;
-            this.CERList.Location = new System.Drawing.Point(28, 141);
+            this.CERList.Location = new System.Drawing.Point(69, 76);
             this.CERList.Name = "CERList";
             this.CERList.Size = new System.Drawing.Size(166, 172);
             this.CERList.TabIndex = 26;
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(633, 233);
+            this.updateButton.Location = new System.Drawing.Point(674, 168);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(75, 23);
             this.updateButton.TabIndex = 27;
@@ -130,7 +130,7 @@
             // 
             this.readOnlyTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox3.Location = new System.Drawing.Point(215, 141);
+            this.readOnlyTextBox3.Location = new System.Drawing.Point(256, 76);
             this.readOnlyTextBox3.Multiline = true;
             this.readOnlyTextBox3.Name = "readOnlyTextBox3";
             this.readOnlyTextBox3.ReadOnly = true;
@@ -143,7 +143,7 @@
             // 
             this.readOnlyTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox4.Location = new System.Drawing.Point(215, 202);
+            this.readOnlyTextBox4.Location = new System.Drawing.Point(256, 137);
             this.readOnlyTextBox4.Multiline = true;
             this.readOnlyTextBox4.Name = "readOnlyTextBox4";
             this.readOnlyTextBox4.ReadOnly = true;
@@ -154,7 +154,7 @@
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(387, 171);
+            this.addButton.Location = new System.Drawing.Point(428, 106);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
             this.addButton.TabIndex = 31;
@@ -164,7 +164,7 @@
             // 
             // NewTextBox
             // 
-            this.NewTextBox.Location = new System.Drawing.Point(215, 172);
+            this.NewTextBox.Location = new System.Drawing.Point(256, 107);
             this.NewTextBox.Name = "NewTextBox";
             this.NewTextBox.Size = new System.Drawing.Size(166, 20);
             this.NewTextBox.TabIndex = 30;
@@ -174,7 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 448);
+            this.ClientSize = new System.Drawing.Size(818, 349);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.NewTextBox);
             this.Controls.Add(this.readOnlyTextBox4);

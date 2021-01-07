@@ -44,7 +44,7 @@
             // 
             this.readOnlyTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox4.Location = new System.Drawing.Point(228, 152);
+            this.readOnlyTextBox4.Location = new System.Drawing.Point(229, 152);
             this.readOnlyTextBox4.Multiline = true;
             this.readOnlyTextBox4.Name = "readOnlyTextBox4";
             this.readOnlyTextBox4.ReadOnly = true;
@@ -58,7 +58,7 @@
             // 
             this.readOnlyTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox2.Location = new System.Drawing.Point(228, 107);
+            this.readOnlyTextBox2.Location = new System.Drawing.Point(229, 107);
             this.readOnlyTextBox2.Multiline = true;
             this.readOnlyTextBox2.Name = "readOnlyTextBox2";
             this.readOnlyTextBox2.ReadOnly = true;
@@ -70,7 +70,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(179, 212);
+            this.CancelButton.Location = new System.Drawing.Point(182, 212);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 22);
             this.CancelButton.TabIndex = 15;
@@ -81,7 +81,7 @@
             // namesComboBox
             // 
             this.namesComboBox.FormattingEnabled = true;
-            this.namesComboBox.Location = new System.Drawing.Point(56, 151);
+            this.namesComboBox.Location = new System.Drawing.Point(57, 151);
             this.namesComboBox.Name = "namesComboBox";
             this.namesComboBox.Size = new System.Drawing.Size(166, 21);
             this.namesComboBox.TabIndex = 14;
@@ -90,7 +90,7 @@
             // LocationsComboBox
             // 
             this.LocationsComboBox.FormattingEnabled = true;
-            this.LocationsComboBox.Location = new System.Drawing.Point(56, 107);
+            this.LocationsComboBox.Location = new System.Drawing.Point(57, 107);
             this.LocationsComboBox.Name = "LocationsComboBox";
             this.LocationsComboBox.Size = new System.Drawing.Size(166, 21);
             this.LocationsComboBox.TabIndex = 13;
@@ -100,7 +100,7 @@
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox1.Location = new System.Drawing.Point(188, 24);
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(194, 24);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
             this.readOnlyTextBox1.ReadOnly = true;
@@ -111,21 +111,21 @@
             // 
             // LocationTextBox
             // 
-            this.LocationTextBox.Location = new System.Drawing.Point(334, 108);
+            this.LocationTextBox.Location = new System.Drawing.Point(335, 108);
             this.LocationTextBox.Name = "LocationTextBox";
             this.LocationTextBox.Size = new System.Drawing.Size(168, 20);
             this.LocationTextBox.TabIndex = 19;
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(334, 151);
+            this.nameTextBox.Location = new System.Drawing.Point(335, 151);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(168, 20);
             this.nameTextBox.TabIndex = 20;
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(228, 258);
+            this.DeleteButton.Location = new System.Drawing.Point(231, 258);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(96, 23);
             this.DeleteButton.TabIndex = 21;
@@ -135,7 +135,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(300, 212);
+            this.OKButton.Location = new System.Drawing.Point(303, 212);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 22);
             this.OKButton.TabIndex = 22;
@@ -147,7 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 430);
+            this.ClientSize = new System.Drawing.Size(560, 318);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.nameTextBox);

@@ -47,7 +47,7 @@
             // 
             this.readOnlyTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox1.Location = new System.Drawing.Point(176, 12);
+            this.readOnlyTextBox1.Location = new System.Drawing.Point(183, 12);
             this.readOnlyTextBox1.Multiline = true;
             this.readOnlyTextBox1.Name = "readOnlyTextBox1";
             this.readOnlyTextBox1.ReadOnly = true;
@@ -59,7 +59,7 @@
             // NameComboBox
             // 
             this.NameComboBox.FormattingEnabled = true;
-            this.NameComboBox.Location = new System.Drawing.Point(35, 94);
+            this.NameComboBox.Location = new System.Drawing.Point(47, 94);
             this.NameComboBox.Name = "NameComboBox";
             this.NameComboBox.Size = new System.Drawing.Size(166, 21);
             this.NameComboBox.TabIndex = 1;
@@ -67,7 +67,7 @@
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(313, 94);
+            this.NameTextBox.Location = new System.Drawing.Point(325, 94);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(166, 20);
             this.NameTextBox.TabIndex = 2;
@@ -75,7 +75,7 @@
             // PlateComboBox
             // 
             this.PlateComboBox.FormattingEnabled = true;
-            this.PlateComboBox.Location = new System.Drawing.Point(80, 138);
+            this.PlateComboBox.Location = new System.Drawing.Point(92, 138);
             this.PlateComboBox.Name = "PlateComboBox";
             this.PlateComboBox.Size = new System.Drawing.Size(121, 21);
             this.PlateComboBox.TabIndex = 3;
@@ -83,7 +83,7 @@
             // 
             // PlateTextBox
             // 
-            this.PlateTextBox.Location = new System.Drawing.Point(313, 137);
+            this.PlateTextBox.Location = new System.Drawing.Point(325, 137);
             this.PlateTextBox.Name = "PlateTextBox";
             this.PlateTextBox.Size = new System.Drawing.Size(166, 20);
             this.PlateTextBox.TabIndex = 4;
@@ -91,14 +91,14 @@
             // DimensionCombo
             // 
             this.DimensionCombo.FormattingEnabled = true;
-            this.DimensionCombo.Location = new System.Drawing.Point(313, 180);
+            this.DimensionCombo.Location = new System.Drawing.Point(325, 180);
             this.DimensionCombo.Name = "DimensionCombo";
             this.DimensionCombo.Size = new System.Drawing.Size(121, 21);
             this.DimensionCombo.TabIndex = 5;
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(163, 230);
+            this.CancelButton.Location = new System.Drawing.Point(177, 230);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 6;
@@ -108,7 +108,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(273, 230);
+            this.OKButton.Location = new System.Drawing.Point(287, 230);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 7;
@@ -120,7 +120,7 @@
             // 
             this.readOnlyTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox2.Location = new System.Drawing.Point(207, 94);
+            this.readOnlyTextBox2.Location = new System.Drawing.Point(219, 94);
             this.readOnlyTextBox2.Multiline = true;
             this.readOnlyTextBox2.Name = "readOnlyTextBox2";
             this.readOnlyTextBox2.ReadOnly = true;
@@ -134,7 +134,7 @@
             // 
             this.readOnlyTextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox4.Location = new System.Drawing.Point(207, 139);
+            this.readOnlyTextBox4.Location = new System.Drawing.Point(219, 139);
             this.readOnlyTextBox4.Multiline = true;
             this.readOnlyTextBox4.Name = "readOnlyTextBox4";
             this.readOnlyTextBox4.ReadOnly = true;
@@ -148,7 +148,7 @@
             // 
             this.readOnlyTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyTextBox3.Location = new System.Drawing.Point(207, 181);
+            this.readOnlyTextBox3.Location = new System.Drawing.Point(219, 181);
             this.readOnlyTextBox3.Multiline = true;
             this.readOnlyTextBox3.Name = "readOnlyTextBox3";
             this.readOnlyTextBox3.ReadOnly = true;
@@ -160,22 +160,21 @@
             // 
             // DeleteButton
             // 
-            this.DeleteButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.DeleteButton.BackColor = System.Drawing.SystemColors.Control;
             this.DeleteButton.FlatAppearance.BorderSize = 0;
-            this.DeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteButton.Location = new System.Drawing.Point(207, 280);
+            this.DeleteButton.Location = new System.Drawing.Point(221, 280);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(100, 23);
             this.DeleteButton.TabIndex = 12;
             this.DeleteButton.Text = "Elimina Elemento";
-            this.DeleteButton.UseVisualStyleBackColor = false;
+            this.DeleteButton.UseVisualStyleBackColor = true;
             this.DeleteButton.Click += new System.EventHandler(this.ButtonClicked);
             // 
             // readOnlyDimension
             // 
             this.readOnlyDimension.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.readOnlyDimension.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readOnlyDimension.Location = new System.Drawing.Point(101, 181);
+            this.readOnlyDimension.Location = new System.Drawing.Point(113, 181);
             this.readOnlyDimension.Multiline = true;
             this.readOnlyDimension.Name = "readOnlyDimension";
             this.readOnlyDimension.ReadOnly = true;
@@ -188,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 364);
+            this.ClientSize = new System.Drawing.Size(539, 335);
             this.Controls.Add(this.readOnlyDimension);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.readOnlyTextBox3);
